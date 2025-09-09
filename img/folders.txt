@@ -1,0 +1,24 @@
+Homepage/
+|
+|-- Frontpage/
+|       |-- Bilder für Startseite
+|
+|-- Eigenportrait/
+|       |-- Bilder für eigenes Portrait
+|
+|-- Portfolio/
+|       |-- Hochzeit/
+|       |       |-- Icon Bild/
+|       |       |       |-- Icon Bild
+|       |       |-- Hochzeiten/
+|       |       |       |-- Bilder von Hochzeiten
+|       |-- Events/
+|       |       |-- Icon Bild/
+|       |       |       |-- Icon Bild
+|       |       |-- Events/
+|       |       |       |-- Bilder von Events
+|       |-- Shootings/
+|       |       |-- Icon Bild/
+|       |       |       |-- Icon Bild
+|       |       |-- Shootings/
+|       |       |       |-- Bilder von Shooting
