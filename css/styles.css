@@ -1,54 +1,97 @@
+/* ======================================================
+   Basis-Variablen & Reset
+   ====================================================== */
 :root {
     --black: #000;
-    --neon: #edfa5c;
     --white: #fff;
     --gray: #ccc;
-    --font: "Arial", sans-serif;
+    --neon: #edfa5c;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+    /* Abstände & Breiten */
+    --container: 1100px;
+    --pad: clamp(16px, 2vw, 28px);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+    height: 100%;
 }
 
 body {
     margin: 0;
-    font-family: var(--font);
-    background: var(--black);
     color: var(--white);
+    background: var(--black);
+    font-family: var(--font);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
-/* Hero */
-.hero{
+/* Hilfsklassen & Typo */
+.container {
+    width: min(100% - 2*var(--pad), var(--container));
+    margin-inline: auto;
+}
+
+.h2 {
+    margin: 0 0 .75em 0;
+    font-size: clamp(1.3rem, 1rem + 1.6vw, 2rem);
+    font-weight: 900;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+}
+
+.h2--inline {
+    display: inline-block;
+    background: var(--neon);
+    color: var(--black);
+    padding: .4rem .7rem;
+    border-radius: .4rem;
+}
+
+/* ======================================================
+   HERO
+   - Hintergrundbild hier setzen
+   ====================================================== */
+.hero {
     position: relative;
-    min-height: 100vh;
-    padding: 20px;
-    color: var(--white);
+    min-height: 100svh;
+    padding: var(--pad);
     display: grid;
-    grid-template-rows: auto 1fr; /* Logo oben, Content unten */
+    grid-template-rows: auto 1fr;
     background: url("../img/frontpage/MelanieMichelFotografie-77.jpg") center/cover no-repeat;
 }
 
-.logo-box {
+/* Logo */
+.hero__logo {
     position: absolute;
-    top: 80px;
-    left: 80px;
+    top: 100px;
+    left: 100px;
 }
-
-.logo-box img {
-    max-width: 300px;
+.hero__logo img {
+    width: clamp(160px, 22vw, 300px);
     height: auto;
     display: block;
 }
 
-.hero-content{
+/* Inhalt */
+.hero__content {
     position: absolute;
-    left: 80px;
-    bottom: 120px;
-    max-width: min(980px, 78%);
+    left: var(--pad);
+    bottom: clamp(80px, 12vh, 140px);
+    max-width: min(78%, 980px);
 }
 
-.hero-quote{
-    margin: 0 0 18px 0;
-    font-size: clamp(1.15rem, 0.6rem + 2.2vw, 2.2rem);
+/* Zitat im Hero */
+.hero__quote {
+    margin: 0 0 .9rem 0;
+    font-size: clamp(1.05rem, 0.7rem + 1.8vw, 2rem);
     line-height: 1.25;
-    font-weight: 800;
+    font-weight: 300;
     text-transform: uppercase;
     letter-spacing: .02em;
     text-shadow:
@@ -57,122 +100,339 @@ body {
     max-width: 38ch;
 }
 
-.btn{
+/* ======================================================
+   Buttons
+   - .btn: Basisstil
+   - .btn--primary: visueller Stil (Neon)
+   - .btn--floating: Position
+   ====================================================== */
+.btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: .5rem;
     text-decoration: none;
     border-radius: 999px;
-    padding: 1rem 2rem;
-    font-weight: 800;
+    padding: 1rem 1.6rem;
+    font-weight: 300;
     letter-spacing: .02em;
     border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
 }
+.btn:active { transform: translateY(1px); }
 
-.btn-neon{
+.btn--primary {
     background: var(--neon);
     color: var(--black);
     box-shadow: 0 12px 24px rgba(0,0,0,.35);
 }
 
-.hero .btn.btn-neon{
+.btn--floating {
     position: absolute;
-    right: 80px;
-    bottom: 60px;
-}
-
-/* Anfrage-Button (unabhängig anpassbar) */
-.btn-request {
+    bottom: 100px;
     right: 100px;
-    bottom: 80px;
-    padding: 1.2rem 3rem;
-    font-size: 1.2rem;
+    padding: 0.4rem 3rem;
+    font-size: clamp(1rem, .9rem + .3vw, 1.15rem);
+}
+
+/* ======================================================
+   Sektionen
+   ====================================================== */
+.section {
+    padding-block: clamp(40px, 6vw, 64px);
+}
+
+.section--accent {
     background: var(--neon);
     color: var(--black);
-    box-shadow: 0 14px 28px rgba(0,0,0,.4);
 }
 
-/* --- Responsive Tweaks --- */
-@media (max-width: 900px){
-    .logo-box img{ max-width: 220px; }
-    .hero-content{ left: 24px; bottom: 140px; max-width: 90%; }
-    .hero .btn.btn-neon{ right: 24px; bottom: 24px; padding: .9rem 1.4rem; }
-    .hero-quote{ font-size: clamp(1rem, 1vw + 1rem, 1.5rem); max-width: 90%; }
-}
-
-
-/* About */
-.about {
-    display: flex;
-    flex-wrap: wrap;
-    background: var(--neon);
-    color: var(--black);
-    padding: 40px 20px;
-}
-
-.about-text {
-    flex: 1;
-    min-width: 300px;
-    padding-right: 20px;
-}
-
-.about-text h2 {
-    margin-top: 0;
-    font-size: 1.8rem;
-    font-weight: 900;
-}
-
-.about-img {
-    flex: 1;
-    min-width: 300px;
-}
-
-.about-img img {
-    width: 100%;
-    border-radius: 6px;
-}
-
-/* Offers */
-.offers {
-    background: var(--black);
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.offers h2 {
-    background: var(--neon);
-    color: var(--black);
-    padding: 10px;
-    display: inline-block;
-    font-size: 2rem;
-}
-
-.offer-grid {
+/* Zweispaltiges Layout, das automatisch stapelt */
+.split {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+    gap: clamp(16px, 3vw, 32px);
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 900px) {
+    .split { grid-template-columns: 1fr; }
 }
 
-.offer {
-    background: #111;
-    border-radius: 8px;
-    padding: 15px;
-}
+.split__item { min-width: 0; }
 
-.offer img {
+/* Einheitlicher Bildstil */
+.media {
     width: 100%;
-    height: 800px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* ======================================================
+   Karten / Portfolio
+   ====================================================== */
+.cards {
+    display: grid;
+    gap: clamp(16px, 3vw, 24px);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-top: clamp(16px, 3vw, 28px);
+}
+
+.card {
+    background: #111;
+    border-radius: 10px;
+    padding: clamp(12px, 2.2vw, 16px);
+}
+
+.card__img {
+    width: 100%;
+    aspect-ratio: 4 / 5;      /* verhindert Layout-Sprung; statt fixer Höhe */
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
-.offer h3 {
-    margin: 10px 0;
-    font-size: 1.2rem;
+/* Fokus stärker nach links auf das Brautpaar schieben */
+.card__img--focus-left { object-position: 35% 50%; }
+
+.card__title {
+    margin: .8rem 0 .25rem 0;
+    font-size: clamp(1rem, .9rem + .4vw, 1.2rem);
+    font-weight: 800;
+    letter-spacing: .01em;
+    text-transform: uppercase;
 }
 
-.offer p {
-    font-size: 0.9rem;
+.card__text {
+    margin: 0;
     color: var(--gray);
+    font-size: .95rem;
 }
+
+/* ===== Tablet (≤ 900px) ===== */
+@media (max-width: 900px) {
+    /* Quote kleiner + tiefer setzen (Kollisionsschutz zum Button) */
+    .hero__content {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: calc(env(safe-area-inset-bottom) + 96px);
+        max-width: 34ch;
+    }
+    .hero__quote {
+        font-size: clamp(1rem, 0.7rem + 1.4vw, 1.35rem);
+        line-height: 1.25;
+        text-shadow: 0 2px 18px rgba(0,0,0,.6), 0 1px 2px rgba(0,0,0,.85);
+    }
+
+    /* Button bleibt unten rechts – NICHT volle Breite */
+    .btn--floating {
+        position: absolute;
+        bottom: 28px;
+        right: 28px;
+        width: auto;
+        max-width: 60vw;
+        padding: .9rem 1.4rem;
+        font-size: 1rem;
+        border-radius: 999px;
+    }
+
+    .hero__logo img { width: clamp(140px, 22vw, 220px); }
+
+    .hero {
+        background-position: 70% center; /* X=70%, Y=50% */
+    }
+}
+
+/* ===== Smartphone (≤ 600px) ===== */
+@media (max-width: 600px) {
+    .hero__content {
+        left: 16px;
+        right: 16px;
+        bottom: calc(env(safe-area-inset-bottom) + 110px);
+        max-width: 32ch;
+    }
+    .hero__quote {
+        font-size: clamp(.95rem, .85rem + 1.1vw, 1.15rem);
+        line-height: 1.25;
+    }
+
+    .btn--floating {
+        bottom: max(16px, env(safe-area-inset-bottom) + 12px);
+        right: max(16px, env(safe-area-inset-right) + 12px);
+        width: auto;         /* kein full width */
+        max-width: 70vw;
+        padding: .85rem 1.3rem;
+    }
+
+    .hero__logo img { width: clamp(120px, 36vw, 180px); }
+
+    .hero {
+        background-position: 65% 45%;    /* X=80%, Y=45% */
+    }
+}
+
+/* Schmale Laptops / große Tablets quer */
+@media (max-width: 1200px) {
+    .hero {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        padding: clamp(16px, 2vw, 24px);
+        padding-bottom: 120px;           /* Platz für Button */
+    }
+
+    /* Logo im Flow oben */
+    .hero__logo { position: static; justify-self: start; margin-top: 8px; }
+
+    /* Zitat im Flow, unten in der zweiten Zeile */
+    .hero__content {
+        position: static;
+        align-self: end;
+        max-width: 40ch;
+    }
+
+    /* Button weiterhin unten rechts absolut */
+    .btn--floating {
+        position: absolute;
+        bottom: 28px; /* gern feintunen */
+        right: 28px;
+        width: auto;
+        max-width: 60vw;
+    }
+}
+
+/* #about (gelber Abschnitt) soll den gesamten Screen füllen */
+#about.section--accent {
+    min-height: 100svh;                 /* volle Bildschirmhöhe, sicher für Mobile-UI */
+    display: grid;                      /* damit wir vertikal zentrieren können */
+    padding-block: clamp(24px, 8vh, 64px);
+}
+
+/* Inhalt im Abschnitt vertikal zentrieren */
+#about.section--accent > .container {
+    min-height: 0;                      /* verhindert Überlauf mit Grid */
+    display: grid;
+    grid-template-columns: 1fr 1fr;     /* Text | Bild (Desktop) */
+    align-items: center;                /* vertikal mittig */
+    gap: clamp(16px, 3vw, 32px);
+}
+
+/* Bild bleibt schön im Rahmen */
+#about .media {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+/* Tablet & Smartphone: einspaltig, weiter mittig */
+@media (max-width: 900px) {
+    #about.section--accent > .container {
+        grid-template-columns: 1fr;       /* untereinander */
+        align-content: center;            /* vertikal zentriert im Viewport */
+        row-gap: clamp(12px, 3vh, 24px);
+    }
+    /* Optional: Bildhöhe begrenzen, damit nichts nach unten rausläuft */
+    #about .media {
+        max-height: 45svh;
+        object-fit: cover;
+    }
+}
+
+
+/* ===== PORTFOLIO fullscreen & schön zentriert ===== */
+#offers {
+    min-height: 100svh;                 /* volle Bildschirmhöhe */
+    display: grid;
+    align-content: center;              /* Inhalt vertikal mittig */
+    padding-block: clamp(24px, 8vh, 64px);
+}
+
+#offers > .container {
+    display: grid;
+    grid-template-rows: auto 1fr;       /* Überschrift | Karten */
+    gap: clamp(16px, 3vw, 28px);
+}
+
+/* Karten-Grid: passt sich Breite an, bleibt mittig */
+#offers .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(16px, 2.5vw, 24px);
+    align-items: stretch;               /* gleiche Kartenhöhe */
+}
+
+/* Karten selbst: flex, damit Text unten bündig bleibt */
+#offers .card {
+    display: flex;
+    flex-direction: column;
+}
+
+#offers .card__img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Tablet/Phone: etwas kompakter & einspaltig, bleibt fullscreen */
+@media (max-width: 900px) {
+    #offers {
+        padding-block: clamp(20px, 6vh, 48px);
+    }
+    #offers .cards {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    #offers .cards {
+        grid-template-columns: 1fr;       /* eine Spalte */
+    }
+}
+
+/* Portfolio breiter & fast fullscreen */
+#offers {
+    --container: 1600px;                 /* Container speziell hier erweitern */
+    min-height: 100svh;                  /* bleibt fullscreen */
+    padding-block: clamp(20px, 6vh, 48px);
+}
+
+/* Überschrift + Karten-Grid */
+#offers > .container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(16px, 2vw, 28px);
+}
+
+/* Größere Karten: füllt die Breite auf Desktop */
+@media (min-width: 1200px) {
+    #offers .cards {
+        grid-template-columns: repeat(3, minmax(420px, 1fr)); /* vorher 220px */
+        gap: clamp(16px, 1.5vw, 28px);
+    }
+    #offers .card {
+        padding: clamp(10px, 0.9vw, 16px);  /* weniger Innenabstand = mehr Bildfläche */
+    }
+}
+
+/* Zwischenbreite (Laptop) – trotzdem groß wirken */
+@media (min-width: 900px) and (max-width: 1199px) {
+    #offers { --container: 1400px; }
+    #offers .cards {
+        grid-template-columns: repeat(3, minmax(360px, 1fr));
+    }
+}
+
+/* Mobile/Tablet bleibt kompakt und ein-/zweispaltig */
+@media (max-width: 900px) {
+    #offers .cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+}
+@media (max-width: 600px) {
+    #offers .cards { grid-template-columns: 1fr; }
+}
+
+/* Bild bleibt hochkant, füllt die Karte optimal */
+#offers .card__img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 8px;
+}
+

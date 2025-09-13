@@ -1,74 +1,111 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Melanie Michel Fotografie</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-<!-- Hero Bereich -->
+<!-- ===================== HERO ===================== -->
 <header class="hero">
-    <!-- Logo-Box -->
-    <div class="logo-box">
-        <img src="img/logo/MelanieMichelLoge.png" alt="Melanie Michel Fotografie Logo">
-    </div>
+    <!-- Logo -->
+    <a class="hero__logo" href="#top" aria-label="Startseite">
+        <img
+                src="img/logo/MelanieMichelLoge.png"
+                alt="Logo: Melanie Michel Fotografie"
+                loading="eager"
+                decoding="async"
+        />
+    </a>
 
-    <!-- Inhalt im Bild -->
-    <div class="hero-content">
-        <blockquote class="hero-quote">
-            „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen – schlicht und
-            natürlich neue Perspektiven eröffnen.“
+    <!-- Inhalt -->
+    <div class="hero__content">
+        <blockquote class="hero__quote">
+            „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen –
+            schlicht und natürlich neue Perspektiven eröffnen.“
         </blockquote>
-
-        <!-- Anfrage Button -->
-        <div class="hero-ctas">
-            <a href="#about" class="btn btn-neon btn-request">ANFRAGE</a>
-        </div>
     </div>
+
+    <!-- Anfrage-Button -->
+    <a href="#about" class="btn btn--primary btn--floating">ANFRAGE</a>
 </header>
 
-<!-- About -->
-<section id="about" class="about">
-    <div class="about-text">
-        <h2>MEIN LEBEN IM KURZFORMAT</h2>
-        <p>
-            Geboren im Zürcher Oberland, lebe ich seit einiger Jahren in Zürich. Neben meiner Arbeit
-            als Sozialpädagogin begleite ich punktuell Hochzeiten, persönliche Shootings und kleine Events.
-            Die Fotografie begleitet mich schon lange – sie wurde für mich während des Studiums zum
-            Sozialarbeiterin zum kreativen Ausgleich und ist heute ein wichtiger Teil meines beruflichen Lebens.
-        </p>
-        <p>
-            Bei Aufträgen halte ich mich bewusst im Hintergrund, um echte Stimmungen mit Ruhe und Achtsamkeit
-            einzufangen. Mein Stil ist natürlich, ehrlich und nah am Menschen – inspiriert durch Licht,
-            Atmosphären und Zwischentöne. Die Fotografie in der Natur schafft für mich und meine Auftraggeber
-            visuell ausdrucksstarke Momente.
-        </p>
-    </div>
-    <div class="about-img">
-        <img src="img/selfportrait/Bilder%20für%20eigenes%20Portrait.jpg" alt="Fotografin Melanie Michel">
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="section section--accent">
+    <div class="container split">
+        <div class="split__item">
+            <h2 class="h2">Mein Leben im Kurzformat</h2>
+            <p>
+                Geboren im Zürcher Oberland, lebe ich seit einiger Jahren in Zürich. Neben
+                meiner Arbeit als Sozialpädagogin begleite ich punktuell Hochzeiten,
+                persönliche Shootings und kleine Events. Die Fotografie begleitet mich schon
+                lange – sie wurde während des Studiums zum kreativen Ausgleich und ist heute
+                ein wichtiger Teil meines beruflichen Lebens.
+            </p>
+            <p>
+                Bei Aufträgen halte ich mich bewusst im Hintergrund, um echte Stimmungen mit
+                Ruhe und Achtsamkeit einzufangen. Mein Stil ist natürlich, ehrlich und nah
+                am Menschen – inspiriert durch Licht, Atmosphären und Zwischentöne. Die
+                Fotografie in der Natur schafft für mich und meine Auftraggeber visuell
+                ausdrucksstarke Momente.
+            </p>
+        </div>
+
+        <div class="split__item">
+            <img
+                    src="img/selfportrait/Bilder%20für%20eigenes%20Portrait.jpg"
+                    alt="Fotografin Melanie Michel – Portrait"
+                    class="media"
+                    loading="lazy"
+                    decoding="async"
+            />
+        </div>
     </div>
 </section>
 
-<!-- Angebote -->
-<section id="offers" class="offers">
-    <h2>Portfolio</h2>
-    <div class="offer-grid">
-        <div class="offer">
-            <img src="img/portfolio/wedding/iconPic/Icon%20Bild%20Hochzeiten.jpg" alt="Hochzeit">
-            <h3>HOCHZEIT</h3>
-            <p>An dieser Stelle kannst du genauer beschreiben, was für Dienstleistungen du anbietest.</p>
-        </div>
-        <div class="offer">
-            <img src="img/portfolio/event/iconPic/MelanieMichelFotografie%20(2%20von%2096).jpg" alt="Event">
-            <h3>EVENT</h3>
-            <p>An dieser Stelle kannst du genauer beschreiben, was für Dienstleistungen du anbietest.</p>
-        </div>
-        <div class="offer">
-            <img src="img/portfolio/shooting/iconPic/Shooting%20Fay_1.jpg" alt="Shooting">
-            <h3>SHOOTING</h3>
-            <p>An dieser Stelle kannst du genauer beschreiben, was für Dienstleistungen du anbietest.</p>
+<!-- ===================== PORTFOLIO ===================== -->
+<section id="offers" class="section">
+    <div class="container">
+        <h2 class="h2 h2--inline">Portfolio</h2>
+
+        <div class="cards">
+            <article class="card">
+                <img
+                        src="img/portfolio/wedding/iconPic/Icon%20Bild%20Hochzeiten.jpg"
+                        alt="Portfolio-Kachel: Hochzeit"
+                        class="card__img card__img--focus-left"
+                        loading="lazy"
+                        decoding="async"
+                />
+                <h3 class="card__title">Hochzeiten</h3>
+                <p class="card__text">Beschreibe hier deine Leistungen für Hochzeiten.</p>
+            </article>
+
+            <article class="card">
+                <img
+                        src="img/portfolio/event/iconPic/MelanieMichelFotografie%20(2%20von%2096).jpg"
+                        alt="Portfolio-Kachel: Event"
+                        class="card__img"
+                        loading="lazy"
+                        decoding="async"
+                />
+                <h3 class="card__title">Events</h3>
+                <p class="card__text">Beschreibe hier deine Leistungen für Events.</p>
+            </article>
+
+            <article class="card">
+                <img
+                        src="img/portfolio/shooting/iconPic/Shooting%20Fay_1.jpg"
+                        alt="Portfolio-Kachel: Shooting"
+                        class="card__img"
+                        loading="lazy"
+                        decoding="async"
+                />
+                <h3 class="card__title">Shootings</h3>
+                <p class="card__text">Beschreibe hier deine Leistungen für Shootings.</p>
+            </article>
         </div>
     </div>
 </section>
