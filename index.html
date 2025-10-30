@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/styles.css" />
 
     <!-- Preload hero image for faster first paint -->
-    <link rel="preload" as="image" href="img/frontpage/MelanieMichelFotografie-77.webp" />
+    <link rel="preload" as="image" href="img/frontpage/frontpage.webp" />
 </head>
 <body>
 
@@ -33,7 +33,7 @@
     <header class="hero hero--sticky" id="hero" data-theme="dark">
         <!-- Logo -->
         <a class="hero__logo" href="#top" aria-label="Startseite">
-            <img src="img/logo/MelanieMichelLoge.webp"
+            <img src="img/logo/MelanieMichelLogo.webp"
                  alt="Logo: Melanie Michel Fotografie"
                  loading="eager" decoding="async" />
         </a>
@@ -58,7 +58,7 @@
         <div class="split__item">
             <h2 class="h2 reveal">Mein Leben im Kurzformat</h2>
             <p class="reveal">
-                Geboren im Zürcher Oberland, lebe ich seit einiger Jahren in Zürich. Neben
+                Geboren im Zürcher Oberland, lebe ich seit einigen Jahren in Zürich. Neben
                 meiner Arbeit als Sozialpädagogin begleite ich punktuell Hochzeiten,
                 persönliche Shootings und kleine Events. Die Fotografie begleitet mich schon
                 lange – sie wurde während des Studiums zum kreativen Ausgleich und ist heute
@@ -74,7 +74,7 @@
         </div>
 
         <div class="split__item">
-            <img src="img/selfportrait/Bilder%20fu%CC%88r%20eigenes%20Portrait.webp"
+            <img src="img/selfportrait/selfportrait.webp"
                  alt="Fotografin Melanie Michel – Portrait"
                  class="media reveal-right"
                  loading="lazy" decoding="async" />
@@ -89,30 +89,27 @@
 
         <div class="cards">
             <article class="card">
-                <img src="img/portfolio/wedding/iconPic/Icon%20Bild%20Hochzeiten.webp"
+                <img src="img/portfolio/wedding/iconPic/wedding_icon.webp"
                      alt="Portfolio-Kachel: Hochzeit"
                      class="card__img card__img--focus-left"
                      loading="lazy" decoding="async" />
                 <h3 class="card__title">Hochzeiten</h3>
-                <p class="card__text">Beschreibe hier deine Leistungen für Hochzeiten.</p>
             </article>
 
             <article class="card">
-                <img src="img/portfolio/event/iconPic/MelanieMichelFotografie%20(2%20von%2096).webp"
+                <img src="img/portfolio/event/iconPic/event_icon.webp"
                      alt="Portfolio-Kachel: Event"
                      class="card__img"
                      loading="lazy" decoding="async" />
                 <h3 class="card__title">Events</h3>
-                <p class="card__text">Beschreibe hier deine Leistungen für Events.</p>
             </article>
 
             <article class="card">
-                <img src="img/portfolio/shooting/iconPic/Shooting%20Fay_1.webp"
+                <img src="img/portfolio/shooting/iconPic/shooting_icon.webp"
                      alt="Portfolio-Kachel: Shooting"
                      class="card__img"
                      loading="lazy" decoding="async" />
                 <h3 class="card__title">Shootings</h3>
-                <p class="card__text">Beschreibe hier deine Leistungen für Shootings.</p>
             </article>
         </div>
     </div>
@@ -125,13 +122,94 @@
             <h2 class="discover__title">ENTDECKE MEINE FOTOS</h2>
         </div>
         <div class="discover__image">
-            <img src="img/discover/Melanie Michel Fotografie (7 von 50).webp"
+            <img src="img/portfolio/discover/discover.webp"
                  alt="Entdecke meine Fotos – Beispielportrait"
                  loading="lazy" decoding="async" />
         </div>
     </div>
 </section>
 
+<!-- ===================== GALLERY (One-Pager) ===================== -->
+<section id="gallery" class="section" data-theme="dark">
+    <div class="container">
+
+        <!-- On-page anchor chips -->
+        <nav class="gallery-toc" aria-label="Abschnitte">
+            <a class="gallery-toc__link" href="#gallery-wedding">Hochzeiten</a>
+            <a class="gallery-toc__link" href="#gallery-event">Events</a>
+            <a class="gallery-toc__link" href="#gallery-shooting">Shootings</a>
+        </nav>
+    </div>
+
+    <!-- Weddings -->
+    <div class="container">
+        <h3 id="gallery-wedding" class="gallery__heading">Hochzeiten</h3>
+        <div class="gallery gallery--grid">
+            <figure class="gallery__item"><img src="img/gallery/wedding-01.webp" alt="Hochzeit 01" loading="lazy" decoding="async"></figure>
+            <figure class="gallery__item"><img src="img/gallery/wedding-02.webp" alt="Hochzeit 02" loading="lazy" decoding="async"></figure>
+            <!-- add more -->
+        </div>
+    </div>
+
+    <!-- Events -->
+    <div class="container">
+        <h3 id="gallery-event" class="gallery__heading">Events</h3>
+        <div class="gallery gallery--grid">
+            <figure class="gallery__item"><img src="img/gallery/event-01.webp" alt="Event 01" loading="lazy" decoding="async"></figure>
+            <figure class="gallery__item"><img src="img/gallery/event-02.webp" alt="Event 02" loading="lazy" decoding="async"></figure>
+        </div>
+    </div>
+
+    <!-- Shootings -->
+    <div class="container">
+        <h3 id="gallery-shooting" class="gallery__heading">Shootings</h3>
+        <div class="gallery gallery--grid">
+            <figure class="gallery__item"><img src="img/gallery/shooting-01.webp" alt="Shooting 01" loading="lazy" decoding="async"></figure>
+            <figure class="gallery__item"><img src="img/gallery/shooting-02.webp" alt="Shooting 02" loading="lazy" decoding="async"></figure>
+        </div>
+    </div>
+
+    <!-- Lightweight lightbox -->
+    <dialog class="lightbox" id="lightbox">
+        <button class="lightbox__close" aria-label="Schliessen">×</button>
+        <img class="lightbox__img" alt="">
+    </dialog>
+</section>
+
+<!-- ===================== CTA / READY SECTION ===================== -->
+<section id="ready" class="section cta-section" data-theme="dark">
+    <div class="cta__media">
+        <!-- Replace with your image -->
+        <img src="img/cta/ready.webp"
+             alt="Fotoprint auf Regal"
+             loading="lazy" decoding="async">
+    </div>
+
+    <aside class="cta__panel">
+        <div class="cta__copy">
+            <h2 class="cta__title">Bereit für dein nächstes Foto?</h2>
+            <p class="cta__text">
+                Schreib mir, erzähl mir von deinen Ideen / deinem Anlass und lass uns
+                zusammen deine Fotostory kreieren.
+            </p>
+
+            <p class="cta__meta">
+                Melanie Michel<br>
+                8047 Zürich
+            </p>
+        </div>
+
+        <div class="cta__actions">
+            <!-- Instagram button (link your profile) -->
+            <a class="cta__social" href="https://www.instagram.com/_melaniemichelfotografie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
+                <!-- Inline SVG icon -->
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm6.25-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z" fill="currentColor"/>
+                </svg>
+            </a>
+        </div>
+    </aside>
+</section>
 
 <!-- JS (placed last, deferred in markup for FCP; keeps variables synced with scroll) -->
 <script src="js/app.js" defer></script>

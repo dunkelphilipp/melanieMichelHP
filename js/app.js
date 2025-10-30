@@ -89,3 +89,30 @@ const menuItems = document.querySelectorAll('.menu-item');
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
 })();
+
+// One-pager Gallery Lightbox
+(function () {
+    const gridContainers = document.querySelectorAll('.gallery--grid');
+    const dlg = document.getElementById('lightbox');
+    const dlgImg = dlg?.querySelector('.lightbox__img');
+    const closeBtn = dlg?.querySelector('.lightbox__close');
+    if (!gridContainers.length || !dlg || !dlgImg) return;
+
+    gridContainers.forEach(grid => {
+        grid.addEventListener('click', (e) => {
+            const img = e.target.closest('.gallery__item img');
+            if (!img) return;
+            dlgImg.src = img.currentSrc || img.src;
+            dlgImg.alt = img.alt || '';
+            dlg.showModal();
+        });
+    });
+
+    closeBtn?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => {
+        const r = dlgImg.getBoundingClientRect();
+        const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        if (!inside) dlg.close();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && dlg.open) dlg.close(); });
+})();
