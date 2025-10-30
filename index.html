@@ -1,50 +1,70 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="no-js">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Melanie Michel Fotografie</title>
+
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Preload hero image for faster first paint -->
+    <link rel="preload" as="image" href="img/frontpage/MelanieMichelFotografie-77.webp" />
 </head>
 <body>
 
+<!-- ===================== Menu ===================== -->
+<div class="menu-overlay">
+    <nav class="menu-items">
+        <a href="#about" class="menu-item">Über mich</a>
+        <a href="#offers" class="menu-item">Portfolio</a>
+    </nav>
+</div>
+
+<button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Menü öffnen">
+    <span class="menu-toggle__bar"></span>
+    <span class="menu-toggle__bar"></span>
+    <span class="menu-toggle__bar"></span>
+</button>
+
 <!-- ===================== HERO ===================== -->
-<header class="hero">
-    <!-- Logo -->
-    <a class="hero__logo" href="#top" aria-label="Startseite">
-        <img
-                src="img/logo/MelanieMichelLoge.png"
-                alt="Logo: Melanie Michel Fotografie"
-                loading="eager"
-                decoding="async"
-        />
-    </a>
+<section class="hero-stage">
+    <!-- Sticky hero keeps the background visible while content zooms/fades out -->
+    <header class="hero hero--sticky" id="hero" data-theme="dark">
+        <!-- Logo -->
+        <a class="hero__logo" href="#top" aria-label="Startseite">
+            <img src="img/logo/MelanieMichelLoge.webp"
+                 alt="Logo: Melanie Michel Fotografie"
+                 loading="eager" decoding="async" />
+        </a>
 
-    <!-- Inhalt -->
-    <div class="hero__content">
-        <blockquote class="hero__quote">
-            „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen –
-            schlicht und natürlich neue Perspektiven eröffnen.“
-        </blockquote>
-    </div>
+        <!-- Quote / Claim -->
+        <div class="hero__content">
+            <blockquote class="hero__quote">
+                „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen –
+                schlicht und natürlich neue Perspektiven eröffnen.“
+            </blockquote>
+        </div>
 
-    <!-- Anfrage-Button -->
-    <a href="#about" class="btn btn--primary btn--floating">ANFRAGE</a>
-</header>
+        <!-- CTA scrolls to About (kept floating on larger screens) -->
+        <a href="#about" class="btn btn--primary btn--floating">ANFRAGE</a>
+    </header>
+</section>
+
 
 <!-- ===================== ABOUT ===================== -->
-<section id="about" class="section section--accent">
+<section id="about" class="section section--accent" data-theme="accent">
     <div class="container split">
         <div class="split__item">
-            <h2 class="h2">Mein Leben im Kurzformat</h2>
-            <p>
+            <h2 class="h2 reveal">Mein Leben im Kurzformat</h2>
+            <p class="reveal">
                 Geboren im Zürcher Oberland, lebe ich seit einiger Jahren in Zürich. Neben
                 meiner Arbeit als Sozialpädagogin begleite ich punktuell Hochzeiten,
                 persönliche Shootings und kleine Events. Die Fotografie begleitet mich schon
                 lange – sie wurde während des Studiums zum kreativen Ausgleich und ist heute
                 ein wichtiger Teil meines beruflichen Lebens.
             </p>
-            <p>
+            <p class="reveal">
                 Bei Aufträgen halte ich mich bewusst im Hintergrund, um echte Stimmungen mit
                 Ruhe und Achtsamkeit einzufangen. Mein Stil ist natürlich, ehrlich und nah
                 am Menschen – inspiriert durch Licht, Atmosphären und Zwischentöne. Die
@@ -54,55 +74,43 @@
         </div>
 
         <div class="split__item">
-            <img
-                    src="img/selfportrait/Bilder%20für%20eigenes%20Portrait.jpg"
-                    alt="Fotografin Melanie Michel – Portrait"
-                    class="media"
-                    loading="lazy"
-                    decoding="async"
-            />
+            <img src="img/selfportrait/Bilder%20fu%CC%88r%20eigenes%20Portrait.webp"
+                 alt="Fotografin Melanie Michel – Portrait"
+                 class="media reveal-right"
+                 loading="lazy" decoding="async" />
         </div>
     </div>
 </section>
 
-<!-- ===================== PORTFOLIO ===================== -->
-<section id="offers" class="section">
+<!-- ===================== OFFER ===================== -->
+<section id="offers" class="section" data-theme="dark">
     <div class="container">
-        <h2 class="h2 h2--inline">Portfolio</h2>
+        <h2 class="h2 h2--inline">Angebote</h2>
 
         <div class="cards">
             <article class="card">
-                <img
-                        src="img/portfolio/wedding/iconPic/Icon%20Bild%20Hochzeiten.jpg"
-                        alt="Portfolio-Kachel: Hochzeit"
-                        class="card__img card__img--focus-left"
-                        loading="lazy"
-                        decoding="async"
-                />
+                <img src="img/portfolio/wedding/iconPic/Icon%20Bild%20Hochzeiten.webp"
+                     alt="Portfolio-Kachel: Hochzeit"
+                     class="card__img card__img--focus-left"
+                     loading="lazy" decoding="async" />
                 <h3 class="card__title">Hochzeiten</h3>
                 <p class="card__text">Beschreibe hier deine Leistungen für Hochzeiten.</p>
             </article>
 
             <article class="card">
-                <img
-                        src="img/portfolio/event/iconPic/MelanieMichelFotografie%20(2%20von%2096).jpg"
-                        alt="Portfolio-Kachel: Event"
-                        class="card__img"
-                        loading="lazy"
-                        decoding="async"
-                />
+                <img src="img/portfolio/event/iconPic/MelanieMichelFotografie%20(2%20von%2096).webp"
+                     alt="Portfolio-Kachel: Event"
+                     class="card__img"
+                     loading="lazy" decoding="async" />
                 <h3 class="card__title">Events</h3>
                 <p class="card__text">Beschreibe hier deine Leistungen für Events.</p>
             </article>
 
             <article class="card">
-                <img
-                        src="img/portfolio/shooting/iconPic/Shooting%20Fay_1.jpg"
-                        alt="Portfolio-Kachel: Shooting"
-                        class="card__img"
-                        loading="lazy"
-                        decoding="async"
-                />
+                <img src="img/portfolio/shooting/iconPic/Shooting%20Fay_1.webp"
+                     alt="Portfolio-Kachel: Shooting"
+                     class="card__img"
+                     loading="lazy" decoding="async" />
                 <h3 class="card__title">Shootings</h3>
                 <p class="card__text">Beschreibe hier deine Leistungen für Shootings.</p>
             </article>
@@ -110,5 +118,22 @@
     </div>
 </section>
 
+<!-- ===================== DISCOVER ===================== -->
+<section id="discover" class="section discover-section" data-theme="dark">
+    <div class="discover__container">
+        <div class="discover__text">
+            <h2 class="discover__title">ENTDECKE MEINE FOTOS</h2>
+        </div>
+        <div class="discover__image">
+            <img src="img/discover/Melanie Michel Fotografie (7 von 50).webp"
+                 alt="Entdecke meine Fotos – Beispielportrait"
+                 loading="lazy" decoding="async" />
+        </div>
+    </div>
+</section>
+
+
+<!-- JS (placed last, deferred in markup for FCP; keeps variables synced with scroll) -->
+<script src="js/app.js" defer></script>
 </body>
 </html>
