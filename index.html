@@ -129,11 +129,10 @@
     </div>
 </section>
 
-<!-- ===================== GALLERY (One-Pager) ===================== -->
+<!-- ===================== GALLERY (NEW 4-COLUMN GRID V4 - Load Optimised) ===================== -->
 <section id="gallery" class="section" data-theme="dark">
     <div class="container">
-
-        <!-- On-page anchor chips -->
+        <!-- On-page anchor chips (unverändert) -->
         <nav class="gallery-toc" aria-label="Abschnitte">
             <a class="gallery-toc__link" href="#gallery-wedding">Hochzeiten</a>
             <a class="gallery-toc__link" href="#gallery-event">Events</a>
@@ -141,46 +140,160 @@
         </nav>
     </div>
 
-    <!-- Weddings -->
+    <!-- Weddings (4-Column Layout from HPGrid.xlsx - Sheet2.csv) -->
     <div class="container">
         <h3 id="gallery-wedding" class="gallery__heading">Hochzeiten</h3>
-        <div class="gallery gallery--grid">
-            <figure class="gallery__item"><img src="img/gallery/wedding-01.webp" alt="Hochzeit 01" loading="lazy" decoding="async"></figure>
-            <figure class="gallery__item"><img src="img/gallery/wedding-02.webp" alt="Hochzeit 02" loading="lazy" decoding="async"></figure>
-            <!-- add more -->
+
+        <div class="gallery gallery--complex-grid">
+            <!-- H1 (v2) - Load immediately -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit1.webp" alt="Hochzeit 1" decoding="async">
+            </figure>
+            <!-- H2 (v2) - Load immediately -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit2.webp" alt="Hochzeit 2" decoding="async">
+            </figure>
+            <!-- H3 (h2, v3) - Load immediately -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit3.webp" alt="Hochzeit 3" decoding="async">
+            </figure>
+            <!-- H4 (h2, v3) - Load immediately -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit4.webp" alt="Hochzeit 4" decoding="async">
+            </figure>
+            <!-- H5 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit5.webp" alt="Hochzeit 5" loading="lazy" decoding="async">
+            </figure>
+            <!-- H6 (h4, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-4 item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit6.webp" alt="Hochzeit 6" loading="lazy" decoding="async">
+            </figure>
+            <!-- H7 (v2) - Lazy load -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit7.webp" alt="Hochzeit 7" loading="lazy" decoding="async">
+            </figure>
+            <!-- H8 (h3, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-3 item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit8.webp" alt="Hochzeit 8" loading="lazy" decoding="async">
+            </figure>
+            <!-- H9 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit9.webp" alt="Hochzeit 9" loading="lazy" decoding="async">
+            </figure>
+            <!-- H10 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit10.webp" alt="Hochzeit 10" loading="lazy" decoding="async">
+            </figure>
+            <!-- H11 (v2) - Lazy load -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit11.webp" alt="Hochzeit 11" loading="lazy" decoding="async">
+            </figure>
+            <!-- H12 (v2) - Lazy load -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit12.webp" alt="Hochzeit 12" loading="lazy" decoding="async">
+            </figure>
+            <!-- H13 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit13.webp" alt="Hochzeit 13" loading="lazy" decoding="async">
+            </figure>
+            <!-- H14 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit14.webp" alt="Hochzeit 14" loading="lazy" decoding="async">
+            </figure>
+            <!-- H15 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/wedding/weddingGal/Hochzeit15.webp" alt="Hochzeit 15" loading="lazy" decoding="async">
+            </figure>
         </div>
     </div>
 
-    <!-- Events -->
+
+    <!-- Events (4-Column Layout from HPGrid.xlsx - Sheet2.csv) -->
     <div class="container">
         <h3 id="gallery-event" class="gallery__heading">Events</h3>
-        <div class="gallery gallery--grid">
-            <figure class="gallery__item"><img src="img/gallery/event-01.webp" alt="Event 01" loading="lazy" decoding="async"></figure>
-            <figure class="gallery__item"><img src="img/gallery/event-02.webp" alt="Event 02" loading="lazy" decoding="async"></figure>
+
+        <div class="gallery gallery--complex-grid">
+            <!-- E1 (v2) - Lazy load -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/event/eventGal/Event1.webp" alt="Event 1" loading="lazy" decoding="async">
+            </figure>
+            <!-- E2 (v2) - Lazy load -->
+            <figure class="gallery__item item-v-span-2">
+                <img src="img/portfolio/event/eventGal/Event2.webp" alt="Event 2" loading="lazy" decoding="async">
+            </figure>
+            <!-- E3 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/event/eventGal/Event3.webp" alt="Event 3" loading="lazy" decoding="async">
+            </figure>
+            <!-- E4 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/event/eventGal/Event4.webp" alt="Event 4" loading="lazy" decoding="async">
+            </figure>
+            <!-- E5 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/event/eventGal/Event5.webp" alt="Event 5" loading="lazy" decoding="async">
+            </figure>
+            <!-- E6 (h4, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-4 item-v-span-2">
+                <img src="img/portfolio/event/eventGal/Event6.webp" alt="Event 6" loading="lazy" decoding="async">
+            </figure>
         </div>
     </div>
 
-    <!-- Shootings -->
+    <!-- Shootings (4-Column Layout from HPGrid.xlsx - Sheet2.csv) -->
     <div class="container">
         <h3 id="gallery-shooting" class="gallery__heading">Shootings</h3>
-        <div class="gallery gallery--grid">
-            <figure class="gallery__item"><img src="img/gallery/shooting-01.webp" alt="Shooting 01" loading="lazy" decoding="async"></figure>
-            <figure class="gallery__item"><img src="img/gallery/shooting-02.webp" alt="Shooting 02" loading="lazy" decoding="async"></figure>
+
+        <div class="gallery gallery--complex-grid">
+            <!-- S1 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/shooting/shootingGal/Shooting1.webp" alt="Shooting 1" loading="lazy" decoding="async">
+            </figure>
+            <!-- S2 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/shooting/shootingGal/Shooting2.webp" alt="Shooting 2" loading="lazy" decoding="async">
+            </figure>
+            <!-- S3 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/shooting/shootingGal/Shooting3.webp" alt="Shooting 3" loading="lazy" decoding="async">
+            </figure>
+            <!-- S4 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/shooting/shootingGal/Shooting4.webp" alt="Shooting 4" loading="lazy" decoding="async">
+            </figure>
+            <!-- S5 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/shooting/shootingGal/Shooting5.webp" alt="Shooting 5" loading="lazy" decoding="async">
+            </figure>
+            <!-- S6 (h2, v3) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-3">
+                <img src="img/portfolio/shooting/shootingGal/Shooting6.webp" alt="Shooting 6" loading="lazy" decoding="async">
+            </figure>
+            <!-- S7 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/shooting/shootingGal/Shooting7.webp" alt="Shooting 7" loading="lazy" decoding="async">
+            </figure>
+            <!-- S8 (h2, v2) - Lazy load -->
+            <figure class="gallery__item item-h-span-2 item-v-span-2">
+                <img src="img/portfolio/shooting/shootingGal/Shooting8.webp" alt="Shooting 8" loading="lazy" decoding="async">
+            </figure>
         </div>
     </div>
 
-    <!-- Lightweight lightbox -->
+    <!-- Lightweight lightbox (Unverändert) -->
     <dialog class="lightbox" id="lightbox">
         <button class="lightbox__close" aria-label="Schliessen">×</button>
         <img class="lightbox__img" alt="">
     </dialog>
 </section>
+<!-- ===================== END GALLERY (NEW) ===================== -->
 
 <!-- ===================== CTA / READY SECTION ===================== -->
 <section id="ready" class="section cta-section" data-theme="dark">
     <div class="cta__media">
         <!-- Replace with your image -->
-        <img src="img/cta/ready.webp"
+        <img src="img/cta/cta1.webp"
              alt="Fotoprint auf Regal"
              loading="lazy" decoding="async">
     </div>
@@ -200,7 +313,7 @@
         </div>
 
         <div class="cta__actions">
-            <!-- Instagram button (link your profile) -->
+            <!-- Instagram button -->
             <a class="cta__social" href="https://www.instagram.com/_melaniemichelfotografie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
                 <!-- Inline SVG icon -->
                 <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">

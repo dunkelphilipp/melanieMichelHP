@@ -423,51 +423,141 @@ body {
     }
 }
 
-/* One-pager gallery */
-.gallery-toc {
-    display: flex; gap: 10px; margin: clamp(10px, 2vw, 20px) 0; flex-wrap: wrap;
+/* ======================================================
+   New Complex Gallery Grid (4-COLUMN)
+   ====================================================== */
+
+/* 1. Das Grid-Container-Element */
+.gallery--complex-grid {
+    display: grid;
+    /* 4-Spalten-Layout (NEU) */
+    grid-template-columns: repeat(4, 1fr);
+    /* Basis-Höhe der Zeilen (unverändert) */
+    grid-auto-rows: clamp(180px, 22vw, 280px);
+    /* "dense" füllt Lücken (unverändert) */
+    grid-auto-flow: dense;
+    gap: clamp(8px, 1.2vw, 16px);
+}
+
+/* 2. Die Grid-Items (figure) (unverändert) */
+.gallery--complex-grid .gallery__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #111;
+    margin: 0;
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+/* 3. Die Bilder in den Items (unverändert) */
+.gallery--complex-grid .gallery__item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .35s ease;
+}
+
+.gallery--complex-grid .gallery__item:hover img {
+    transform: scale(1.03);
+}
+
+/* 4. Utility-Klassen für Spans (aktualisiert) */
+
+/* Spalten-Span */
+.gallery--complex-grid .item-h-span-2 {
+    grid-column: span 2;
+}
+.gallery--complex-grid .item-h-span-3 {
+    grid-column: span 3;
+}
+.gallery--complex-grid .item-h-span-4 {
+    grid-column: span 4;
+}
+
+/* Zeilen-Span */
+.gallery--complex-grid .item-v-span-2 {
+    grid-row: span 2;
+}
+.gallery--complex-grid .item-v-span-3 {
+    grid-row: span 3;
+}
+
+
+/* 5. Responsive Anpassung (aktualisiert) */
+@media (max-width: 1000px) {
+    /* Auf Tablets zu 3 Spalten wechseln */
+    .gallery--complex-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: clamp(180px, 25vw, 300px);
+    }
+
+    /* Items, die 4 Spalten hatten, auf 3 begrenzen */
+    .gallery--complex-grid .item-h-span-4 {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Auf kleineren Tablets zu 2 Spalten wechseln */
+    .gallery--complex-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: clamp(180px, 30vw, 320px);
+    }
+
+    /* Items, die 3+ Spalten hatten, auf 2 begrenzen */
+    .gallery--complex-grid .item-h-span-3,
+    .gallery--complex-grid .item-h-span-4 {
+        grid-column: span 2;
+    }
+}
+
+
+@media (max-width: 480px) {
+    /* Auf Mobilgeräten zu 1 Spalte wechseln */
+    .gallery--complex-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        gap: 12px;
+    }
+
+    /* Alle Spans auf 1 zurücksetzen */
+    .gallery--complex-grid .item-h-span-2,
+    .gallery--complex-grid .item-h-span-3,
+    .gallery--complex-grid .item-h-span-4,
+    .gallery--complex-grid .item-v-span-2,
+    .gallery--complex-grid .item-v-span-3 {
+        grid-column: span 1;
+        grid-row: span 1;
+        aspect-ratio: 4 / 5;
+    }
+
+    .gallery--complex-grid .gallery__item img {
+        aspect-ratio: unset;
+    }
 }
 .gallery-toc__link {
-    text-decoration: none; background: #111; color: var(--white);
-    border: 1px solid #222; border-radius: 999px; padding: .5rem .9rem;
+    display: inline-block;
+    padding: 8px 24px; /* Added more horizontal padding for a "longer" look */
+    border: 2px solid var(--black); /* Set border to black */
+    background: var(--black); /* Set background to black */
+    border-radius: 999px; /* Fully rounded edges */
+    color: var(--white); /* Text color white for contrast */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
-.gallery-toc__link:hover { background: var(--neon); color: var(--black); border-color: var(--neon); }
-
+.gallery-toc__link:hover {
+    background: var(--neon);
+    color: var(--black);
+    border-color: var(--neon);
+}
 .gallery__heading {
-    margin: clamp(20px, 4vw, 36px) 0 clamp(10px, 2vw, 16px);
-    font-size: clamp(1.1rem, 1rem + 1vw, 1.6rem);
-    font-weight: 900; text-transform: uppercase;
-    display: inline-block; background: var(--neon); color: var(--black);
-    padding: .25rem .6rem; border-radius: .4rem;
-}
-
-.gallery--grid {
-    display: grid; gap: clamp(8px, 1.2vw, 16px);
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-}
-@media (min-width: 900px) {
-    .gallery--grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-}
-
-.gallery__item { position: relative; overflow: hidden; border-radius: 10px; background: #111; }
-.gallery__item img {
-    width: 100%; height: 100%; display: block;
-    aspect-ratio: 4 / 5; object-fit: cover; transition: transform .35s ease;
-}
-.gallery__item:hover img { transform: scale(1.03); }
-
-/* Lightbox */
-.lightbox { inset: 0; margin: auto; padding: 0; border: none; width: min(92vw, 1200px); background: transparent; }
-.lightbox::backdrop { background: rgba(0,0,0,.8); }
-.lightbox__img { width: 100%; height: auto; display: block; border-radius: 8px; }
-.lightbox__close {
-    position: absolute; top: 10px; right: 10px; z-index: 2;
-    background: var(--neon); color: var(--black); border: none; border-radius: 999px;
-    width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer;
-}
-
-/* Optional: smooth hash scrolling */
-html { scroll-behavior: smooth; }
+    color: var(--black); /* Changed to black */
+    font-size: clamp(1.5rem, 2vw, 4rem); /* Made font size larger */
+    font-weight: 600;
+    text-transform: uppercase;
 
 /* ===== CTA / READY SECTION ===== */
 .cta-section {
