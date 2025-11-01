@@ -17,6 +17,7 @@ const menuItems = document.querySelectorAll('.menu-item');
     const hero = document.getElementById('hero');
     const stage = document.querySelector('.hero-stage'); // <- NEU
     const about = document.getElementById('about');
+    const offers = document.getElementById('offers');
 
     // Menubar
     menuToggle.addEventListener('click', () => {
@@ -35,7 +36,7 @@ const menuItems = document.querySelectorAll('.menu-item');
     });
 
     // Guard if elements are missing
-    if (!hero || !about) return;
+    if (!hero || !about || !stage || !offers) return;
 
     // Helper: clamp to [0,1]
     const clamp01 = (v) => Math.max(0, Math.min(1, v));
