@@ -16,6 +16,7 @@
     --heroProgress: 0;   /* 0..1 → zoom out & fade hero content */
     --aboutTheme: 0;     /* 0..1 → body bg black→yellow */
     --revealProgress: 0; /* 0..1 → About content fly in */
+    --cardProgress: 0;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -558,6 +559,7 @@ body {
     font-size: clamp(1.5rem, 2vw, 4rem); /* Made font size larger */
     font-weight: 600;
     text-transform: uppercase;
+}
 
 /* ===== CTA / READY SECTION ===== */
 .cta-section {
@@ -586,7 +588,7 @@ body {
 }
 
 .cta__title {
-    margin: 0 0 .6rem 0;
+    margin: 0 0.6rem 0;
     font-size: clamp(1.6rem, 1rem + 3vw, 3rem);
     font-weight: 900;
     text-transform: uppercase;
@@ -643,5 +645,65 @@ body {
     .cta__actions {
         justify-content: flex-start;
         margin-top: 1rem;
+    }
+}
+
+.cta__email-link {
+    display: inline-block;
+    color: var(--black);
+    font-size: 1.15rem; /* Make it prominent */
+    font-weight: 800;
+    text-decoration: none; /* Remove default underline */
+    border-bottom: 3px solid var(--black); /* Custom underline */
+    margin-top: 0; /* <<< REMOVED the '1rem' top margin */
+    margin-bottom: 1.5rem;
+    transition: opacity 0.2s ease;
+}
+
+/* ======================================================
+   Footer (Legal Links)
+   ====================================================== */
+.footer {
+    padding: clamp(24px, 4vw, 32px) 0;
+    background: var(--black);
+    color: var(--white); /* Changed from gray for higher contrast */
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.1); /* Subtle separator */
+}
+
+.footer__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+.footer__links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer__link {
+    color: var(--white); /* Changed from gray */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer__link:hover {
+    color: var(--gray); /* Changed from white to provide hover effect */
+    text-decoration: underline;
+}
+
+.footer__copy p {
+    margin: 0;
+    opacity: 0.7;
+}
+
+/* On larger screens, put links and copyright side-by-side */
+@media (min-width: 768px) {
+    .footer__content {
+        flex-direction: row;
+        justify-content: space-between;
     }
 }
