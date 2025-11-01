@@ -16,9 +16,17 @@
 <!-- ===================== Menu ===================== -->
 <div class="menu-overlay">
     <nav class="menu-items">
+        <a href="#hero" class="menu-item">Home</a>
         <a href="#about" class="menu-item">Über mich</a>
-        <a href="#offers" class="menu-item">Portfolio</a>
+        <a href="#offers" class="menu-item">Angebote</a>
+        <a href="#gallery" class="menu-item">Portfolio</a>
+        <a href="#ready" class="menu-item">Anfrage</a>
     </nav>
+
+    <div class="menu-legal">
+        <a href="impressum.html" class="menu-legal__link">Impressum</a>
+        <a href="datenschutz.html" class="menu-legal__link">Datenschutz</a>
+    </div>
 </div>
 
 <button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Menü öffnen">
@@ -47,7 +55,7 @@
         </div>
 
         <!-- CTA scrolls to About (kept floating on larger screens) -->
-        <a href="#about" class="btn btn--primary btn--floating">ANFRAGE</a>
+        <a href="#ready" class="btn btn--primary btn--floating">ANFRAGE</a>
     </header>
 </section>
 
@@ -83,7 +91,7 @@
 </section>
 
 <!-- ===================== OFFER ===================== -->
-<section id="offers" class="section" data-theme="dark">
+<section id="offers" class="section" data-theme="accent">
     <div class="container">
         <h2 class="h2 h2--inline">Angebote</h2>
 
@@ -130,7 +138,7 @@
 </section>
 
 <!-- ===================== GALLERY (NEW 4-COLUMN GRID V4 - Load Optimised) ===================== -->
-<section id="gallery" class="section" data-theme="dark">
+<section id="gallery" class="section" data-theme="accent">
     <div class="container">
         <!-- On-page anchor chips (unverändert) -->
         <nav class="gallery-toc" aria-label="Abschnitte">
@@ -290,7 +298,7 @@
 <!-- ===================== END GALLERY (NEW) ===================== -->
 
 <!-- ===================== CTA / READY SECTION ===================== -->
-<section id="ready" class="section cta-section" data-theme="dark">
+<section id="ready" class="section cta-section" data-theme="accent">
     <div class="cta__media">
         <!-- Replace with your image -->
         <img src="img/cta/cta1.webp"
@@ -334,8 +342,8 @@
                 Update these href paths when you create the pages.
                 e.g., href="datenschutz.html"
             -->
-            <a href="#datapolicy" class="footer__link">Datenschutz</a>
-            <a href="#legal" class="footer__link">Impressum</a>
+            <a href="datenschutz.html" class="footer__link">Datenschutz</a>
+            <a href="impressum.html" class="footer__link">Impressum</a>
         </div>
         <div class="footer__copy">
             <p>© 2025 Melanie Michel Fotografie. Alle Rechte vorbehalten.</p>

@@ -93,7 +93,7 @@ const menuItems = document.querySelectorAll('.menu-item');
 
 // One-pager Gallery Lightbox
 (function () {
-    const gridContainers = document.querySelectorAll('.gallery--grid');
+    const gridContainers = document.querySelectorAll('.gallery--complex-grid');
     const dlg = document.getElementById('lightbox');
     const dlgImg = dlg?.querySelector('.lightbox__img');
     const closeBtn = dlg?.querySelector('.lightbox__close');
