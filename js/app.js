@@ -233,6 +233,188 @@
 })();
 
 // ==============================================
+// Discover Section Animations
+// ==============================================
+(function initDiscoverAnimations() {
+    const root = document.documentElement;
+    const discoverSection = document.getElementById('discover');
+    const discoverTitle = document.querySelector('.discover__title');
+    const discoverImage = document.querySelector('.discover__image img');
+
+    if (!discoverSection || !discoverTitle || !discoverImage) return;
+
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+    let ticking = false;
+    let hasAnimated = false;
+
+    function updateDiscoverAnimation() {
+        ticking = false;
+        const vh = window.innerHeight || 1;
+        const rect = discoverSection.getBoundingClientRect();
+
+        // Color transition: starts when section enters viewport
+        // Progress from 0 to 1 as section moves into view
+        const colorTransitionStart = vh * 1.2; // Start before section is visible
+        const colorTransitionEnd = vh * 0.5; // End when section is half visible
+        const colorProgress = clamp01((colorTransitionStart - rect.top) / (colorTransitionStart - colorTransitionEnd));
+
+        root.style.setProperty('--discoverColorProgress', colorProgress.toFixed(4));
+
+        // Content animations: trigger when section is well into viewport
+        const animationTrigger = vh * 0.6; // Trigger when section top reaches 60% of viewport
+        const shouldAnimate = rect.top < animationTrigger && rect.bottom > 0;
+
+        if (shouldAnimate && !hasAnimated) {
+            // Scrolling down - animate in
+            discoverTitle.classList.add('is-visible');
+            discoverImage.classList.add('is-visible');
+            hasAnimated = true;
+        } else if (!shouldAnimate && hasAnimated && rect.top > animationTrigger) {
+            // Scrolling up - animate out
+            discoverTitle.classList.remove('is-visible');
+            discoverImage.classList.remove('is-visible');
+            hasAnimated = false;
+        }
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateDiscoverAnimation);
+            ticking = true;
+        }
+    }
+
+    // Initialize and attach listeners
+    updateDiscoverAnimation();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+})();
+
+// ==============================================
+// Gallery TOC Scroll Animation
+// ==============================================
+(function initGalleryTocAnimation() {
+    const root = document.documentElement;
+    const gallerySection = document.getElementById('gallery');
+    const galleryToc = document.querySelector('.gallery-toc');
+
+    if (!gallerySection || !galleryToc) return;
+
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+    let ticking = false;
+
+    function updateGalleryTocScale() {
+        ticking = false;
+        const vh = window.innerHeight || 1;
+        const rect = galleryToc.getBoundingClientRect();
+
+        // Scale progress: buttons grow as they enter the viewport
+        // Start scaling when TOC is 100% down the viewport, finish at 60%
+        const scaleStart = vh * 1.0; // Start scaling earlier
+        const scaleEnd = vh * 0.6;   // Finish scaling faster (fully grown)
+        const scaleProgress = clamp01((scaleStart - rect.top) / (scaleStart - scaleEnd));
+
+        root.style.setProperty('--galleryTocProgress', scaleProgress.toFixed(4));
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateGalleryTocScale);
+            ticking = true;
+        }
+    }
+
+    // Initialize and attach listeners
+    updateGalleryTocScale();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+})();
+
+// ==============================================
+// Gallery Items & Headings Animation
+// ==============================================
+(function initGalleryItemsAnimation() {
+    const galleryHeadings = document.querySelectorAll('.gallery__heading');
+    const galleryItems = document.querySelectorAll('.gallery__item');
+
+    if (galleryHeadings.length === 0 && galleryItems.length === 0) return;
+
+    // Use Intersection Observer for efficient animation triggering
+    const observerOptions = {
+        root: null,
+        rootMargin: '-50px 0px -50px 0px', // Trigger slightly before entering viewport
+        threshold: 0.1 // Trigger when 10% visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Element is entering viewport - animate in
+                const delay = entry.target.dataset.index ? parseInt(entry.target.dataset.index) * 50 : 0;
+
+                setTimeout(() => {
+                    entry.target.classList.add('is-visible');
+                }, delay);
+            } else {
+                // Element is leaving viewport - animate out (remove class immediately)
+                entry.target.classList.remove('is-visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all gallery headings
+    galleryHeadings.forEach(heading => {
+        observer.observe(heading);
+    });
+
+    // Observe all gallery items with stagger
+    galleryItems.forEach((item, index) => {
+        // Add index for stagger effect (modulo 12 to keep delays reasonable)
+        item.dataset.index = index % 12;
+        observer.observe(item);
+    });
+})();
+
+// ==============================================
+// CTA Section Scroll Animation
+// ==============================================
+(function initCtaAnimation() {
+    const root = document.documentElement;
+    const ctaSection = document.getElementById('ready');
+
+    if (!ctaSection) return;
+
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+    let ticking = false;
+
+    function updateCtaProgress() {
+        ticking = false;
+        const vh = window.innerHeight || 1;
+        const rect = ctaSection.getBoundingClientRect();
+
+        // Animation progress: slides in as section enters viewport
+        // Start when section bottom is at viewport bottom, finish when section is centered
+        const animationStart = vh * 0.8; // Start when section is 80% down
+        const animationEnd = vh * 0.3;   // Finish when section is 30% down
+        const ctaProgress = clamp01((animationStart - rect.top) / (animationStart - animationEnd));
+
+        root.style.setProperty('--ctaProgress', ctaProgress.toFixed(4));
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateCtaProgress);
+            ticking = true;
+        }
+    }
+
+    // Initialize and attach listeners
+    updateCtaProgress();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+})();
+
+// ==============================================
 // Gallery Lightbox
 // ==============================================
 (function initLightbox() {

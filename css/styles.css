@@ -543,6 +543,13 @@ body[data-theme="accent"] .menu-toggle__bar {
     min-height: 80vh;
     overflow: hidden;
     width: 100%;
+    position: relative;
+    /* Smooth background color transition via CSS variable */
+    background: linear-gradient(
+            to bottom,
+            rgb(237, 250, 92) calc(var(--discoverColorProgress, 0) * -100%),
+            var(--black) calc(var(--discoverColorProgress, 0) * 100%)
+    );
 }
 
 .discover__container {
@@ -570,6 +577,15 @@ body[data-theme="accent"] .menu-toggle__bar {
     color: var(--neon);
     word-wrap: break-word;
     hyphens: auto;
+    /* Animation: slide from right */
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.discover__title.is-visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .discover__image {
@@ -584,6 +600,15 @@ body[data-theme="accent"] .menu-toggle__bar {
     max-height: 100vh;
     object-fit: contain;
     object-position: right center;
+    /* Animation: slide from left */
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.discover__image img.is-visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* ======================================================
@@ -605,7 +630,11 @@ body[data-theme="accent"] .menu-toggle__bar {
     color: var(--white);
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    /* Scroll-driven scale - starts at 0.3, scales to 1.0 */
+    transform: scale(calc(0.3 + 0.7 * var(--galleryTocProgress, 0)));
+    transform-origin: center;
+    will-change: transform;
 }
 
 .gallery-toc__link:hover {
@@ -620,6 +649,15 @@ body[data-theme="accent"] .menu-toggle__bar {
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom: clamp(16px, 2vw, 24px);
+    /* Animation: rise from below */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery__heading.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .gallery--complex-grid {
@@ -639,6 +677,15 @@ body[data-theme="accent"] .menu-toggle__bar {
     margin: 0;
     grid-column: span 1;
     grid-row: span 1;
+    /* Animation: rise from below */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery--complex-grid .gallery__item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .gallery--complex-grid .gallery__item img {
@@ -813,6 +860,10 @@ body[data-theme="accent"] .menu-toggle__bar {
 
 .cta__media {
     overflow: hidden;
+    /* Animation: slide from left */
+    opacity: calc(var(--ctaProgress, 0));
+    transform: translateX(calc(-80px * (1 - var(--ctaProgress, 0))));
+    will-change: transform, opacity;
 }
 
 .cta__media img {
@@ -829,6 +880,10 @@ body[data-theme="accent"] .menu-toggle__bar {
     grid-template-rows: 1fr auto;
     padding: clamp(24px, 6vw, 56px);
     width: 100%;
+    /* Animation: slide from right */
+    opacity: calc(var(--ctaProgress, 0));
+    transform: translateX(calc(80px * (1 - var(--ctaProgress, 0))));
+    will-change: transform, opacity;
 }
 
 .cta__title {
