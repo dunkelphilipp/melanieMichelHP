@@ -1,0 +1,173 @@
+# ================================================
+# .gitignore for Melanie Michel Photography
+# GitHub Pages Static Website
+# ================================================
+
+# ================================================
+# Node.js / Build Tools (Thumbnail Builder)
+# ================================================
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+package.json
+yarn.lock
+
+# Build scripts and tools (YOUR THUMBNAIL BUILDER)
+build-thumbnails.js
+clean-thumbnails.js
+thumbnail-builder/
+build-tools/
+scripts/
+image-processor/
+*.build.js
+*.config.js
+
+# ================================================
+# IDE and Editor files
+# ================================================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+
+# Other editors
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# ================================================
+# Development Files
+# ================================================
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# ================================================
+# Source Images (Keep only optimized versions)
+# ================================================
+# Original high-resolution images before optimization
+img-source/
+img-original/
+raw-images/
+unoptimized/
+*.psd
+*.ai
+*.sketch
+*.fig
+
+# Temporary image processing
+temp/
+tmp/
+.cache/
+
+# ================================================
+# Backup and Archive Files
+# ================================================
+*.backup
+*.bak
+*.swp
+*.swo
+*~
+backup/
+archives/
+
+# ================================================
+# Server Configuration (not needed for GitHub Pages)
+# ================================================
+.htaccess
+.htaccess.local
+web.config
+web.config.local
+*.conf
+
+# ================================================
+# Documentation Drafts
+# ================================================
+NOTES.md
+TODO.md
+drafts/
+SECURITY_GUIDE.md
+THUMBNAIL_WORKFLOW.md
+GITHUB_PAGES_GUIDE.md
+QUICK_START.md
+
+# ================================================
+# macOS
+# ================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ================================================
+# Windows
+# ================================================
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+
+# ================================================
+# Linux
+# ================================================
+*~
+.directory
+.Trash-*
+
+# ================================================
+# Testing
+# ================================================
+test/
+tests/
+*.test.js
+coverage/
+
+# ================================================
+# Security (Keep these private)
+# ================================================
+# Don't commit if you have API keys or sensitive data
+secrets/
+private/
+credentials/
+
+# ================================================
+# Optional: Large Files
+# ================================================
+# If you have very large original images, keep them local only
+# *.cr2
+# *.nef
+# *.arw
+# *.dng
+
+# ================================================
+# Keep These Files (Explicitly track what should be public)
+# ================================================
+# These files SHOULD be committed:
+# !index.html
+# !impressum.html
+# !datenschutz.html
+# !robots.txt
+# !security.txt
+# !README.md
+# !css/styles.css
+# !js/app.js
+# !img/**/*.webp
+# !.well-known/security.txt
