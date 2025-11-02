@@ -645,10 +645,11 @@ body[data-theme="accent"] .menu-toggle__bar {
 
 .gallery__heading {
     color: var(--black);
-    font-size: clamp(1.5rem, 2vw, 4rem);
-    font-weight: 600;
+    font-size: clamp(1.3rem, 1rem + 1.6vw, 2rem);
+    font-weight: 900;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
-    margin-bottom: clamp(16px, 2vw, 24px);
+    margin: 0 0 0.75em;
     /* Animation: rise from below */
     opacity: 0;
     transform: translateY(40px);
