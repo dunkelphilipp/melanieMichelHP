@@ -381,3 +381,81 @@
         }
     });
 })();
+
+// ==============================================
+// Progressive Image Loading for Thumbnails
+// ==============================================
+(function initProgressiveImages() {
+    const galleryImages = document.querySelectorAll('.gallery__item img[data-full]');
+
+    if (galleryImages.length === 0) return;
+
+    // Track loaded images to avoid reloading
+    const loadedImages = new Set();
+
+    /**
+     * Load full resolution image
+     */
+    function loadFullImage(img) {
+        const fullSrc = img.getAttribute('data-full');
+
+        // Skip if already loaded or loading
+        if (loadedImages.has(fullSrc)) return;
+        loadedImages.add(fullSrc);
+
+        // Create new image to preload
+        const fullImage = new Image();
+
+        fullImage.onload = () => {
+            // Smooth transition from thumbnail to full image
+            img.style.opacity = '0.7';
+
+            setTimeout(() => {
+                img.src = fullSrc;
+                img.removeAttribute('data-full');
+                img.style.opacity = '1';
+            }, 100);
+        };
+
+        fullImage.onerror = () => {
+            console.warn(`Failed to load full image: ${fullSrc}`);
+            loadedImages.delete(fullSrc);
+        };
+
+        // Start loading
+        fullImage.src = fullSrc;
+    }
+
+    /**
+     * Use Intersection Observer for efficient loading
+     */
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                loadFullImage(img);
+                observer.unobserve(img);
+            }
+        });
+    }, {
+        // Start loading 100px before image enters viewport
+        rootMargin: '100px 0px',
+        threshold: 0.01
+    });
+
+    // Observe all gallery images
+    galleryImages.forEach(img => {
+        // Add smooth transition
+        img.style.transition = 'opacity 0.3s ease';
+        imageObserver.observe(img);
+    });
+
+    // Preload images on hover (desktop only)
+    if (window.innerWidth > 768) {
+        galleryImages.forEach(img => {
+            img.addEventListener('mouseenter', () => {
+                loadFullImage(img);
+            }, { once: true });
+        });
+    }
+})();
