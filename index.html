@@ -19,7 +19,17 @@
         <a href="#hero" class="menu-item">Home</a>
         <a href="#about" class="menu-item">Über mich</a>
         <a href="#offers" class="menu-item">Angebote</a>
-        <a href="#gallery" class="menu-item">Portfolio</a>
+        <div class="menu-item-wrapper">
+            <button class="menu-item menu-item--toggle" aria-expanded="false">
+                Portfolio
+                <span class="menu-item__arrow">›</span>
+            </button>
+            <div class="menu-submenu">
+                <a href="#gallery-wedding" class="menu-submenu__item">Hochzeiten</a>
+                <a href="#gallery-event" class="menu-submenu__item">Events</a>
+                <a href="#gallery-shooting" class="menu-submenu__item">Shootings</a>
+            </div>
+        </div>
         <a href="#ready" class="menu-item">Anfrage</a>
     </nav>
 
@@ -37,28 +47,23 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="hero-stage">
-    <!-- Sticky hero keeps the background visible while content zooms/fades out -->
     <header class="hero hero--sticky" id="hero" data-theme="dark">
-        <!-- Logo -->
         <a class="hero__logo" href="#top" aria-label="Startseite">
             <img src="img/logo/MelanieMichelLogo.webp"
                  alt="Logo: Melanie Michel Fotografie"
                  loading="eager" decoding="async" />
         </a>
 
-        <!-- Quote / Claim -->
         <div class="hero__content">
             <blockquote class="hero__quote">
-                „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen –
-                schlicht und natürlich neue Perspektiven eröffnen.“
+                „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen —
+                schlicht und natürlich neue Perspektiven eröffnen."
             </blockquote>
         </div>
 
-        <!-- CTA scrolls to About (kept floating on larger screens) -->
         <a href="#ready" class="btn btn--primary btn--floating">ANFRAGE</a>
     </header>
 </section>
-
 
 <!-- ===================== ABOUT ===================== -->
 <section id="about" class="section section--accent" data-theme="accent">
@@ -69,13 +74,13 @@
                 Geboren im Zürcher Oberland, lebe ich seit einigen Jahren in Zürich. Neben
                 meiner Arbeit als Sozialpädagogin begleite ich punktuell Hochzeiten,
                 persönliche Shootings und kleine Events. Die Fotografie begleitet mich schon
-                lange – sie wurde während des Studiums zum kreativen Ausgleich und ist heute
+                lange — sie wurde während des Studiums zum kreativen Ausgleich und ist heute
                 ein wichtiger Teil meines beruflichen Lebens.
             </p>
             <p class="reveal">
                 Bei Aufträgen halte ich mich bewusst im Hintergrund, um echte Stimmungen mit
                 Ruhe und Achtsamkeit einzufangen. Mein Stil ist natürlich, ehrlich und nah
-                am Menschen – inspiriert durch Licht, Atmosphären und Zwischentöne. Die
+                am Menschen — inspiriert durch Licht, Atmosphären und Zwischentöne. Die
                 Fotografie in der Natur schafft für mich und meine Auftraggeber visuell
                 ausdrucksstarke Momente.
             </p>
@@ -83,7 +88,7 @@
 
         <div class="split__item">
             <img src="img/selfportrait/selfportrait.webp"
-                 alt="Fotografin Melanie Michel – Portrait"
+                 alt="Fotografin Melanie Michel — Portrait"
                  class="media reveal-right"
                  loading="lazy" decoding="async" />
         </div>
@@ -131,16 +136,15 @@
         </div>
         <div class="discover__image">
             <img src="img/portfolio/discover/discover.webp"
-                 alt="Entdecke meine Fotos – Beispielportrait"
+                 alt="Entdecke meine Fotos — Beispielportrait"
                  loading="lazy" decoding="async" />
         </div>
     </div>
 </section>
 
-<!-- ===================== GALLERY (NEW 4-COLUMN GRID V4 - Load Optimised) ===================== -->
+<!-- ===================== GALLERY ===================== -->
 <section id="gallery" class="section" data-theme="accent">
     <div class="container">
-        <!-- On-page anchor chips (unverändert) -->
         <nav class="gallery-toc" aria-label="Abschnitte">
             <a class="gallery-toc__link" href="#gallery-wedding">Hochzeiten</a>
             <a class="gallery-toc__link" href="#gallery-event">Events</a>
@@ -148,159 +152,121 @@
         </nav>
     </div>
 
-    <!-- Weddings (4-Column Layout from HPGrid.xlsx - Sheet2.csv) -->
+    <!-- Weddings -->
     <div class="container">
         <h3 id="gallery-wedding" class="gallery__heading">Hochzeiten</h3>
 
         <div class="gallery gallery--complex-grid">
-            <!-- H1 (v2) - Load immediately -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit1.webp" alt="Hochzeit 1" decoding="async">
             </figure>
-            <!-- H2 (v2) - Load immediately -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit2.webp" alt="Hochzeit 2" decoding="async">
             </figure>
-            <!-- H3 (h2, v3) - Load immediately -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit3.webp" alt="Hochzeit 3" decoding="async">
             </figure>
-            <!-- H4 (h2, v3) - Load immediately -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit4.webp" alt="Hochzeit 4" decoding="async">
             </figure>
-            <!-- H5 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit5.webp" alt="Hochzeit 5" loading="lazy" decoding="async">
             </figure>
-            <!-- H6 (h4, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-4 item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit6.webp" alt="Hochzeit 6" loading="lazy" decoding="async">
             </figure>
-            <!-- H7 (v2) - Lazy load -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit7.webp" alt="Hochzeit 7" loading="lazy" decoding="async">
             </figure>
-            <!-- H8 (h3, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-3 item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit8.webp" alt="Hochzeit 8" loading="lazy" decoding="async">
             </figure>
-            <!-- H9 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit9.webp" alt="Hochzeit 9" loading="lazy" decoding="async">
             </figure>
-            <!-- H10 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit10.webp" alt="Hochzeit 10" loading="lazy" decoding="async">
             </figure>
-            <!-- H11 (v2) - Lazy load -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit11.webp" alt="Hochzeit 11" loading="lazy" decoding="async">
             </figure>
-            <!-- H12 (v2) - Lazy load -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit12.webp" alt="Hochzeit 12" loading="lazy" decoding="async">
             </figure>
-            <!-- H13 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit13.webp" alt="Hochzeit 13" loading="lazy" decoding="async">
             </figure>
-            <!-- H14 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit14.webp" alt="Hochzeit 14" loading="lazy" decoding="async">
             </figure>
-            <!-- H15 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/wedding/weddingGal/Hochzeit15.webp" alt="Hochzeit 15" loading="lazy" decoding="async">
             </figure>
         </div>
     </div>
 
-
-    <!-- Events (4-Column Layout from HPGrid.xlsx - Sheet2.csv) -->
+    <!-- Events -->
     <div class="container">
         <h3 id="gallery-event" class="gallery__heading">Events</h3>
 
         <div class="gallery gallery--complex-grid">
-            <!-- E1 (v2) - Lazy load -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/event/eventGal/Event1.webp" alt="Event 1" loading="lazy" decoding="async">
             </figure>
-            <!-- E2 (v2) - Lazy load -->
             <figure class="gallery__item item-v-span-2">
                 <img src="img/portfolio/event/eventGal/Event2.webp" alt="Event 2" loading="lazy" decoding="async">
             </figure>
-            <!-- E3 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/event/eventGal/Event3.webp" alt="Event 3" loading="lazy" decoding="async">
             </figure>
-            <!-- E4 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/event/eventGal/Event4.webp" alt="Event 4" loading="lazy" decoding="async">
             </figure>
-            <!-- E5 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/event/eventGal/Event5.webp" alt="Event 5" loading="lazy" decoding="async">
             </figure>
-            <!-- E6 (h4, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-4 item-v-span-2">
                 <img src="img/portfolio/event/eventGal/Event6.webp" alt="Event 6" loading="lazy" decoding="async">
             </figure>
         </div>
     </div>
 
-    <!-- Shootings (4-Column Layout from HPGrid.xlsx - Sheet2.csv) -->
+    <!-- Shootings -->
     <div class="container">
         <h3 id="gallery-shooting" class="gallery__heading">Shootings</h3>
 
         <div class="gallery gallery--complex-grid">
-            <!-- S1 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/shooting/shootingGal/Shooting1.webp" alt="Shooting 1" loading="lazy" decoding="async">
             </figure>
-            <!-- S2 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/shooting/shootingGal/Shooting2.webp" alt="Shooting 2" loading="lazy" decoding="async">
             </figure>
-            <!-- S3 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/shooting/shootingGal/Shooting3.webp" alt="Shooting 3" loading="lazy" decoding="async">
             </figure>
-            <!-- S4 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/shooting/shootingGal/Shooting4.webp" alt="Shooting 4" loading="lazy" decoding="async">
             </figure>
-            <!-- S5 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/shooting/shootingGal/Shooting5.webp" alt="Shooting 5" loading="lazy" decoding="async">
             </figure>
-            <!-- S6 (h2, v3) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-3">
                 <img src="img/portfolio/shooting/shootingGal/Shooting6.webp" alt="Shooting 6" loading="lazy" decoding="async">
             </figure>
-            <!-- S7 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/shooting/shootingGal/Shooting7.webp" alt="Shooting 7" loading="lazy" decoding="async">
             </figure>
-            <!-- S8 (h2, v2) - Lazy load -->
             <figure class="gallery__item item-h-span-2 item-v-span-2">
                 <img src="img/portfolio/shooting/shootingGal/Shooting8.webp" alt="Shooting 8" loading="lazy" decoding="async">
             </figure>
         </div>
     </div>
-
-    <!-- Lightweight lightbox (Unverändert) -->
-    <dialog class="lightbox" id="lightbox">
-        <button class="lightbox__close" aria-label="Schliessen">×</button>
-        <img class="lightbox__img" alt="">
-    </dialog>
 </section>
-<!-- ===================== END GALLERY (NEW) ===================== -->
 
 <!-- ===================== CTA / READY SECTION ===================== -->
 <section id="ready" class="section cta-section" data-theme="accent">
     <div class="cta__media">
-        <!-- Replace with your image -->
         <img src="img/cta/cta1.webp"
              alt="Fotoprint auf Regal"
              loading="lazy" decoding="async">
@@ -323,9 +289,7 @@
         </div>
 
         <div class="cta__actions">
-            <!-- Instagram button -->
             <a class="cta__social" href="https://www.instagram.com/_melaniemichelfotografie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
-                <!-- Inline SVG icon -->
                 <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
                     <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm6.25-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z" fill="currentColor"/>
                 </svg>
@@ -334,14 +298,10 @@
     </aside>
 </section>
 
-<!-- ===================== FOOTER (NEW) ===================== -->
+<!-- ===================== FOOTER ===================== -->
 <footer class="footer" data-theme="dark">
     <div class="footer__content container">
         <div class="footer__links">
-            <!--
-                Update these href paths when you create the pages.
-                e.g., href="datenschutz.html"
-            -->
             <a href="datenschutz.html" class="footer__link">Datenschutz</a>
             <a href="impressum.html" class="footer__link">Impressum</a>
         </div>
@@ -351,8 +311,15 @@
     </div>
 </footer>
 
+<!-- ===================== LIGHTBOX (Global) ===================== -->
+<dialog class="lightbox" id="lightbox">
+    <button class="lightbox__close" aria-label="Schliessen">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Vorheriges Bild">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Nächstes Bild">›</button>
+    <img class="lightbox__img" alt="">
+</dialog>
 
-<!-- JS (placed last, deferred in markup for FCP; keeps variables synced with scroll) -->
+<!-- ===================== SCRIPTS ===================== -->
 <script src="js/app.js" defer></script>
 </body>
 </html>
