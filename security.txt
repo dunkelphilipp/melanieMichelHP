@@ -1,0 +1,14 @@
+# Security Contact Information
+# This file follows the security.txt standard (RFC 9116)
+# https://securitytxt.org/
+
+Contact: mailto:melaniemichelfotografie@gmail.com
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: de, en
+Canonical: https://yourdomain.com/.well-known/security.txt
+
+# Policy
+Policy: This is a photography portfolio website. If you discover a security vulnerability, please report it responsibly via email.
+
+# Acknowledgments
+# We appreciate responsible disclosure of security vulnerabilities.
