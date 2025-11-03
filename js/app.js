@@ -179,7 +179,7 @@
         const stageRect = stage.getBoundingClientRect();
         const heroProgress = clamp01(-stageRect.top / vh);
 
-        // *** NEW: If we're at the very top, ensure everything is reset ***
+        // reset scroll progress
         if (scrollTop < 10) {
             root.style.setProperty('--heroProgress', '0');
             root.style.setProperty('--aboutTheme', '0');
@@ -444,6 +444,7 @@
             images.forEach(img => {
                 currentImages.push({
                     src: img.currentSrc || img.src,
+                    full: img.getAttribute('data-full') || img.currentSrc || img.src,
                     alt: img.alt || ''
                 });
             });
@@ -454,7 +455,9 @@
     function showImage(index) {
         if (index < 0 || index >= currentImages.length) return;
         currentIndex = index;
-        dlgImg.src = currentImages[index].src;
+        // Use full-resolution image if available, otherwise fall back to thumbnail
+        const fullSrc = currentImages[index].full || currentImages[index].src;
+        dlgImg.src = fullSrc;
         dlgImg.alt = currentImages[index].alt;
 
         // Update navigation button visibility (desktop only)
@@ -580,6 +583,9 @@
      */
     function loadFullImage(img) {
         const fullSrc = img.getAttribute('data-full');
+
+        // Skip if no data-full attribute
+        if (!fullSrc) return;
 
         // Skip if already loaded or loading
         if (loadedImages.has(fullSrc)) return;
