@@ -1,0 +1,1189 @@
+/* ==========================================================================
+   Melanie Michel Fotografie — Business, Events & Journalismus
+   Eigenstaendiges Stylesheet fuer die Business-Ansicht.
+
+   Bewusst das Gegenstueck zur Hochzeits-Ansicht: dort heller Papierton,
+   hier dunkel und kontrastreich. Beide teilen nur die Schrift (Inter,
+   selbst gehostet) und den Akzentton.
+
+   Die Vorlage nutzt Tailwind ueber ein CDN. Hier steht stattdessen
+   natives CSS: die Content-Security-Policy dieser Seite laesst keine
+   fremden Skripte zu, und eine ganze Utility-Bibliothek fuer eine
+   statische Seite waere unnoetiger Ballast.
+   ========================================================================== */
+
+/* Inter, selbst gehostet (SIL OFL 1.1, siehe fonts/OFL.txt).
+   Dieselben Dateien wie in der Hochzeits-Ansicht — kein zweiter Download. */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 900;
+    font-display: swap;
+    src: url('../fonts/inter-latin-var.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+        U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+        U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 900;
+    font-display: swap;
+    src: url('../fonts/inter-latin-ext-var.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+        U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+        U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+    --bg: #050505;
+    --text: #F0F0F0;
+    --text-dim: #A9A9A9;
+    --text-dimmer: #7C7C7C;
+    --rust: #C2410C;
+    --rule: rgba(240, 240, 240, .16);
+    --rule-strong: rgba(240, 240, 240, .32);
+    --modal-bg: #FAFAFA;
+    --modal-ink: #111111;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+    overflow-x: hidden;
+}
+
+@media (pointer: coarse) {
+    body { cursor: auto; }
+}
+
+img { max-width: 100%; }
+
+::selection { background: var(--text); color: var(--bg); }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 10000;
+    background: var(--text);
+    color: var(--bg);
+    padding: .75rem 1.25rem;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ---------- Cursor ----------
+   Wie in der Hochzeits-Ansicht: weiss plus mix-blend-mode: difference
+   ergibt |Hintergrund − 255| und damit das echte Negativ des Inhalts.
+   In der Vorlage etwas groesser als dort, das wird uebernommen. */
+#cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    z-index: 9999;
+    transition: width .3s, height .3s;
+}
+
+#cursor.big { width: 60px; height: 60px; }
+
+/* Der eigene Kreis ersetzt den System-Cursor vollstaendig — keine Hand,
+   kein Textbalken. body{cursor:none} allein reicht nicht, weil die
+   Browser-Stylesheets cursor:pointer direkt auf a/button setzen. */
+@media (pointer: fine) {
+    a,
+    button,
+    summary,
+    input,
+    textarea,
+    select,
+    label,
+    [role="button"] {
+        cursor: none;
+    }
+}
+
+@media (pointer: coarse) {
+    #cursor { display: none; }
+}
+
+/* ---------- Halbton-Hintergrund ----------
+   Die Vorlage legt ein eingebettetes Halbton-GIF hinter die Seite. Hier
+   entsteht dasselbe Bild aus einem vorhandenen Foto plus Punktraster in
+   CSS — kein zusaetzliches Asset, nur wenige Zeilen. */
+#ambient {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* Punktraster */
+#ambient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at center, #000 0 30%, transparent 32%);
+    background-size: 7px 7px;
+    mix-blend-mode: multiply;
+    opacity: .6;
+}
+
+/* Dunkler Schleier, damit der Text durchgehend lesbar bleibt */
+#ambient::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .74);
+}
+
+.wrap {
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .wrap { padding: 0 2.5rem; }
+}
+
+.wrap--narrow { max-width: 80rem; }
+
+/* Glasflaeche wie in der Vorlage: der Hintergrund bleibt sichtbar */
+.glass {
+    background: rgba(5, 5, 5, .22);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* ---------- Navigation ---------- */
+.site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    /* difference laesst die Leiste ueber hellen wie dunklen Bildern lesbar
+       bleiben, ohne eigene Flaeche — wie in der Vorlage */
+    mix-blend-mode: difference;
+    transition: padding .4s, background-color .4s, border-color .4s;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid transparent;
+}
+
+@media (min-width: 880px) {
+    .site-nav { padding: 2rem 0; }
+}
+
+/* Ab etwas Scrollweg wird die Leiste zur Glasflaeche und verlaesst den
+   difference-Modus, damit sie sich klar vom Inhalt abhebt. */
+.site-nav.is-stuck {
+    mix-blend-mode: normal;
+    background: rgba(5, 5, 5, .82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom-color: var(--rule);
+    padding: .9rem 0;
+}
+
+.nav-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.brand img { height: 26px; width: auto; display: block; }
+.brand__suffix { color: var(--text-dim); font-weight: 500; }
+
+.nav-links {
+    display: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+@media (min-width: 880px) {
+    .nav-links { display: flex; }
+}
+
+.nav-links a {
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: opacity .25s, color .25s;
+}
+
+.nav-links a:hover { opacity: .65; }
+
+.nav-right { display: flex; align-items: center; gap: 1.25rem; }
+
+.nav-switch {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .25s;
+}
+
+.nav-switch:hover { color: var(--rust); }
+
+@media (max-width: 559px) {
+    .nav-right > .nav-switch { display: none; }
+}
+
+.nav-burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+@media (pointer: coarse) {
+    .nav-burger { cursor: pointer; }
+}
+
+@media (min-width: 880px) {
+    .nav-burger { display: none; }
+}
+
+.nav-burger__bar {
+    display: block;
+    height: 1.5px;
+    width: 100%;
+    background: var(--text);
+    transition: transform .3s, opacity .3s;
+}
+
+.nav-burger[aria-expanded="true"] .nav-burger__bar:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.nav-burger[aria-expanded="true"] .nav-burger__bar:nth-child(2) { opacity: 0; }
+.nav-burger[aria-expanded="true"] .nav-burger__bar:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.nav-mobile {
+    display: none;
+    margin-top: 1rem;
+    border-top: 1px solid var(--rule);
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.nav-mobile.is-open { display: block; }
+
+@media (min-width: 880px) {
+    .nav-mobile,
+    .nav-mobile.is-open { display: none; }
+}
+
+.nav-mobile a {
+    display: block;
+    padding: .8rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.nav-mobile a:hover { color: var(--rust); }
+
+/* ---------- Sprachumschalter ---------- */
+.i18n-pending body { visibility: hidden; }
+
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+}
+
+.lang-switch button {
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    transition: color .25s;
+}
+
+.lang-switch button:hover { color: var(--rust); }
+.lang-switch button[aria-pressed="true"] { color: var(--text); }
+.lang-switch__sep { color: var(--text-dimmer); opacity: .5; }
+
+@media (pointer: coarse) {
+    .lang-switch button { cursor: pointer; }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 0 5rem;
+}
+
+/* Flex-Elemente schrumpfen standardmaessig nicht unter ihre
+   Mindestinhaltsbreite — ohne min-width:0 schiebt eine lange Ueberschrift
+   die ganze Seite auf. */
+.hero > .wrap { min-width: 0; }
+
+@media (min-width: 880px) {
+    .hero { padding: 10rem 0 8rem; }
+}
+
+.eyebrow {
+    margin: 0 0 1.25rem;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+h1 {
+    margin: 0;
+    /* Untergrenze niedrig genug, dass das lange „UNGEFILTERTE" auch auf
+       320px in eine Zeile passt. Bei 3rem erzwang es die Mindestbreite
+       des Flex-Elements und machte die Seite einen Pixel breiter als den
+       Viewport. */
+    font-size: clamp(1.95rem, 8.6vw, 9rem);
+    font-weight: 900;
+    line-height: .92;
+    letter-spacing: -.045em;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+}
+
+h1 .muted { color: var(--text-dimmer); }
+
+.hero-foot {
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+@media (min-width: 880px) {
+    .hero-foot {
+        margin-top: 6rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 3rem;
+    }
+}
+
+.hero-foot p {
+    margin: 0;
+    max-width: 32rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-dim);
+}
+
+.link-underline {
+    display: inline-block;
+    border-bottom: 1px solid var(--text);
+    padding-bottom: .25rem;
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    /* Kein nowrap: der laengere deutsche Text („Noch unsicher? Schreib
+       einfach") sprengte sonst auf 320px die Rasterspalte und schob den
+       ganzen Abschnitt aus dem Viewport. */
+    transition: color .25s, border-color .25s;
+}
+
+.link-underline:hover { color: var(--rust); border-color: var(--rust); }
+
+/* ---------- Abschnitte ---------- */
+section { padding: 5rem 0; }
+
+@media (min-width: 880px) {
+    section { padding: 8rem 0; }
+}
+
+.rule-top { border-top: 1px solid var(--rule); }
+
+h2 {
+    margin: 0;
+    font-size: clamp(2.1rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.04em;
+    text-transform: uppercase;
+}
+
+.section-head { margin-bottom: 4rem; }
+
+@media (min-width: 880px) {
+    .section-head { margin-bottom: 6rem; }
+}
+
+.section-note {
+    margin: 2rem 0 0;
+    max-width: 34rem;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--text-dim);
+}
+
+/* ---------- Archiv ----------
+   Die Vorlage nutzt ein Masonry aus CSS-Spalten, weil sie einen langen
+   Strom einzelner Projekte zeigt. Hier sind es genau vier gleichwertige
+   Bereiche. Spalten wuerden sie nach Hoehe verteilen und eine Kachel
+   allein in einer Spalte stranden lassen; ein 2x2-Raster mit einheitlichem
+   Seitenverhaeltnis liest sich als bewusste Vierteilung. Die vollen,
+   unbeschnittenen Aufnahmen zeigt die Projektansicht. */
+.archive {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem 2rem;
+}
+
+@media (min-width: 768px) {
+    .archive { grid-template-columns: 1fr 1fr; gap: 3.5rem 2.5rem; }
+}
+
+.tile {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    text-align: left;
+    color: inherit;
+    text-decoration: none;
+}
+
+.tile__media {
+    /* span statt div, damit die Kachel ein gueltiger Button-Inhalt bleibt —
+       deshalb display muss explizit gesetzt werden, sonst greift
+       aspect-ratio auf einem Inline-Element nicht. */
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #111;
+    aspect-ratio: 4 / 3;
+}
+
+.tile__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Graustufen als Grundzustand, Farbe erst bei Zuwendung — wie in der
+       Vorlage. Haelt das Archiv als Ganzes ruhig. */
+    filter: grayscale(100%) contrast(1.1);
+    transition: filter .6s ease, transform .8s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tile:hover .tile__media img,
+.tile:focus-visible .tile__media img {
+    filter: grayscale(0%) contrast(1);
+    transform: scale(1.03);
+}
+
+.tile__meta {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    /* In der Vorlage erscheint die Beschriftung erst beim Hover. Hier
+       bleibt sie immer lesbar: auf Tastatur und Touch gibt es kein Hover,
+       und ohne Beschriftung waere nicht erkennbar, was sich oeffnet. */
+    opacity: .72;
+    transition: opacity .3s;
+}
+
+.tile:hover .tile__meta,
+.tile:focus-visible .tile__meta { opacity: 1; }
+
+.tile__title {
+    margin: 0;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    transition: color .25s;
+}
+
+.tile:hover .tile__title,
+.tile:focus-visible .tile__title { color: var(--rust); }
+
+.tile__count {
+    margin: 0;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* ---------- Reservierte Plaetze ----------
+   Fuer Business- und Journalismusfotografie: die Flaeche steht schon im
+   Raster, die Bilder folgen. */
+.tile--empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .9rem;
+    aspect-ratio: 4 / 3;
+    border: 1px dashed var(--rule-strong);
+    background: rgba(240, 240, 240, .03);
+    padding: 2rem;
+    text-align: center;
+}
+
+.tile--empty .tile__title { color: var(--text); }
+
+.tile--empty__hint {
+    margin: 0;
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+}
+
+/* Ein kleines Kreuz als Platzhaltermarke */
+.tile--empty__mark {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    opacity: .5;
+}
+
+.tile--empty__mark::before,
+.tile--empty__mark::after {
+    content: '';
+    position: absolute;
+    background: var(--text-dim);
+}
+
+.tile--empty__mark::before { top: 12px; left: 0; width: 26px; height: 1.5px; }
+.tile--empty__mark::after { left: 12px; top: 0; width: 1.5px; height: 26px; }
+
+/* ---------- Stimmen ---------- */
+.cols3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+@media (min-width: 880px) {
+    .cols3 { grid-template-columns: repeat(3, 1fr); gap: 4rem; }
+}
+
+.quote { display: flex; flex-direction: column; }
+
+.quote > p {
+    margin: 0 0 2rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--text);
+}
+
+@media (min-width: 880px) {
+    .quote > p { font-size: 1.4rem; }
+}
+
+.quote__who {
+    margin-top: auto;
+    border-top: 1px solid var(--rule-strong);
+    padding-top: 1rem;
+}
+
+.quote__who strong {
+    display: block;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+.quote__who span {
+    display: block;
+    margin-top: .3rem;
+    font-size: .72rem;
+    color: var(--text-dimmer);
+}
+
+/* ---------- Ueber mich ---------- */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+@media (min-width: 880px) {
+    .about-grid { grid-template-columns: 1.05fr .95fr; gap: 5rem; }
+}
+
+.about-text h2 { margin-bottom: 2.5rem; }
+
+.about-text p {
+    margin: 0 0 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-dim);
+}
+
+@media (min-width: 880px) {
+    .about-text p { font-size: 1.15rem; }
+}
+
+.about-lists {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule-strong);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.about-lists h3 {
+    margin: 0 0 .9rem;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+}
+
+.about-lists ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: .92rem;
+    line-height: 1.85;
+    color: var(--text);
+}
+
+.about-media {
+    overflow: hidden;
+    background: #111;
+    max-width: 30rem;
+}
+
+@media (min-width: 880px) {
+    .about-media { margin-left: auto; }
+}
+
+.about-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(100%) contrast(1.1);
+    transition: filter .6s ease, transform .8s cubic-bezier(.16, 1, .3, 1);
+}
+
+.about-media:hover img { filter: grayscale(0%) contrast(1); transform: scale(1.03); }
+
+/* ---------- FAQ ---------- */
+.faq-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+}
+
+@media (min-width: 880px) {
+    .faq-grid { grid-template-columns: 1fr 2fr; gap: 4rem; }
+}
+
+details {
+    border-top: 1px solid var(--rule-strong);
+    padding: 1.5rem 0;
+}
+
+details:last-of-type { border-bottom: 1px solid var(--rule-strong); }
+
+summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    list-style: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text);
+    transition: color .25s;
+}
+
+@media (min-width: 880px) {
+    summary { font-size: 1.2rem; }
+}
+
+@media (pointer: coarse) {
+    summary { cursor: pointer; }
+}
+
+summary::-webkit-details-marker { display: none; }
+
+details:hover summary,
+details[open] summary { color: var(--rust); }
+
+.plus {
+    flex: none;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-top: .3rem;
+    transition: transform .3s;
+}
+
+.plus::before,
+.plus::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+}
+
+.plus::before { top: 7px; left: 0; width: 16px; height: 1.5px; }
+.plus::after { left: 7px; top: 0; width: 1.5px; height: 16px; }
+
+details[open] .plus { transform: rotate(45deg); }
+
+details > p {
+    margin: 1.5rem 0 0;
+    max-width: 44rem;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-dim);
+}
+
+.faq-more { padding-top: 2.5rem; }
+
+/* ---------- Kontakt ---------- */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+@media (min-width: 880px) {
+    .contact-grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
+}
+
+.contact-lines {
+    margin-top: 3rem;
+    font-size: .95rem;
+    line-height: 2.1;
+    color: var(--text-dim);
+}
+
+.contact-lines a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: .1rem;
+    transition: color .25s, border-color .25s;
+}
+
+.contact-lines a:hover { color: var(--rust); border-color: var(--rust); }
+
+form { display: grid; gap: 2rem; }
+
+.row2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 640px) {
+    .row2 { grid-template-columns: 1fr 1fr; }
+}
+
+.field {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #555;
+    padding: .75rem 0;
+    font-family: inherit;
+    font-size: 1.05rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color .25s;
+}
+
+.field::placeholder { color: #888; }
+.field:focus { border-color: var(--text); }
+textarea.field { resize: vertical; }
+
+/* Die Optionsliste erbt die Systemfarben, deshalb hier explizit dunkel */
+select.field option { background: #111; color: var(--text); }
+
+.btn {
+    justify-self: start;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    padding: 1.1rem 2.5rem;
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    transition: background .25s, color .25s;
+}
+
+.btn:hover { background: var(--rust); color: var(--text); }
+
+@media (pointer: coarse) {
+    .btn { cursor: pointer; }
+}
+
+.form-note {
+    margin: 0;
+    font-size: .8rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-dimmer);
+    max-width: 34rem;
+}
+
+.form-status {
+    margin: 0;
+    font-size: .9rem;
+    color: var(--rust);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+    border-top: 1px solid var(--rule);
+    padding: 2.25rem 0;
+}
+
+.foot-in {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+}
+
+.foot-in nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+
+.foot-in a {
+    color: var(--text-dimmer);
+    text-decoration: none;
+    transition: color .25s;
+}
+
+.foot-in a:hover { color: var(--rust); }
+
+/* ---------- Projekt-Ansicht ----------
+   Hell, faehrt von unten herein. Als <dialog>, damit Fokus und
+   Escape-Taste ohne eigenen Nachbau funktionieren. */
+.project {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: var(--modal-bg);
+    color: var(--modal-ink);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateY(100%);
+    transition: transform .6s cubic-bezier(.83, 0, .17, 1);
+    z-index: 1000;
+}
+
+.project[open] { display: block; }
+.project.is-open { transform: translateY(0); }
+.project::backdrop { background: rgba(5, 5, 5, .6); }
+
+.project__close {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 1010;
+    background: var(--modal-ink);
+    color: var(--modal-bg);
+    border: none;
+    padding: .9rem 1.5rem;
+    font-family: inherit;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    transition: background .25s;
+}
+
+@media (min-width: 880px) {
+    .project__close { top: 2rem; right: 2rem; }
+}
+
+.project__close:hover { background: var(--rust); }
+
+@media (pointer: coarse) {
+    .project__close { cursor: pointer; }
+}
+
+.project__head {
+    padding: 6rem 0 4rem;
+}
+
+@media (min-width: 880px) {
+    .project__head { padding: 9rem 0 7rem; }
+}
+
+.project__head h2 {
+    color: var(--modal-ink);
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 880px) {
+    .project__head h2 { font-size: clamp(2.5rem, 6vw, 5rem); }
+}
+
+.project__head p {
+    margin: 0;
+    max-width: 52rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: #666;
+}
+
+@media (min-width: 880px) {
+    .project__head p { font-size: 1.7rem; }
+}
+
+/* Asymmetrisches Raster wie in der Vorlage */
+.project__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 5rem 2rem;
+    padding-bottom: 8rem;
+    align-items: center;
+}
+
+@media (min-width: 880px) {
+    .project__grid { gap: 10rem 4rem; }
+}
+
+.project__item { grid-column: 1 / -1; }
+
+@media (min-width: 880px) {
+    .project__item--a { grid-column: 3 / span 8; }
+    .project__item--b { grid-column: 1 / span 6; }
+    .project__item--c { grid-column: 6 / span 7; }
+    .project__item--d { grid-column: 2 / span 5; }
+    .project__item--e { grid-column: 2 / span 9; }
+}
+
+.project__media {
+    display: block;
+    overflow: hidden;
+    background: #e6e6e6;
+}
+
+.project__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    transform: translateY(80px);
+    clip-path: inset(20% 0 20% 0);
+    transition: opacity .8s ease,
+                transform 1.2s cubic-bezier(.16, 1, .3, 1),
+                clip-path 1.2s cubic-bezier(.16, 1, .3, 1);
+    will-change: transform, opacity, clip-path;
+}
+
+.project__media img.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+}
+
+/* ---------- Cookie-Hinweis ---------- */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 8000;
+    background: #0d0d0d;
+    border-top: 1px solid var(--rule);
+    color: var(--text);
+    padding: 1.25rem 0;
+    transform: translateY(100%);
+    transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+}
+
+.cookie-banner.is-visible { transform: translateY(0); }
+
+.cookie-banner__content {
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cookie-banner__text {
+    margin: 0;
+    font-size: .8rem;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 62ch;
+    color: var(--text-dim);
+}
+
+.cookie-banner__text a { color: var(--text); }
+
+.cookie-banner__actions { display: flex; gap: .75rem; flex: none; }
+
+.cookie-banner__btn {
+    font-family: inherit;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: .7rem 1.35rem;
+    border: 1px solid var(--rule-strong);
+    background: transparent;
+    color: var(--text);
+    transition: background .25s, color .25s, border-color .25s;
+}
+
+.cookie-banner__btn--accept { background: var(--text); color: var(--bg); border-color: var(--text); }
+.cookie-banner__btn--accept:hover { background: var(--rust); border-color: var(--rust); color: var(--text); }
+.cookie-banner__btn--decline:hover { border-color: var(--rust); color: var(--rust); }
+
+@media (pointer: coarse) {
+    .cookie-banner__btn { cursor: pointer; }
+}
+
+/* ---------- Reveal ---------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .8s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1);
+}
+
+.reveal.is-visible { opacity: 1; transform: none; }
+
+.delay-1 { transition-delay: 100ms; }
+.delay-2 { transition-delay: 200ms; }
+
+/* ---------- Fokus & Motion ---------- */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+.field:focus-visible,
+.tile:focus-visible {
+    outline: 2px solid var(--rust);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal { opacity: 1; transform: none; }
+    .project { transition: none; }
+    .project__media img { opacity: 1; transform: none; clip-path: none; }
+}

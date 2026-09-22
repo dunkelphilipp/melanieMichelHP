@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="meta.title">Reportage, Portrait &amp; Eventfotografie Zürich — Melanie Michel</title>
+    <meta name="description" data-i18n-content="meta.description"
+          content="Dokumentarische Fotografie aus Zürich für Events, Portraits, Unternehmen und Redaktionen. Beobachtet statt inszeniert." />
+
+    <!-- Security Headers — identisch streng wie index.html und weddings.html.
+         Inter wird selbst gehostet, es sind keine fremden Domains nötig.
+         Die Vorlage lädt Tailwind über ein CDN; das wäre hier blockiert und
+         ist durch natives CSS ersetzt. -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self' mailto:;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://www.melaniemichel.ch/business.html" />
+    <link rel="alternate" hreflang="de" href="https://www.melaniemichel.ch/business.html" />
+    <link rel="alternate" hreflang="en" href="https://www.melaniemichel.ch/business.html?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://www.melaniemichel.ch/business.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:title" data-i18n-content="og.title"
+          content="Reportage, Portrait &amp; Eventfotografie Zürich — Melanie Michel" />
+    <meta property="og:description" data-i18n-content="og.description"
+          content="Dokumentarische Fotografie aus Zürich für Events, Portraits, Unternehmen und Redaktionen." />
+    <meta property="og:url" content="https://www.melaniemichel.ch/business.html" />
+    <meta property="og:image"
+          content="https://www.melaniemichel.ch/img/portfolio/event/eventGal/Event1.webp" />
+
+    <!-- Inter, selbst gehostet — dieselben Dateien wie in weddings.html -->
+    <link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="stylesheet" href="css/business.css" />
+
+    <link rel="preload" as="image" href="img/portfolio/event/eventGal/Event1-thumb.webp" />
+
+    <!-- Sprache vor dem ersten Zeichnen festlegen — gleiche Logik wie in
+         weddings.html: ?lang=, gespeicherte Wahl, Browsersprache, Deutsch. -->
+    <script>
+        (function () {
+            var supported = ['de', 'en'], fallback = 'de', lang = null;
+            try {
+                var fromUrl = new URLSearchParams(location.search).get('lang');
+                if (fromUrl && supported.indexOf(fromUrl) >= 0) lang = fromUrl;
+            } catch (e) { /* ältere Browser */ }
+            if (!lang) {
+                try {
+                    var saved = localStorage.getItem('mm_lang');
+                    if (saved && supported.indexOf(saved) >= 0) lang = saved;
+                } catch (e) { /* Privatmodus */ }
+            }
+            if (!lang) {
+                var nav = (navigator.language || fallback).slice(0, 2).toLowerCase();
+                lang = supported.indexOf(nav) >= 0 ? nav : fallback;
+            }
+            window.__mmLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.setAttribute('data-lang', lang);
+            if (lang !== fallback) {
+                document.documentElement.classList.add('i18n-pending');
+                setTimeout(function () {
+                    document.documentElement.classList.remove('i18n-pending');
+                }, 1500);
+            }
+        })();
+    </script>
+</head>
+<body>
+
+<a class="skip-link" href="#work" data-i18n="skip.work">Direkt zum Archiv</a>
+
+<div id="cursor" aria-hidden="true"></div>
+
+<!-- Halbton-Hintergrund: vorhandenes Foto plus Punktraster aus CSS -->
+<div id="ambient" aria-hidden="true"></div>
+
+<!-- ===================== NAV ===================== -->
+<nav class="site-nav">
+    <div class="wrap nav-in">
+        <a class="brand" href="index.html">
+            <img src="img/Logo/MelanieMichelLogo.webp" alt="" width="120" height="26"
+                 loading="eager" decoding="async" />
+            <span class="visually-hidden" data-i18n="brand.sr">Melanie Michel Fotografie — </span><span
+                class="brand__suffix" data-i18n="brand.suffix">Business</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#work" data-i18n="nav.work">Arbeiten</a>
+            <a href="#about" data-i18n="nav.about">Über mich</a>
+            <a href="#faq" data-i18n="nav.faq">Fragen</a>
+            <a href="#contact" data-i18n="nav.contact">Kontakt</a>
+        </div>
+
+        <div class="nav-right">
+            <a class="nav-switch" href="weddings.html" data-i18n="nav.switchFull">Hochzeiten ›</a>
+
+            <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Sprache">
+                <button type="button" data-lang-switch="de" aria-pressed="true"
+                        data-i18n-title="lang.deTitle" title="Auf Deutsch anzeigen">DE</button>
+                <span class="lang-switch__sep" aria-hidden="true">/</span>
+                <button type="button" data-lang-switch="en" aria-pressed="false"
+                        data-i18n-title="lang.enTitle" title="Show in English">EN</button>
+            </div>
+
+            <button class="nav-burger" type="button" aria-expanded="false"
+                    aria-controls="nav-mobile" data-i18n-aria-label="nav.menu" aria-label="Menü öffnen">
+                <span class="nav-burger__bar"></span>
+                <span class="nav-burger__bar"></span>
+                <span class="nav-burger__bar"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="wrap nav-mobile" id="nav-mobile">
+        <a href="#work" data-i18n="nav.work">Arbeiten</a>
+        <a href="#about" data-i18n="nav.about">Über mich</a>
+        <a href="#faq" data-i18n="nav.faq">Fragen</a>
+        <a href="#contact" data-i18n="nav.contact">Kontakt</a>
+        <a href="weddings.html" data-i18n="nav.switchFull">Hochzeiten ›</a>
+    </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+    <div class="wrap">
+        <p class="eyebrow reveal" data-i18n="hero.place">Zürich, Schweiz</p>
+        <h1 class="reveal delay-1">
+            <span data-i18n="hero.h1a">Ungefilterte</span><br>
+            <span class="muted" data-i18n="hero.h1b">Realität.</span>
+        </h1>
+        <div class="hero-foot reveal delay-2">
+            <p data-i18n="hero.lede">
+                Dokumentarische Fotografie für Events, Portraits, Unternehmen und Redaktionen.
+                Beobachtet statt inszeniert.
+            </p>
+            <a class="link-underline" href="#work" data-i18n="hero.cta">Archiv ansehen</a>
+        </div>
+    </div>
+</header>
+
+<!-- ===================== ARCHIV ===================== -->
+<section id="work">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <h2 data-i18n-html="work.h2">Ausgewähltes<br>Archiv</h2>
+            <p class="section-note" data-i18n="work.note">
+                Vier Bereiche, eine Haltung: Ich bin mitten im Geschehen und halte fest, was ohnehin
+                passiert. Klick auf einen Bereich für die ganze Strecke.
+            </p>
+        </div>
+
+        <div class="archive">
+
+            <!-- Events — 6 Aufnahmen vorhanden -->
+            <div class="archive-item reveal">
+                <button class="tile" type="button" data-project="events">
+                    <span class="tile__media">
+                        <img src="img/portfolio/event/eventGal/Event1-thumb.webp"
+                             data-i18n-alt="ev.1"
+                             alt="Schwarzweiss: Festivalpublikum unter einem Leuchtschild mit der Aufschrift Pizza, Kronleuchter über der Menge"
+                             width="600" height="400" loading="eager" decoding="async" />
+                    </span>
+                    <span class="tile__meta">
+                        <span class="tile__title" data-i18n="work.events.label">Events &amp; Kultur</span>
+                        <span class="tile__count"><span data-count>6</span> <span
+                                data-i18n="work.images">Bilder</span></span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Portrait & Shooting — 8 Aufnahmen vorhanden -->
+            <div class="archive-item reveal delay-1">
+                <button class="tile" type="button" data-project="portraits">
+                    <span class="tile__media">
+                        <img src="img/portfolio/shooting/shootingGal/Shooting3-thumb.webp"
+                             data-i18n-alt="po.3"
+                             alt="Schwarzweiss: lachende Frau mit lockigem Haar in schwarzem Pullover am Fenster"
+                             width="600" height="900" loading="lazy" decoding="async" />
+                    </span>
+                    <span class="tile__meta">
+                        <span class="tile__title" data-i18n="work.portraits.label">Portrait &amp; Shooting</span>
+                        <span class="tile__count"><span data-count>8</span> <span
+                                data-i18n="work.images">Bilder</span></span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- ===================================================================
+                 RESERVIERTE PLÄTZE — Business und Journalismus
+
+                 Die Flächen stehen schon im Raster, die Aufnahmen folgen.
+                 So wird aus einem Platzhalter eine richtige Kachel:
+
+                 1. Bilder ablegen, dem bestehenden Muster folgend, z. B.
+                    img/portfolio/business/businessGal/Business1.webp
+                    plus Business1-thumb.webp (600px breit) als Titelbild.
+                 2. In js/business.js den kommentierten Block in PROJECTS
+                    aktivieren und die Bilder eintragen.
+                 3. In js/i18n.business.js die Bildbeschreibungen unter
+                    bu.1 ... bzw. jo.1 ... in beiden Sprachen ergänzen.
+                 4. Hier das <div class="tile tile--empty"> gegen eine Kachel
+                    nach dem Vorbild von Events oben tauschen
+                    (button.tile mit data-project="business").
+
+                 Bis dahin ist der Platzhalter bewusst kein Button: es gibt
+                 noch nichts zu öffnen, und ein Knopf ohne Wirkung wäre für
+                 Besucherinnen wie für Screenreader irritierend.
+                 =================================================================== -->
+
+            <div class="archive-item reveal delay-2">
+                <div class="tile tile--empty">
+                    <span class="tile--empty__mark" aria-hidden="true"></span>
+                    <span class="tile__title" data-i18n="work.business.label">Business &amp; Branding</span>
+                    <p class="tile--empty__hint" data-i18n="work.soon">Bilder folgen</p>
+                </div>
+            </div>
+
+            <div class="archive-item reveal">
+                <div class="tile tile--empty">
+                    <span class="tile--empty__mark" aria-hidden="true"></span>
+                    <span class="tile__title" data-i18n="work.journalism.label">Journalismus</span>
+                    <p class="tile--empty__hint" data-i18n="work.soon">Bilder folgen</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===================== STIMMEN ===================== -->
+<!-- ACHTUNG Melanie: Die drei Zitate sind Platzhalter. Bitte durch echte
+     Rückmeldungen ersetzen (mit Einverständnis) oder den Abschnitt
+     entfernen, solange keine vorliegen. Erfundene Bewertungen wären
+     rechtlich heikel. Die Texte stehen auch in js/i18n.business.js. -->
+<section id="voices" class="rule-top glass">
+    <div class="wrap">
+        <div class="section-head reveal">
+            <h2 data-i18n-html="voices.h2">In ihren<br>Worten</h2>
+        </div>
+        <div class="cols3">
+            <div class="quote reveal">
+                <p data-i18n="voices.1">„Platzhalter — hier kommt eine echte Rückmeldung hin, etwa von einer
+                    Veranstalterin oder einem Unternehmen. Zwei bis vier Sätze wirken am besten."</p>
+                <div class="quote__who">
+                    <strong data-i18n="voices.who1">Name</strong>
+                    <span data-i18n="voices.role1">Bereich · Ort</span>
+                </div>
+            </div>
+            <div class="quote reveal delay-1">
+                <p data-i18n="voices.2">„Platzhalter — am überzeugendsten sind Rückmeldungen, die eine konkrete
+                    Sorge benennen und erzählen, wie es dann tatsächlich lief."</p>
+                <div class="quote__who">
+                    <strong data-i18n="voices.who1">Name</strong>
+                    <span data-i18n="voices.role1">Bereich · Ort</span>
+                </div>
+            </div>
+            <div class="quote reveal delay-2">
+                <p data-i18n="voices.3">„Platzhalter — auch ein kurzer Satz genügt, wenn er echt ist."</p>
+                <div class="quote__who">
+                    <strong data-i18n="voices.who1">Name</strong>
+                    <span data-i18n="voices.role1">Bereich · Ort</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== ÜBER MICH ===================== -->
+<section id="about" class="rule-top glass">
+    <div class="wrap wrap--narrow about-grid">
+        <div class="about-text reveal">
+            <h2 data-i18n-html="about.h2">Keine<br>Inszenierung.</h2>
+            <p data-i18n="about.p1">
+                Ich stelle keine Momente her, ich warte auf sie. Als Beobachterin mitten im Geschehen
+                halte ich fest, was ohnehin passiert — möglichst natürlich und ohne Regieanweisung.
+            </p>
+            <p data-i18n="about.p2">
+                Geboren im Zürcher Oberland, lebe ich seit einigen Jahren in Zürich. Als Reportage-
+                und Portraitfotografin interessiert mich besonders die Geschichte hinter den
+                Gesichtern — von Anlässen und Konzerten bis zu kulturellen Veranstaltungen und
+                redaktionellen Aufträgen.
+            </p>
+            <p data-i18n="about.p3">
+                Aktuell absolviere ich den Studiengang Fotografie am MAZ, bis Sommer 2027. Zuvor
+                studierte ich an der ZHAW Soziale Arbeit und arbeitete fünf Jahre mit Jugendlichen im
+                betreuten Wohnen — eine Schule des Zuhörens, die meine Arbeit bis heute prägt.
+            </p>
+
+            <div class="about-lists">
+                <div>
+                    <h3 data-i18n="about.focusTitle">Schwerpunkte</h3>
+                    <ul>
+                        <li data-i18n="about.focus1">Events &amp; Kultur</li>
+                        <li data-i18n="about.focus2">Portrait &amp; Reportage</li>
+                        <li data-i18n="about.focus3">Business &amp; Branding</li>
+                        <li data-i18n="about.focus4">Journalismus</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="about.baseTitle">Standort</h3>
+                    <ul>
+                        <li data-i18n="about.base1">Zürich, CH</li>
+                        <li data-i18n="about.base2">Schweizweit unterwegs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <figure class="about-media reveal delay-1" style="margin:0">
+            <img src="img/selfportrait/selfportrait.webp"
+                 data-i18n-alt="about.alt"
+                 alt="Schwarzweiss: Melanie Michel mit einem Glas in der Hand vor einer Containerwand"
+                 width="1875" height="2500" loading="lazy" decoding="async" />
+        </figure>
+    </div>
+</section>
+
+<!-- ===================== FRAGEN ===================== -->
+<section id="faq" class="rule-top glass">
+    <div class="wrap wrap--narrow faq-grid">
+        <div class="reveal">
+            <h2 data-i18n-html="faq.h2">Bevor du<br>zögerst.</h2>
+            <p class="section-note" data-i18n="faq.intro">
+                Das, was mir Auftraggeberinnen und Auftraggeber vorher erzählen. Wenn deine Frage
+                nicht dabei ist: einfach fragen.
+            </p>
+        </div>
+        <div>
+            <details>
+                <summary><span data-i18n="faq.q1">„Ich bin nicht fotogen und werde vor der Kamera steif."</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a1">
+                    Das sagen fast alle. Meine Arbeit lebt nicht von Posen — es gibt nichts
+                    vorzuführen. Ich halte fest, was ohnehin passiert, deshalb ist Steifheit kein
+                    Problem, das gelöst werden muss. Die verkrampften Momente landen einfach nicht
+                    in der Auswahl.
+                </p>
+            </details>
+            <details>
+                <summary><span data-i18n="faq.q2">„Wir wollen nicht den ganzen Tag dirigiert werden."</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a2">
+                    Werdet ihr nicht. Ich beobachte weit mehr als ich anweise. Die meisten vergessen
+                    mich in der ersten Stunde — genau darum geht es. Ihr macht euren Anlass, ich
+                    mache die Aufnahmen.
+                </p>
+            </details>
+            <details>
+                <summary><span data-i18n="faq.q3">„Ist unser Anlass zu klein oder zu speziell?"</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a3">
+                    Ungewöhnliche Aufträge mag ich am liebsten. Ein Werkstattbesuch, eine Lesung im
+                    Hinterzimmer, ein einzelnes ehrliches Portrait — Grösse und Konvention
+                    entscheiden nicht darüber, ob etwas es wert ist, dokumentiert zu werden.
+                </p>
+            </details>
+            <details>
+                <!-- TODO Melanie: Falls du mit Tagessätzen oder einem Einstiegspreis
+                     arbeiten willst, gehört die Zahl genau hier hin. Bewusst ohne
+                     Betrag gelassen, damit nichts Falsches online steht.
+                     Auch in js/i18n.business.js anpassen. -->
+                <summary><span data-i18n="faq.q4">„Was kostet das, bevor ich überhaupt schreibe?"</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a4">
+                    Eine Anfrage kostet nichts und verpflichtet zu nichts. Schick mir die grobe
+                    Ausgangslage — Umfang, Ort, Zeitraum — und du bekommst eine ehrliche Zahl für
+                    genau diesen Auftrag, keine aufgeblasenen Pakete.
+                </p>
+            </details>
+
+            <div class="faq-more">
+                <a class="link-underline" href="#contact" data-i18n="faq.more">Noch unsicher? Schreib einfach →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== KONTAKT ===================== -->
+<section id="contact" class="rule-top">
+    <div class="wrap wrap--narrow contact-grid">
+        <div class="reveal">
+            <h2 data-i18n="contact.h2">Anfragen.</h2>
+            <p class="section-note" data-i18n="contact.intro">
+                Schreib mir die konkrete Ausgangslage: was, wann, wo und in welchem Umfang. Du
+                bekommst eine Antwort mit einer Zahl darin.
+            </p>
+            <div class="contact-lines">
+                <a href="mailto:melaniemichelfotografie@gmail.com">melaniemichelfotografie@gmail.com</a><br>
+                <a href="https://www.instagram.com/_melaniemichelfotografie" target="_blank" rel="noopener">
+                    @_melaniemichelfotografie
+                </a>
+            </div>
+        </div>
+
+        <div class="reveal delay-1">
+            <form id="enquiry-form" data-recipient="mailto:melaniemichelfotografie@gmail.com">
+                <div class="row2">
+                    <label class="visually-hidden" for="f-name" data-i18n="form.name">Name</label>
+                    <input class="field" id="f-name" name="name" type="text" required
+                           autocomplete="name" data-i18n-placeholder="form.name" placeholder="Name">
+
+                    <label class="visually-hidden" for="f-email" data-i18n="form.email">E-Mail</label>
+                    <input class="field" id="f-email" name="email" type="email" required
+                           autocomplete="email" data-i18n-placeholder="form.email" placeholder="E-Mail">
+                </div>
+
+                <div>
+                    <label class="visually-hidden" for="f-scope" data-i18n="form.scope">Bereich</label>
+                    <select class="field" id="f-scope" name="scope" required>
+                        <option value="" disabled selected data-i18n="form.scope">Bereich</option>
+                        <option value="event" data-i18n="form.scopeEvent">Event &amp; Kultur</option>
+                        <option value="portrait" data-i18n="form.scopePortrait">Portrait &amp; Shooting</option>
+                        <option value="business" data-i18n="form.scopeBusiness">Business &amp; Branding</option>
+                        <option value="journalism" data-i18n="form.scopeJournalism">Journalismus &amp; Redaktion</option>
+                        <option value="other" data-i18n="form.scopeOther">Etwas anderes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="visually-hidden" for="f-message" data-i18n="form.message">Details zum Vorhaben</label>
+                    <textarea class="field" id="f-message" name="message" rows="4" required
+                              data-i18n-placeholder="form.message"
+                              placeholder="Details zum Vorhaben"></textarea>
+                </div>
+
+                <button class="btn" type="submit" data-i18n="form.submit">Anfrage senden</button>
+
+                <p class="form-note" data-i18n="form.note">
+                    Die Anfrage wird in deinem Mailprogramm vorbereitet, damit du sie vor dem
+                    Absenden noch sehen kannst.
+                </p>
+                <p class="form-status" id="form-status" hidden role="status"></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer glass">
+    <div class="wrap foot-in">
+        <span data-i18n="footer.rights">© 2026 Melanie Michel Fotografie — Zürich</span>
+        <nav>
+            <a href="weddings.html" data-i18n="nav.switch">Hochzeiten</a>
+            <a href="impressum.html" data-i18n="footer.impressum">Impressum</a>
+            <a href="datenschutz.html" data-i18n="footer.datenschutz">Datenschutz</a>
+        </nav>
+    </div>
+</footer>
+
+<!-- ===================== PROJEKTANSICHT ===================== -->
+<dialog class="project" id="project" data-i18n-aria-label="project.label" aria-label="Projektansicht">
+    <button class="project__close" type="button" data-i18n="project.close">Schliessen</button>
+    <div class="project__head wrap wrap--narrow">
+        <h2></h2>
+        <p></p>
+    </div>
+    <div class="project__grid wrap wrap--narrow"></div>
+</dialog>
+
+<!-- ===================== COOKIE-HINWEIS ===================== -->
+<div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-banner__content">
+        <p class="cookie-banner__text">
+            <span data-i18n="cookie.text">Diese Website verwendet Cookies, um die technische Funktionalität zu
+                gewährleisten. Wir verwenden keine Tracking-Tools oder Analyse-Cookies. Weitere
+                Informationen findest du in der </span><a href="datenschutz.html"
+                data-i18n="cookie.link">Datenschutzerklärung</a><span data-i18n="cookie.textEnd">.</span>
+        </p>
+        <div class="cookie-banner__actions">
+            <button class="cookie-banner__btn cookie-banner__btn--decline" id="cookieDecline"
+                    data-i18n="cookie.decline">Ablehnen</button>
+            <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAccept"
+                    data-i18n="cookie.accept">Akzeptieren</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/i18n.common.js" defer></script>
+<script src="js/i18n.business.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/business.js" defer></script>
+<script>
+    // Foto hinter dem Halbton-Raster. Inline, damit das Bild nicht doppelt
+    // im CSS gepflegt werden muss.
+    // Bewusst eine Event-Aufnahme: img/frontpage/frontpage.webp zeigt einen
+    // Brautstrauss und gehoert damit in die Hochzeits-Ansicht, nicht hierher.
+    document.getElementById('ambient').style.backgroundImage =
+        "url('img/portfolio/event/eventGal/Event2.webp')";
+</script>
+</body>
+</html>
