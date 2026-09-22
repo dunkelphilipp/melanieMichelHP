@@ -80,6 +80,7 @@
 
         const dlgImg = dlg.querySelector('.lightbox__img');
         const counter = dlg.querySelector('.lightbox__counter');
+        const cursorEl = document.getElementById('cursor');
         const closeBtn = dlg.querySelector('.lightbox__close');
         const prevBtn = dlg.querySelector('.lightbox__nav--prev');
         const nextBtn = dlg.querySelector('.lightbox__nav--next');
@@ -107,6 +108,15 @@
             lastFocused = document.activeElement;
             show(i);
             dlg.showModal();
+
+            // showModal() hebt den Dialog in die Top-Layer. Die zeichnet über
+            // allem anderen, unabhängig von z-index — der eigene Cursor bliebe
+            // also darunter verborgen. Deshalb wandert er für die Dauer der
+            // Vollbildansicht in den Dialog hinein.
+            if (cursorEl) {
+                dlg.appendChild(cursorEl);
+                cursorEl.classList.add('in-lightbox');
+            }
         }
 
         function close() {
@@ -137,6 +147,13 @@
         // Fokus zurück auf das auslösende Bild
         dlg.addEventListener('close', () => {
             dlgImg.removeAttribute('src');
+
+            // Cursor zurück in den normalen Seitenfluss
+            if (cursorEl) {
+                cursorEl.classList.remove('in-lightbox');
+                document.body.appendChild(cursorEl);
+            }
+
             if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
         });
 

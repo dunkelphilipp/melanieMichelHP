@@ -97,14 +97,18 @@ img { max-width: 100%; }
     top: 1rem;
 }
 
-/* ---------- Cursor ---------- */
+/* ---------- Cursor ----------
+   Weiss plus mix-blend-mode: difference ergibt das echte Negativ:
+   difference rechnet |Hintergrund − Quelle|, mit Weiss also 255 − Wert.
+   Alles unter dem Kreis — Text wie Bild — erscheint invertiert.
+   (Mit einem dunklen Kreis bliebe der Effekt praktisch unsichtbar.) */
 #cursor {
     position: fixed;
     top: 0;
     left: 0;
     width: 14px;
     height: 14px;
-    background: var(--ink);
+    background: #fff;
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -114,6 +118,28 @@ img { max-width: 100%; }
 }
 
 #cursor.big { width: 52px; height: 52px; }
+
+/* In der Vollbildansicht etwas grösser, damit der Kreis auf dem dunklen
+   Grund gut zu sehen ist; über den Bedienelementen wächst er wie sonst. */
+#cursor.in-lightbox { width: 26px; height: 26px; }
+#cursor.in-lightbox.big { width: 52px; height: 52px; }
+
+/* Der eigene Kreis ersetzt den System-Cursor vollständig: keine Hand
+   über Links, kein Textbalken über Text — nur der Kreis mit dem Negativ.
+   body{cursor:none} allein genügt nicht, weil die Browser-Stylesheets
+   cursor:pointer direkt auf a/button setzen und Vererbung so überstimmen. */
+@media (pointer: fine) {
+    a,
+    button,
+    summary,
+    input,
+    textarea,
+    select,
+    label,
+    [role="button"] {
+        cursor: none;
+    }
+}
 
 @media (pointer: coarse) {
     #cursor { display: none; }
@@ -232,7 +258,6 @@ nav.site-nav {
     padding: 0;
     border: none;
     background: transparent;
-    cursor: none;
 }
 
 @media (pointer: coarse) {
@@ -335,7 +360,6 @@ h1 {
     text-decoration: none;
     border: none;
     font-family: inherit;
-    cursor: none;
     transition: background .25s;
 }
 
@@ -420,21 +444,6 @@ h1 {
     font-variant-numeric: tabular-nums;
 }
 
-/* Fettstift-Markierung, rein in CSS gezeichnet — keine Script-Schrift.
-   Proportionaler Abstand und gedämpfte Deckkraft, damit die Markierung
-   wie eine Notiz auf dem Bogen wirkt und nicht das Bild überdeckt. */
-.frame.select .frame-img::after {
-    content: '';
-    position: absolute;
-    inset: 7%;
-    border: 2px solid var(--rust);
-    border-radius: 48% 52% 47% 53% / 52% 47% 53% 48%;
-    opacity: .6;
-    pointer-events: none;
-}
-
-.frame.select .frame-no { color: var(--rust); }
-
 /* ---------- Abschnitts-Grundgerüst ---------- */
 section { padding: 4.5rem 0; }
 
@@ -512,8 +521,6 @@ h2 {
 @media (min-width: 1024px) {
     .sheet { grid-template-columns: repeat(4, 1fr); }
 }
-
-.sheet .frame-img { cursor: none; }
 
 @media (pointer: coarse) {
     .sheet .frame-img { cursor: pointer; }
@@ -703,7 +710,6 @@ summary {
     align-items: flex-start;
     gap: 1.5rem;
     list-style: none;
-    cursor: none;
     font-size: 1.06rem;
     font-weight: 500;
     line-height: 1.4;
@@ -880,8 +886,11 @@ footer {
     font-size: 2.5rem;
     line-height: 1;
     padding: .5rem 1rem;
-    cursor: pointer;
     transition: color .25s;
+}
+
+@media (pointer: coarse) {
+    .lightbox__btn { cursor: pointer; }
 }
 
 .lightbox__btn:hover { color: var(--rust); }
@@ -951,8 +960,11 @@ footer {
     border: 1px solid var(--paper);
     background: transparent;
     color: var(--paper);
-    cursor: pointer;
     transition: background .25s, color .25s, border-color .25s;
+}
+
+@media (pointer: coarse) {
+    .cookie-banner__btn { cursor: pointer; }
 }
 
 .cookie-banner__btn--accept { background: var(--paper); color: var(--ink); }
