@@ -38,6 +38,11 @@
 
     <link rel="stylesheet" href="css/business.css" />
 
+    <!-- Das GIF nur vorladen, wenn Bewegung gewuenscht ist. Wer
+         prefers-reduced-motion gesetzt hat, bekommt unten im CSS ein
+         Einzelbild und muesste die 1,9 MB sonst umsonst laden. -->
+    <link rel="preload" as="image" href="img/background/halftone.gif"
+          media="(prefers-reduced-motion: no-preference)" />
     <link rel="preload" as="image" href="img/portfolio/event/eventGal/Event1-thumb.webp" />
 
     <!-- Sprache vor dem ersten Zeichnen festlegen — gleiche Logik wie in
@@ -77,7 +82,7 @@
 
 <div id="cursor" aria-hidden="true"></div>
 
-<!-- Halbton-Hintergrund: vorhandenes Foto plus Punktraster aus CSS -->
+<!-- Halbton-Hintergrund: animiertes GIF aus der Design-Vorlage (siehe CSS) -->
 <div id="ambient" aria-hidden="true"></div>
 
 <!-- ===================== NAV ===================== -->
@@ -481,13 +486,5 @@
 <script src="js/i18n.business.js" defer></script>
 <script src="js/i18n.js" defer></script>
 <script src="js/business.js" defer></script>
-<script>
-    // Foto hinter dem Halbton-Raster. Inline, damit das Bild nicht doppelt
-    // im CSS gepflegt werden muss.
-    // Bewusst eine Event-Aufnahme: img/frontpage/frontpage.webp zeigt einen
-    // Brautstrauss und gehoert damit in die Hochzeits-Ansicht, nicht hierher.
-    document.getElementById('ambient').style.backgroundImage =
-        "url('img/portfolio/event/eventGal/Event2.webp')";
-</script>
 </body>
 </html>

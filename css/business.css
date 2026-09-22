@@ -143,36 +143,32 @@ img { max-width: 100%; }
 }
 
 /* ---------- Halbton-Hintergrund ----------
-   Die Vorlage legt ein eingebettetes Halbton-GIF hinter die Seite. Hier
-   entsteht dasselbe Bild aus einem vorhandenen Foto plus Punktraster in
-   CSS — kein zusaetzliches Asset, nur wenige Zeilen. */
+   Das animierte Halbton-GIF aus der Design-Vorlage, unveraendert
+   uebernommen (img/background/halftone.gif, 540x540, 50 Bilder, 2,5 s
+   Schleife). Es ersetzt das frueher hier verwendete Foto samt
+   CSS-Punktraster — das Raster waere jetzt doppelt.
+   Das Bild wird hier und nicht per Skript gesetzt, damit die Regel fuer
+   prefers-reduced-motion weiter unten greifen kann. */
 #ambient {
     position: fixed;
     inset: 0;
     z-index: -2;
+    background-color: #000;
+    background-image: url('../img/background/halftone.gif');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     pointer-events: none;
 }
 
-/* Punktraster */
-#ambient::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle at center, #000 0 30%, transparent 32%);
-    background-size: 7px 7px;
-    mix-blend-mode: multiply;
-    opacity: .6;
-}
-
-/* Dunkler Schleier, damit der Text durchgehend lesbar bleibt */
+/* Dunkler Schleier, damit der Text ueber den hellen Stellen der Animation
+   durchgehend lesbar bleibt. Die Vorlage kommt mit .45 aus, hier steht
+   deutlich mehr Text auf der Flaeche. */
 #ambient::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, .74);
+    background: rgba(0, 0, 0, .68);
 }
 
 .wrap {
@@ -1186,4 +1182,8 @@ summary:focus-visible,
     .reveal { opacity: 1; transform: none; }
     .project { transition: none; }
     .project__media img { opacity: 1; transform: none; clip-path: none; }
+
+    /* Eine endlos laufende Animation ueber die ganze Flaeche waere hier
+       genau das, was abgewaehlt wurde — deshalb ein Einzelbild daraus. */
+    #ambient { background-image: url('../img/background/halftone-static.webp'); }
 }
