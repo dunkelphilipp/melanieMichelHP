@@ -85,13 +85,12 @@
         const prevBtn = dlg.querySelector('.lightbox__nav--prev');
         const nextBtn = dlg.querySelector('.lightbox__nav--next');
 
-        const slides = triggers.map((btn) => {
-            const img = btn.querySelector('img');
-            return {
-                full: btn.getAttribute('data-full'),
-                alt: img ? img.alt : ''
-            };
-        });
+        // Der Alt-Text wird erst beim Anzeigen gelesen, nicht hier zwischen-
+        // gespeichert: Bei einem Sprachwechsel waere eine Kopie sonst veraltet.
+        const slides = triggers.map((btn) => ({
+            full: btn.getAttribute('data-full'),
+            img: btn.querySelector('img')
+        }));
 
         let index = 0;
         let lastFocused = null;
@@ -100,7 +99,7 @@
             index = (i + slides.length) % slides.length;
             const slide = slides[index];
             dlgImg.src = slide.full;
-            dlgImg.alt = slide.alt;
+            dlgImg.alt = slide.img ? slide.img.alt : '';
             if (counter) counter.textContent = (index + 1) + ' / ' + slides.length;
         }
 
@@ -222,14 +221,17 @@
             const place = value('place');
             const message = value('message');
 
-            const subject = 'Hochzeitsanfrage' + (date ? ' — ' + date : '');
+            // Betreff und Text in der aktiven Sprache
+            const t = (key, fallback) => (window.i18n ? window.i18n.t(key) : '') || fallback;
+
+            const subject = t('mail.subject', 'Hochzeitsanfrage') + (date ? ' — ' + date : '');
             const body = [
-                'Namen: ' + names,
-                'E-Mail: ' + email,
-                'Datum: ' + (date || '—'),
-                'Ort: ' + (place || '—'),
+                t('mail.names', 'Namen') + ': ' + names,
+                t('mail.email', 'E-Mail') + ': ' + email,
+                t('mail.date', 'Datum') + ': ' + (date || '—'),
+                t('mail.place', 'Ort') + ': ' + (place || '—'),
                 '',
-                'Nachricht:',
+                t('mail.message', 'Nachricht') + ':',
                 message || '—'
             ].join('\n');
 
@@ -239,8 +241,9 @@
 
             if (status) {
                 status.hidden = false;
-                status.textContent = 'Dein Mailprogramm öffnet sich mit der vorbereiteten Anfrage. ' +
-                    'Falls nicht, schreib mir direkt an ' + recipient.replace('mailto:', '') + '.';
+                status.textContent = t('form.status',
+                    'Dein Mailprogramm öffnet sich mit der vorbereiteten Anfrage. ' +
+                    'Falls nicht, schreib mir direkt an ') + recipient.replace('mailto:', '') + '.';
             }
         });
     })();

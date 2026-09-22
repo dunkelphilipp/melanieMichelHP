@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hochzeitsfotografie Zürich — Melanie Michel Fotografie</title>
-    <meta name="description"
+    <title data-i18n="meta.title">Hochzeitsfotografie Zürich — Melanie Michel Fotografie</title>
+    <meta name="description" data-i18n-content="meta.description"
           content="Dokumentarische Hochzeitsfotografie aus Zürich. Keine gestellten Posen, keine fremde Shotlist — der Tag, wie er wirklich war." />
 
     <!-- Security Headers — identisch streng wie index.html.
@@ -15,13 +15,18 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="robots" content="index, follow">
 
+    <!-- Deutsch ist die Grundfassung, Englisch läuft über ?lang=en -->
     <link rel="canonical" href="https://www.melaniemichel.ch/weddings.html" />
+    <link rel="alternate" hreflang="de" href="https://www.melaniemichel.ch/weddings.html" />
+    <link rel="alternate" hreflang="en" href="https://www.melaniemichel.ch/weddings.html?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://www.melaniemichel.ch/weddings.html" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_CH" />
-    <meta property="og:title" content="Hochzeitsfotografie Zürich — Melanie Michel Fotografie" />
-    <meta property="og:description"
+    <meta property="og:title" data-i18n-content="og.title"
+          content="Hochzeitsfotografie Zürich — Melanie Michel Fotografie" />
+    <meta property="og:description" data-i18n-content="og.description"
           content="Dokumentarische Hochzeitsfotografie aus Zürich. Der Tag, wie er wirklich war." />
     <meta property="og:url" content="https://www.melaniemichel.ch/weddings.html" />
     <meta property="og:image"
@@ -34,10 +39,45 @@
 
     <link rel="preload" as="image"
           href="img/portfolio/wedding/weddingGal/Hochzeit3-thumb.webp" />
+
+    <!-- Sprache vor dem ersten Zeichnen festlegen: Reihenfolge ist ?lang=,
+         gespeicherte Wahl, Browsersprache, dann Deutsch. Nur wenn Englisch
+         gewünscht ist, wird der Inhalt kurz verborgen — sonst blitzte der
+         deutsche Text auf. Ohne JavaScript greift keine der Regeln und die
+         deutsche Fassung bleibt sichtbar. -->
+    <script>
+        (function () {
+            var supported = ['de', 'en'], fallback = 'de', lang = null;
+            try {
+                var fromUrl = new URLSearchParams(location.search).get('lang');
+                if (fromUrl && supported.indexOf(fromUrl) >= 0) lang = fromUrl;
+            } catch (e) { /* ältere Browser */ }
+            if (!lang) {
+                try {
+                    var saved = localStorage.getItem('mm_lang');
+                    if (saved && supported.indexOf(saved) >= 0) lang = saved;
+                } catch (e) { /* Privatmodus */ }
+            }
+            if (!lang) {
+                var nav = (navigator.language || fallback).slice(0, 2).toLowerCase();
+                lang = supported.indexOf(nav) >= 0 ? nav : fallback;
+            }
+            window.__mmLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.setAttribute('data-lang', lang);
+            if (lang !== fallback) {
+                document.documentElement.classList.add('i18n-pending');
+                // Notbremse: Inhalt darf nie dauerhaft verborgen bleiben
+                setTimeout(function () {
+                    document.documentElement.classList.remove('i18n-pending');
+                }, 1500);
+            }
+        })();
+    </script>
 </head>
 <body>
 
-<a class="skip-link" href="#portfolio">Direkt zum Portfolio</a>
+<a class="skip-link" href="#portfolio" data-i18n="skip.portfolio">Direkt zum Portfolio</a>
 
 <div id="cursor" aria-hidden="true"></div>
 
@@ -47,25 +87,35 @@
         <a class="brand" href="index.html">
             <img src="img/Logo/MelanieMichelLogo.webp" alt="" width="120" height="26"
                  loading="eager" decoding="async" />
-            <span class="visually-hidden">Melanie Michel Fotografie — </span>Hochzeiten
+            <span class="visually-hidden" data-i18n="brand.sr">Melanie Michel Fotografie — </span><span
+                data-i18n="brand.suffix">Hochzeiten</span>
         </a>
 
         <div class="nav-links">
-            <a href="#haltung">Haltung</a>
-            <a href="#portfolio">Bilder</a>
-            <a href="#stimmen">Stimmen</a>
-            <a href="#fragen">Fragen</a>
-            <a href="#anfrage">Anfrage</a>
+            <a href="#haltung" data-i18n="nav.haltung">Haltung</a>
+            <a href="#portfolio" data-i18n="nav.bilder">Bilder</a>
+            <a href="#stimmen" data-i18n="nav.stimmen">Stimmen</a>
+            <a href="#fragen" data-i18n="nav.fragen">Fragen</a>
+            <a href="#anfrage" data-i18n="nav.anfrage">Anfrage</a>
         </div>
 
         <div class="nav-right">
             <!-- Wechsel in die Business-Ansicht. business.html entsteht in einem
                  eigenen Feature-Branch; bis dahin zeigt der Link ins Leere. -->
-            <a class="nav-switch" href="business.html">Business<span
-                    class="nav-switch__rest"> &amp; Editorial</span></a>
+            <a class="nav-switch" href="business.html"><span
+                    data-i18n="nav.switch">Business</span><span
+                    class="nav-switch__rest" data-i18n="nav.switchRest"> &amp; Editorial</span></a>
+
+            <div class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Sprache">
+                <button type="button" data-lang-switch="de" aria-pressed="true"
+                        data-i18n-title="lang.deTitle" title="Auf Deutsch anzeigen">DE</button>
+                <span class="lang-switch__sep" aria-hidden="true">/</span>
+                <button type="button" data-lang-switch="en" aria-pressed="false"
+                        data-i18n-title="lang.enTitle" title="Show in English">EN</button>
+            </div>
 
             <button class="nav-burger" type="button" aria-expanded="false"
-                    aria-controls="nav-mobile" aria-label="Menü öffnen">
+                    aria-controls="nav-mobile" data-i18n-aria-label="nav.menu" aria-label="Menü öffnen">
                 <span class="nav-burger__bar"></span>
                 <span class="nav-burger__bar"></span>
                 <span class="nav-burger__bar"></span>
@@ -74,12 +124,12 @@
     </div>
 
     <div class="wrap nav-mobile" id="nav-mobile">
-        <a href="#haltung">Haltung</a>
-        <a href="#portfolio">Bilder</a>
-        <a href="#stimmen">Stimmen</a>
-        <a href="#fragen">Fragen</a>
-        <a href="#anfrage">Anfrage</a>
-        <a href="business.html">Business &amp; Editorial</a>
+        <a href="#haltung" data-i18n="nav.haltung">Haltung</a>
+        <a href="#portfolio" data-i18n="nav.bilder">Bilder</a>
+        <a href="#stimmen" data-i18n="nav.stimmen">Stimmen</a>
+        <a href="#fragen" data-i18n="nav.fragen">Fragen</a>
+        <a href="#anfrage" data-i18n="nav.anfrage">Anfrage</a>
+        <a href="business.html" data-i18n="nav.switchFull">Business &amp; Editorial</a>
     </div>
 </nav>
 
@@ -87,15 +137,15 @@
 <header class="hero">
     <div class="wrap hero-grid">
         <div>
-            <h1>der tag,<br>wie er wirklich<br>war.</h1>
-            <p class="lede">
+            <h1 data-i18n-html="hero.h1">der tag,<br>wie er wirklich<br>war.</h1>
+            <p class="lede" data-i18n="hero.lede">
                 Dokumentarische Hochzeitsfotografie aus Zürich. Niemand sagt dir, wo du stehen sollst,
                 was du mit den Händen machen sollst oder dass du es für die Kamera bitte noch einmal
                 machst. Ich beobachte — und fotografiere, was ohnehin schon da ist.
             </p>
             <div class="hero-actions">
-                <a class="btn" href="#anfrage">Datum anfragen</a>
-                <a class="link-q" href="#fragen">Wir sind kamerascheu — geht das trotzdem?</a>
+                <a class="btn" href="#anfrage" data-i18n="hero.cta">Datum anfragen</a>
+                <a class="link-q" href="#fragen" data-i18n="hero.linkQ">Wir sind kamerascheu — geht das trotzdem?</a>
             </div>
         </div>
 
@@ -103,34 +153,34 @@
             <a class="frame" href="#portfolio">
                 <span class="frame-img">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit3-thumb.webp"
+                         data-i18n-alt="img.3"
                          alt="Brautpaar verlässt Hand in Hand die Trauung durch einen Arkadengang, Gäste lassen Seifenblasen steigen"
                          width="600" height="900" loading="eager" decoding="async" />
                 </span>
-                <span class="frame-no">17A</span>
             </a>
             <a class="frame" href="#portfolio">
                 <span class="frame-img">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit11-thumb.webp"
+                         data-i18n-alt="img.11"
                          alt="Bräutigam küsst die Braut im Arkadengang auf die Stirn, sie hält den Brautstrauss"
                          width="600" height="900" loading="eager" decoding="async" />
                 </span>
-                <span class="frame-no">18</span>
             </a>
             <a class="frame" href="#portfolio">
                 <span class="frame-img">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit9-thumb.webp"
+                         data-i18n-alt="img.9"
                          alt="Brautstrauss aus Rosen, Eukalyptus und Wachsblumen vor einem weissen Anzug"
                          width="600" height="900" loading="lazy" decoding="async" />
                 </span>
-                <span class="frame-no">18A</span>
             </a>
             <a class="frame" href="#portfolio">
                 <span class="frame-img">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit7-thumb.webp"
+                         data-i18n-alt="img.7"
                          alt="Drei Hochzeitsgäste in gelben Kleidern umarmen sich am gedeckten Tisch"
                          width="600" height="900" loading="lazy" decoding="async" />
                 </span>
-                <span class="frame-no">19</span>
             </a>
         </div>
     </div>
@@ -139,26 +189,26 @@
 <!-- ===================== HALTUNG ===================== -->
 <section id="haltung" class="rule-top">
     <div class="wrap">
-        <h2 class="reveal">was das ist,<br>und was nicht</h2>
+        <h2 class="reveal" data-i18n-html="haltung.h2">was das ist,<br>und was nicht</h2>
         <div class="three">
             <div class="reveal">
-                <h3>Du wirst nicht gestellt</h3>
-                <p>
+                <h3 data-i18n="haltung.1.h3">Du wirst nicht gestellt</h3>
+                <p data-i18n="haltung.1.p">
                     Ich arrangiere dich nicht, drücke dir keine Requisiten in die Hand und bitte nie
                     um einen Moment zum zweiten Mal. Wenn du einen Tag voller Regieanweisungen
                     befürchtest: Das ist nicht der Tag, den ich anbiete.
                 </p>
             </div>
             <div class="reveal">
-                <h3>Keine Shotlist, die du nicht geschrieben hast</h3>
-                <p>
+                <h3 data-i18n="haltung.2.h3">Keine Shotlist, die du nicht geschrieben hast</h3>
+                <p data-i18n="haltung.2.p">
                     Keine Checkliste mit den immer gleichen vierzig Bildern. Wir halten die paar
                     Aufnahmen fest, die dir wirklich wichtig sind — alles andere ist der Tag selbst.
                 </p>
             </div>
             <div class="reveal">
-                <h3>Fotogen sein ist keine Voraussetzung</h3>
-                <p>
+                <h3 data-i18n="haltung.3.h3">Fotogen sein ist keine Voraussetzung</h3>
+                <p data-i18n="haltung.3.p">
                     Fast niemand fühlt sich fotogen. Das hört auf, eine Rolle zu spielen, sobald
                     niemand mehr etwas vorführt — ungefähr eine Stunde später, wenn du vergessen
                     hast, dass ich da bin.
@@ -171,8 +221,8 @@
 <!-- ===================== PORTFOLIO / KONTAKTBOGEN ===================== -->
 <section id="portfolio" class="rule-top">
     <div class="wrap">
-        <h2 class="reveal">aus den letzten<br>hochzeiten</h2>
-        <p class="section-intro reveal">
+        <h2 class="reveal" data-i18n-html="portfolio.h2">aus den letzten<br>hochzeiten</h2>
+        <p class="section-intro reveal" data-i18n="portfolio.intro">
             Bilder, wie sie vom Kontaktbogen kommen — die Zwischenmomente eingeschlossen, denn dort
             ist die Hochzeit meistens. Klick auf ein Bild, um es gross zu sehen.
         </p>
@@ -181,177 +231,177 @@
             <!-- Reihe 1 -->
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit1.webp"
-                        aria-label="Bild 1 von 15 gross anzeigen: Getränkefass mit Wein- und Bierflaschen">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit1.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit1-thumb.webp"
+                         data-i18n-alt="img.1"
                          alt="Getränkefass mit Wein- und Bierflaschen, dahinter Kerzenlicht im Dunkeln"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">01</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit2.webp"
-                        aria-label="Bild 2 von 15 gross anzeigen: Gast während der Trauung">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit2.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit2-thumb.webp"
+                         data-i18n-alt="img.2"
                          alt="Hochzeitsgast mit Brille blickt während der Trauung zur Seite, dahinter die Gästereihen"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">01A</figcaption>
             </figure>
 
             <figure class="frame frame--wide reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit5.webp"
-                        aria-label="Bild 3 von 15 gross anzeigen: Gäste im Freien, Schwarzweiss">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit5.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit5-thumb.webp"
+                         data-i18n-alt="img.5"
                          alt="Schwarzweiss: Gästin im Vordergrund, dahinter ein Paar mit Weinglas zwischen Bäumen"
                          width="600" height="400" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">02</figcaption>
             </figure>
 
             <!-- Reihe 2 -->
             <figure class="frame frame--wide reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit6.webp"
-                        aria-label="Bild 4 von 15 gross anzeigen: gedeckter Hochzeitstisch">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit6.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit6-thumb.webp"
+                         data-i18n-alt="img.6"
                          alt="Langer gedeckter Hochzeitstisch mit Kerzen und Girlanden aus Grün, im Hintergrund Lichterketten"
                          width="600" height="400" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">02A</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit3.webp"
-                        aria-label="Bild 5 von 15 gross anzeigen: Auszug des Brautpaars">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit3.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit3-thumb.webp"
+                         data-i18n-alt="img.3"
                          alt="Brautpaar verlässt Hand in Hand die Trauung durch einen Arkadengang, Gäste lassen Seifenblasen steigen"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">03</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit4.webp"
-                        aria-label="Bild 6 von 15 gross anzeigen: Gast mit Ansteckblume">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit4.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit4-thumb.webp"
+                         data-i18n-alt="img.4"
                          alt="Hochzeitsgast im Anzug zeigt auf die Ansteckblume an seinem Revers"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">03A</figcaption>
             </figure>
 
             <!-- Reihe 3 -->
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit7.webp"
-                        aria-label="Bild 7 von 15 gross anzeigen: Gäste umarmen sich am Tisch">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit7.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit7-thumb.webp"
+                         data-i18n-alt="img.7"
                          alt="Drei Hochzeitsgäste in gelben Kleidern umarmen sich am gedeckten Tisch"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">04</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit9.webp"
-                        aria-label="Bild 8 von 15 gross anzeigen: Brautstrauss">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit9.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit9-thumb.webp"
+                         data-i18n-alt="img.9"
                          alt="Brautstrauss aus Rosen, Eukalyptus und Wachsblumen vor einem weissen Anzug"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">04A</figcaption>
             </figure>
 
             <figure class="frame frame--wide reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit8.webp"
-                        aria-label="Bild 9 von 15 gross anzeigen: Gast mit Neugeborenem">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit8.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit8-thumb.webp"
+                         data-i18n-alt="img.8"
                          alt="Frau im roten Kleid hält ein Neugeborenes im Tragetuch, vor Bruchsteinmauer und Torbogen"
                          width="600" height="400" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">05</figcaption>
             </figure>
 
             <!-- Reihe 4 -->
             <figure class="frame frame--wide reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit15.webp"
-                        aria-label="Bild 10 von 15 gross anzeigen: Wildblumen auf dem Tisch">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit15.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit15-thumb.webp"
+                         data-i18n-alt="img.15"
                          alt="Wildblumen in Glasvasen auf dem Hochzeitstisch, dazwischen brennende Kerzen"
                          width="600" height="400" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">05A</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit10.webp"
-                        aria-label="Bild 11 von 15 gross anzeigen: lachende Gästin, Schwarzweiss">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit10.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit10-thumb.webp"
+                         data-i18n-alt="img.10"
                          alt="Schwarzweiss: lachende Hochzeitsgästin im Gespräch, Gegenlicht zwischen Bäumen"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">06</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit11.webp"
-                        aria-label="Bild 12 von 15 gross anzeigen: Brautpaar im Arkadengang">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit11.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit11-thumb.webp"
+                         data-i18n-alt="img.11"
                          alt="Bräutigam küsst die Braut im Arkadengang auf die Stirn, sie hält den Brautstrauss"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">06A</figcaption>
             </figure>
 
             <!-- Reihe 5 -->
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit12.webp"
-                        aria-label="Bild 13 von 15 gross anzeigen: Gast beim Apéro">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit12.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit12-thumb.webp"
+                         data-i18n-alt="img.12"
                          alt="Älterer Hochzeitsgast mit Schal und Weinglas beim Apéro"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">07</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit13.webp"
-                        aria-label="Bild 14 von 15 gross anzeigen: Gäste während der Trauung">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit13.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit13-thumb.webp"
+                         data-i18n-alt="img.13"
                          alt="Hochzeitsgäste sitzen während der Trauung im Freien, zwei Männer im Vordergrund"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">07A</figcaption>
             </figure>
 
             <figure class="frame reveal">
                 <button class="frame-img" type="button"
-                        data-full="img/portfolio/wedding/weddingGal/Hochzeit14.webp"
-                        aria-label="Bild 15 von 15 gross anzeigen: Sängerin am E-Piano">
+                        data-full="img/portfolio/wedding/weddingGal/Hochzeit14.webp">
                     <img src="img/portfolio/wedding/weddingGal/Hochzeit14-thumb.webp"
+                         data-i18n-alt="img.14"
                          alt="Sängerin am E-Piano mit Mikrofon vor einer Bruchsteinmauer"
                          width="600" height="900" loading="lazy" decoding="async" />
+                    <span class="visually-hidden" data-i18n="portfolio.enlarge">Grösser anzeigen</span>
                 </button>
-                <figcaption class="frame-no">08</figcaption>
             </figure>
         </div>
 
         <p class="sheet-foot">
-            <span>15 Aufnahmen — Zürich und Umgebung</span>
-            <span>Reportage &middot; verfügbares Licht</span>
+            <span data-i18n="portfolio.footLeft">15 Aufnahmen — Zürich und Umgebung</span>
+            <span data-i18n="portfolio.footRight">Reportage · verfügbares Licht</span>
         </p>
     </div>
 </section>
@@ -360,8 +410,8 @@
 <div class="band">
     <div class="band-bg" id="band-bg"></div>
     <div class="band-in wrap">
-        <blockquote>Ich stelle keine Momente her. Ich warte auf sie.</blockquote>
-        <p class="attrib">
+        <blockquote data-i18n="band.quote">Ich stelle keine Momente her. Ich warte auf sie.</blockquote>
+        <p class="attrib" data-i18n="band.attrib">
             Dieselbe Haltung wie in meiner Reportage- und Portraitarbeit — angewendet auf einen Tag,
             der nur ein einziges Mal läuft.
         </p>
@@ -372,24 +422,28 @@
 <!-- ACHTUNG Melanie: Die folgenden drei Zitate sind Platzhalter.
      Bitte durch echte Rückmeldungen von Hochzeitspaaren ersetzen (mit
      deren Einverständnis) — oder den ganzen Abschnitt entfernen, solange
-     noch keine vorliegen. Erfundene Bewertungen wären rechtlich heikel. -->
+     noch keine vorliegen. Erfundene Bewertungen wären rechtlich heikel.
+     Die Platzhaltertexte stehen auch in js/i18n.weddings.js. -->
 <section id="stimmen">
     <div class="wrap">
-        <h2 class="reveal">von den paaren</h2>
+        <h2 class="reveal" data-i18n="stimmen.h2">von den paaren</h2>
         <div class="quotes">
             <div class="quote reveal">
-                <p>„Platzhalter — hier kommt ein echtes Zitat eines Hochzeitspaars hin. Zwei bis
+                <p data-i18n="stimmen.1">„Platzhalter — hier kommt ein echtes Zitat eines Hochzeitspaars hin. Zwei bis
                     vier Sätze wirken erfahrungsgemäss am besten."</p>
-                <div class="who"><strong>Name des Paars</strong><span>Ort</span></div>
+                <div class="who"><strong data-i18n="stimmen.who">Name des Paars</strong><span
+                        data-i18n="stimmen.where">Ort</span></div>
             </div>
             <div class="quote reveal">
-                <p>„Platzhalter — am überzeugendsten sind Rückmeldungen, die eine konkrete Sorge
+                <p data-i18n="stimmen.2">„Platzhalter — am überzeugendsten sind Rückmeldungen, die eine konkrete Sorge
                     benennen und erzählen, wie der Tag dann tatsächlich verlief."</p>
-                <div class="who"><strong>Name des Paars</strong><span>Ort</span></div>
+                <div class="who"><strong data-i18n="stimmen.who">Name des Paars</strong><span
+                        data-i18n="stimmen.where">Ort</span></div>
             </div>
             <div class="quote reveal">
-                <p>„Platzhalter — auch ein kurzer Satz genügt, wenn er echt ist."</p>
-                <div class="who"><strong>Name des Paars</strong><span>Ort</span></div>
+                <p data-i18n="stimmen.3">„Platzhalter — auch ein kurzer Satz genügt, wenn er echt ist."</p>
+                <div class="who"><strong data-i18n="stimmen.who">Name des Paars</strong><span
+                        data-i18n="stimmen.where">Ort</span></div>
             </div>
         </div>
     </div>
@@ -398,28 +452,28 @@
 <!-- ===================== ABLAUF ===================== -->
 <section class="rule-top">
     <div class="wrap">
-        <h2 class="reveal">wie eine buchung läuft</h2>
+        <h2 class="reveal" data-i18n="ablauf.h2">wie eine buchung läuft</h2>
         <div class="steps">
             <div class="step reveal">
                 <div class="n">01</div>
-                <h3>Du schreibst</h3>
-                <p>
+                <h3 data-i18n="ablauf.1.h3">Du schreibst</h3>
+                <p data-i18n="ablauf.1.p">
                     Datum, Ort und ungefähr, wie der Tag aussieht. Zwei Sätze genügen. Ich sage dir
                     direkt, ob ich frei bin und was es kostet.
                 </p>
             </div>
             <div class="step reveal">
                 <div class="n">02</div>
-                <h3>Wir reden</h3>
-                <p>
+                <h3 data-i18n="ablauf.2.h3">Wir reden</h3>
+                <p data-i18n="ablauf.2.p">
                     Ein Telefon oder ein Kaffee, unverbindlich. Vor allem, damit du herausfinden
                     kannst, ob es sich für dich richtig anfühlt, mich den ganzen Tag dabeizuhaben.
                 </p>
             </div>
             <div class="step reveal">
                 <div class="n">03</div>
-                <h3>Der Tag</h3>
-                <p>
+                <h3 data-i18n="ablauf.3.h3">Der Tag</h3>
+                <p data-i18n="ablauf.3.p">
                     Ich komme früh, bleibe aus dem Weg und fotografiere. Du wirst nicht verwaltet.
                     Wenn du Gruppenbilder möchtest, nehmen wir uns zwanzig Minuten und ziehen sie durch.
                 </p>
@@ -428,9 +482,10 @@
                 <div class="n">04</div>
                 <!-- TODO Melanie: hier gerne konkrete Fristen einsetzen
                      (z. B. „Vorschau nach einer Woche, Galerie nach sechs Wochen"),
-                     sobald du weisst, was du sicher zusagen willst. -->
-                <h3>Die Auswahl</h3>
-                <p>
+                     sobald du weisst, was du sicher zusagen willst.
+                     Auch in js/i18n.weddings.js anpassen. -->
+                <h3 data-i18n="ablauf.4.h3">Die Auswahl</h3>
+                <p data-i18n="ablauf.4.p">
                     Eine kleine Vorschau folgt kurz nach der Hochzeit, die vollständige Galerie
                     einige Wochen später — von Hand bearbeitet, keine Filter im Stapel, nichts geglättet.
                 </p>
@@ -443,16 +498,16 @@
 <section id="fragen" class="rule-top">
     <div class="wrap faq-grid">
         <div>
-            <h2 class="reveal">bevor du<br>mir schreibst</h2>
-            <p class="section-intro reveal">
+            <h2 class="reveal" data-i18n-html="faq.h2">bevor du<br>mir schreibst</h2>
+            <p class="section-intro reveal" data-i18n="faq.intro">
                 Das, wovon Paare mir erzählen, dass es sie vorher beschäftigt hat. Wenn deine Frage
                 nicht dabei ist: Stell sie einfach im Formular — das kostet nichts.
             </p>
         </div>
         <div>
             <details>
-                <summary>Wir sind kamerascheu und hassen es, zu posieren.<span class="plus"></span></summary>
-                <p>
+                <summary><span data-i18n="faq.q1">Wir sind kamerascheu und hassen es, zu posieren.</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a1">
                     Dann bist du bei mir richtig. Es gibt nichts, wofür du posieren müsstest. Ich
                     arbeite mit Abstand und verfügbarem Licht, und die Bilder entstehen aus dem, was
                     du ohnehin gerade tust. Die steifen Aufnahmen vom Anfang landen einfach nicht in
@@ -460,24 +515,24 @@
                 </p>
             </details>
             <details>
-                <summary>Unsere Eltern erwarten klassische Gruppenbilder.<span class="plus"></span></summary>
-                <p>
+                <summary><span data-i18n="faq.q2">Unsere Eltern erwarten klassische Gruppenbilder.</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a2">
                     Und die sollt ihr haben — das sind die Bilder, die Familien aufbewahren. Ich mache
                     sie sorgfältig, in etwa zwanzig Minuten, zu einem vorher abgesprochenen Zeitpunkt.
                     Danach sind sie erledigt und niemand muss mehr an Fotos denken.
                 </p>
             </details>
             <details>
-                <summary>Unsere Hochzeit ist klein. Lohnt sich das überhaupt?<span class="plus"></span></summary>
-                <p>
+                <summary><span data-i18n="faq.q3">Unsere Hochzeit ist klein. Lohnt sich das überhaupt?</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a3">
                     Ein Standesamt und zwölf Menschen an einem langen Tisch gehört zu dem, was ich am
                     liebsten fotografiere. Wie viele Gäste kommen, hat nichts damit zu tun, ob ein Tag
                     es wert ist, gut dokumentiert zu werden.
                 </p>
             </details>
             <details>
-                <summary>Was, wenn es regnet oder die Location nicht schön ist?<span class="plus"></span></summary>
-                <p>
+                <summary><span data-i18n="faq.q4">Was, wenn es regnet oder die Location nicht schön ist?</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a4">
                     Wetter und Räume sind nicht das Motiv — ihr seid es. Schwieriges Licht und
                     unglamouröse Orte führen eher zu ehrlicheren Bildern als zu schlechteren.
                     Wegen Regen habe ich noch nie jemanden verschoben.
@@ -486,17 +541,18 @@
             <details>
                 <!-- TODO Melanie: Wenn du mit einem Einstiegspreis arbeiten willst,
                      gehört er genau hier hin — das ist die häufigste Frage überhaupt.
-                     Bewusst ohne Zahl gelassen, damit nichts Falsches online steht. -->
-                <summary>Was kostet eine Hochzeitsreportage?<span class="plus"></span></summary>
-                <p>
+                     Bewusst ohne Zahl gelassen, damit nichts Falsches online steht.
+                     Auch in js/i18n.weddings.js anpassen. -->
+                <summary><span data-i18n="faq.q5">Was kostet eine Hochzeitsreportage?</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a5">
                     Das hängt von der Dauer, dem Ort und dem Umfang der Bearbeitung ab. Schreib mir
                     kurz, wann und wo — du bekommst in der ersten Antwort eine konkrete Zahl, nicht
                     erst nach drei E-Mails.
                 </p>
             </details>
             <details>
-                <summary>Fotografierst du auch ausserhalb von Zürich?<span class="plus"></span></summary>
-                <p>
+                <summary><span data-i18n="faq.q6">Fotografierst du auch ausserhalb von Zürich?</span><span class="plus"></span></summary>
+                <p data-i18n="faq.a6">
                     Ja, in der ganzen Schweiz und auf Anfrage auch im Ausland. Reisekosten rechne ich
                     transparent ab und sage dir vorher, was dazukommt.
                 </p>
@@ -509,8 +565,8 @@
 <section id="anfrage" class="enquire">
     <div class="wrap form-grid">
         <div>
-            <h2 class="reveal">datum anfragen</h2>
-            <p class="section-intro reveal">
+            <h2 class="reveal" data-i18n="anfrage.h2">datum anfragen</h2>
+            <p class="section-intro reveal" data-i18n="anfrage.intro">
                 Schreib mir mit Datum und Ort — ich sage dir direkt, ob ich frei bin. Kein Formular,
                 das du zweimal ausfüllen musst, und keine Broschüre, die du erst anfordern sollst.
             </p>
@@ -524,28 +580,30 @@
         <div>
             <form id="enquiry-form" data-recipient="mailto:melaniemichelfotografie@gmail.com">
                 <div class="row2">
-                    <label class="visually-hidden" for="f-names">Eure Namen</label>
+                    <label class="visually-hidden" for="f-names" data-i18n="form.names">Eure Namen</label>
                     <input class="field" id="f-names" name="names" type="text" required
-                           autocomplete="name" placeholder="Eure Namen">
+                           autocomplete="name" data-i18n-placeholder="form.names" placeholder="Eure Namen">
 
-                    <label class="visually-hidden" for="f-email">E-Mail</label>
+                    <label class="visually-hidden" for="f-email" data-i18n="form.email">E-Mail</label>
                     <input class="field" id="f-email" name="email" type="email" required
-                           autocomplete="email" placeholder="E-Mail">
+                           autocomplete="email" data-i18n-placeholder="form.email" placeholder="E-Mail">
                 </div>
                 <div class="row2">
-                    <label class="visually-hidden" for="f-date">Hochzeitsdatum</label>
+                    <label class="visually-hidden" for="f-date" data-i18n="form.date">Hochzeitsdatum</label>
                     <input class="field" id="f-date" name="date" type="text"
-                           placeholder="Hochzeitsdatum (oder ungefähr wann)">
+                           data-i18n-placeholder="form.date" placeholder="Hochzeitsdatum (oder ungefähr wann)">
 
-                    <label class="visually-hidden" for="f-place">Ort</label>
-                    <input class="field" id="f-place" name="place" type="text" placeholder="Wo">
+                    <label class="visually-hidden" for="f-place" data-i18n="form.place">Ort</label>
+                    <input class="field" id="f-place" name="place" type="text"
+                           data-i18n-placeholder="form.place" placeholder="Wo">
                 </div>
-                <label class="visually-hidden" for="f-message">Nachricht</label>
+                <label class="visually-hidden" for="f-message" data-i18n="form.message">Nachricht</label>
                 <textarea class="field" id="f-message" name="message" rows="4"
+                          data-i18n-placeholder="form.message"
                           placeholder="Was ich wissen sollte — auch das, was dir Sorgen macht"></textarea>
                 <div>
-                    <button class="btn" type="submit">Anfrage senden</button>
-                    <p class="form-note">
+                    <button class="btn" type="submit" data-i18n="form.submit">Anfrage senden</button>
+                    <p class="form-note" data-i18n="form.note">
                         Die Anfrage wird in deinem Mailprogramm vorbereitet, damit du sie vor dem
                         Absenden noch sehen kannst.
                     </p>
@@ -559,20 +617,23 @@
 <!-- ===================== FOOTER ===================== -->
 <footer>
     <div class="wrap foot-in">
-        <span>© 2026 Melanie Michel Fotografie — Zürich</span>
+        <span data-i18n="footer.rights">© 2026 Melanie Michel Fotografie — Zürich</span>
         <span>
-            <a href="business.html">Business &amp; Editorial</a> &nbsp;
-            <a href="impressum.html">Impressum</a> &nbsp;
-            <a href="datenschutz.html">Datenschutz</a>
+            <a href="business.html" data-i18n="nav.switchFull">Business &amp; Editorial</a> &nbsp;
+            <a href="impressum.html" data-i18n="footer.impressum">Impressum</a> &nbsp;
+            <a href="datenschutz.html" data-i18n="footer.datenschutz">Datenschutz</a>
         </span>
     </div>
 </footer>
 
 <!-- ===================== LIGHTBOX ===================== -->
-<dialog class="lightbox" id="lightbox" aria-label="Bildansicht">
-    <button class="lightbox__btn lightbox__close" type="button" aria-label="Schliessen">×</button>
-    <button class="lightbox__btn lightbox__nav lightbox__nav--prev" type="button" aria-label="Vorheriges Bild">‹</button>
-    <button class="lightbox__btn lightbox__nav lightbox__nav--next" type="button" aria-label="Nächstes Bild">›</button>
+<dialog class="lightbox" id="lightbox" data-i18n-aria-label="lightbox.label" aria-label="Bildansicht">
+    <button class="lightbox__btn lightbox__close" type="button"
+            data-i18n-aria-label="lightbox.close" aria-label="Schliessen">×</button>
+    <button class="lightbox__btn lightbox__nav lightbox__nav--prev" type="button"
+            data-i18n-aria-label="lightbox.prev" aria-label="Vorheriges Bild">‹</button>
+    <button class="lightbox__btn lightbox__nav lightbox__nav--next" type="button"
+            data-i18n-aria-label="lightbox.next" aria-label="Nächstes Bild">›</button>
     <img class="lightbox__img" alt="">
     <p class="lightbox__counter" aria-hidden="true"></p>
 </dialog>
@@ -581,17 +642,23 @@
 <div class="cookie-banner" id="cookieBanner">
     <div class="cookie-banner__content">
         <p class="cookie-banner__text">
-            Diese Website verwendet Cookies, um die technische Funktionalität zu gewährleisten.
-            Wir verwenden keine Tracking-Tools oder Analyse-Cookies. Weitere Informationen findest
-            du in der <a href="datenschutz.html">Datenschutzerklärung</a>.
+            <span data-i18n="cookie.text">Diese Website verwendet Cookies, um die technische Funktionalität zu
+                gewährleisten. Wir verwenden keine Tracking-Tools oder Analyse-Cookies. Weitere
+                Informationen findest du in der </span><a href="datenschutz.html"
+                data-i18n="cookie.link">Datenschutzerklärung</a><span data-i18n="cookie.textEnd">.</span>
         </p>
         <div class="cookie-banner__actions">
-            <button class="cookie-banner__btn cookie-banner__btn--decline" id="cookieDecline">Ablehnen</button>
-            <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAccept">Akzeptieren</button>
+            <button class="cookie-banner__btn cookie-banner__btn--decline" id="cookieDecline"
+                    data-i18n="cookie.decline">Ablehnen</button>
+            <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAccept"
+                    data-i18n="cookie.accept">Akzeptieren</button>
         </div>
     </div>
 </div>
 
+<script src="js/i18n.common.js" defer></script>
+<script src="js/i18n.weddings.js" defer></script>
+<script src="js/i18n.js" defer></script>
 <script src="js/weddings.js" defer></script>
 <script>
     // Hintergrund des Halbton-Bands. Als Inline-Zuweisung, damit das Bild

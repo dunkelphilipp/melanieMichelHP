@@ -246,6 +246,48 @@ nav.site-nav {
     .nav-switch__rest { display: inline; }
 }
 
+/* ---------- Sprachumschalter ----------
+   Nur fuer Englisch wird der Inhalt bis zur Uebersetzung verborgen; die
+   deutsche Grundfassung steht im HTML und erscheint ohne Verzoegerung.
+   Die Klasse setzt das Inline-Skript im <head> — ohne JavaScript greift
+   sie nie, der deutsche Text bleibt also immer sichtbar. */
+.i18n-pending body { visibility: hidden; }
+
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+}
+
+.lang-switch button {
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    letter-spacing: inherit;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    transition: color .25s;
+}
+
+.lang-switch button:hover { color: var(--rust); }
+.lang-switch button[aria-pressed="true"] { color: var(--ink); }
+.lang-switch__sep { color: var(--rule); }
+
+@media (pointer: coarse) {
+    .lang-switch button { cursor: pointer; }
+}
+
+/* Unter 560px wird es in der Kopfzeile zu eng. Der Wechsel in die
+   Business-Ansicht bleibt im aufklappbaren Menü erreichbar, der
+   Sprachumschalter bleibt sichtbar. */
+@media (max-width: 559px) {
+    .nav-right > .nav-switch { display: none; }
+}
+
 /* Mobiles Menü — die Referenz blendet die Links unter 880px aus;
    hier bleiben sie über einen Toggle erreichbar. */
 .nav-burger {
@@ -432,16 +474,6 @@ h1 {
 .frame:hover .frame-img img {
     filter: saturate(1) contrast(1.06);
     transform: scale(1.035);
-}
-
-.frame-no {
-    display: block;
-    margin: .4rem 0 0;
-    font-size: .6rem;
-    font-weight: 500;
-    letter-spacing: .14em;
-    color: var(--ink-soft);
-    font-variant-numeric: tabular-nums;
 }
 
 /* ---------- Abschnitts-Grundgerüst ---------- */
