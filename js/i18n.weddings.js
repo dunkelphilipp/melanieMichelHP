@@ -91,7 +91,7 @@
         'faq.q4': 'Was, wenn es regnet oder die Location nicht schön ist?',
         'faq.a4': 'Wetter und Räume sind nicht das Motiv — ihr seid es. Schwieriges Licht und unglamouröse Orte führen eher zu ehrlicheren Bildern als zu schlechteren. Wegen Regen habe ich noch nie jemanden verschoben.',
         'faq.q5': 'Was kostet eine Hochzeitsreportage?',
-        'faq.a5': 'Das hängt von der Dauer, dem Ort und dem Umfang der Bearbeitung ab. Schreib mir kurz, wann und wo — du bekommst in der ersten Antwort eine konkrete Zahl, nicht erst nach drei E-Mails.',
+        'faq.a5': 'Zwei Stunden ab CHF 900. Was darüber hinausgeht, hängt von der Dauer, dem Ort und dem Umfang der Bearbeitung ab. Schreib mir kurz, wann und wo — du bekommst in der ersten Antwort eine konkrete Zahl, nicht erst nach drei E-Mails.',
         'faq.q6': 'Fotografierst du auch ausserhalb von Zürich?',
         'faq.a6': 'Ja, in der ganzen Schweiz und auf Anfrage auch im Ausland. Reisekosten rechne ich transparent ab und sage dir vorher, was dazukommt.',
 
@@ -204,7 +204,7 @@
         'faq.q4': "What if it rains, or the venue isn't beautiful?",
         'faq.a4': "Weather and rooms are not the subject — you are. Difficult light and unglamorous places tend to produce more honest photographs, not worse ones. I have never rescheduled anyone for rain.",
         'faq.q5': 'What does a wedding report cost?',
-        'faq.a5': "That depends on the length, the place and how much editing is involved. Write to me with when and where — you'll get a real number in the first reply, not after three emails.",
+        'faq.a5': "Two hours from CHF 900. Beyond that it depends on the length, the place and how much editing is involved. Write to me with when and where — you'll get a real number in the first reply, not after three emails.",
         'faq.q6': 'Do you photograph outside Zurich?',
         'faq.a6': 'Yes, anywhere in Switzerland and, on request, abroad. Travel is billed transparently and I tell you what it adds beforehand.',
 

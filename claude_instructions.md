@@ -6,7 +6,13 @@ sich an zwei Leserinnen: an **Melanie**, die hier mit Claude Code weiterbaut,
 und an **Claude Code selbst**, das dieses Dokument zu Beginn jeder Sitzung
 lesen soll.
 
-Stand: Oktober 2026 — zuletzt ergänzt nach der Landingpage.
+Stand: Oktober 2026 — zuletzt ergänzt bei der Übergabe.
+
+> **Übergabe:** Ab hier wird aus einem **anderen Claude-Konto** weitergebaut.
+> Dieses Konto kennt die bisherige Unterhaltung **nicht** — es kennt nur dieses
+> Repository und dieses Dokument. Alles, was nicht hier steht, ist weg. Das ist
+> der Grund für die Regel im nächsten Abschnitt, und sie ist ab jetzt nicht
+> mehr nur Ordnung, sondern die einzige Überlieferung.
 
 ---
 
@@ -464,8 +470,10 @@ In beiden Ansichten stehen **Platzhalter** statt erfundener Angaben:
   auf einer gewerblichen Seite sind rechtlich heikel. Sie müssen durch echte
   Rückmeldungen ersetzt (mit Einverständnis) oder die Abschnitte entfernt
   werden.
-- **Preise** stehen nirgends als Zahl. Im Quelltext ist mit `TODO` markiert, wo
-  sie hingehören.
+- **Preise**: Für Hochzeiten ist der Einstiegspreis bestätigt (2 Stunden ab
+  CHF 900) und steht in der FAQ. Für die Business-Ansicht gibt es noch keine
+  Zahl; dort ist im Quelltext mit `TODO` markiert, wo sie hingehört. **Zahlen
+  kommen von Melanie, nicht aus der Schätzung.**
 - **Lieferfristen** sind ohne feste Wochenangabe formuliert.
 
 Dieselbe Regel gilt weiter: Claude soll keine Zahlen, Fristen, Referenzen oder
@@ -571,11 +579,87 @@ Regeln für die Arbeit in diesem Repository:
       natürlich neue Perspektiven eröffnen." Es steht auf keiner neuen Seite.
       Zu schade zum Wegwerfen — wohin damit?
 
+### Geplant: Galerie nach Projekten statt nach Einzelbildern
+
+**Das ist der nächste grössere Umbau.** Er betrifft vor allem die
+Hochzeits-Ansicht.
+
+**Heute** zeigt `weddings.html` einen Kontaktbogen aus 15 Einzelbildern. Die
+stammen aus verschiedenen Hochzeiten, stehen aber alle gleichwertig
+nebeneinander — man sieht nicht, was zusammengehört.
+
+**Künftig** soll die Galerie nach Projekten geordnet sein:
+
+- Die Übersicht zeigt **pro Projekt genau ein Bild** — das Titelbild dieser
+  Hochzeit.
+- Ein Klick darauf öffnet die **Strecke dieses Projekts mit rund 10 Bildern**.
+- Die Darstellung der geöffneten Strecke orientiert sich an der
+  **Projektansicht der Business-Ansicht**: heller Grund, von unten
+  hereinfahrend, versetztes Raster, Bilder blenden beim Scrollen nacheinander
+  ein. Nur eben je Projekt statt je Themenbereich.
+
+**Das meiste davon existiert schon.** Die Business-Ansicht macht genau das,
+nur auf Themenbereiche statt auf einzelne Hochzeiten bezogen:
+
+| Was | Wo | Bemerkung |
+|---|---|---|
+| Daten der Strecken | `js/business.js`, `PROJECTS` | Muster zum Übernehmen |
+| Ansicht und Mechanik | `js/business.js`, `initProjects()` | `<dialog>`, Staffelung, Cursor, Sprachwechsel |
+| Gestaltung | `css/business.css`, Abschnitt „Projekt-Ansicht" | hell, versetztes 12-Spalten-Raster |
+| Kacheln der Übersicht | `business.html`, `.archive` | 2×2-Raster, Titelbild plus Beschriftung |
+
+**Wichtig:** Die Hochzeits-Ansicht ist hell gestaltet, die Business-Ansicht
+dunkel. Die Mechanik lässt sich übernehmen, die **Farben und Typografie
+jedoch nicht** — sie müssen in die Papier-Welt von `css/weddings.css` übersetzt
+werden. Sonst fällt die Trennung der beiden Bereiche in sich zusammen.
+
+#### Was dafür zuerst geklärt sein muss
+
+- **Die Bilder müssen nach Projekten sortiert vorliegen.** Heute liegen alle
+  Hochzeitsbilder flach in einem Ordner (`Hochzeit1..15`) und lassen sich
+  keiner bestimmten Hochzeit zuordnen. Ohne diese Zuordnung lässt sich der
+  Umbau nicht machen — **das ist der Engpass, nicht der Code.**
+- **Rund 10 Bilder je Projekt** heisst: Melanie wählt aus und liefert sie
+  geordnet.
+- Vorschlag für den Aufbau, passend zum bisherigen Muster:
+
+```
+img/portfolio/wedding/projects/<projektname>/
+    cover.webp          Titelbild für die Übersicht
+    cover-thumb.webp    dessen Vorschaubild (600 px breit)
+    01.webp  01-thumb.webp
+    02.webp  02-thumb.webp
+    ...
+```
+
+- **Namen der Projekte**: Paare werden in der Regel nicht mit vollem Namen
+  genannt. Besser ein Ort oder eine knappe Beschreibung („Standesamt Zürich",
+  „Scheune im Toggenburg"). Melanie entscheidet, und **die Namen brauchen das
+  Einverständnis der Paare**, ebenso wie die Veröffentlichung der Bilder
+  überhaupt.
+- Jedes Projekt braucht Titel und Kurztext **in beiden Sprachen** in
+  `js/i18n.weddings.js`, dazu je Bild eine Beschreibung für den Alt-Text.
+
+#### Offene Entscheidungen
+
+- Bleibt der Kontaktbogen als zusätzliche Ansicht bestehen, oder ersetzt die
+  Projektgalerie ihn vollständig?
+- Soll die Business-Ansicht ebenfalls nach einzelnen Aufträgen gegliedert
+  werden, statt nach den vier Themenbereichen? Dort ist die heutige Gliederung
+  vermutlich die bessere, weil Auftraggeber eher nach Art der Arbeit suchen als
+  nach einem bestimmten Anlass.
+- Wie viele Projekte zeigt die Übersicht, bevor es zu viel wird?
+
+---
+
 ### Vor der Veröffentlichung auf `main`
 
 - [ ] **Kundenstimmen**: echte Zitate einsetzen oder die Abschnitte entfernen.
       Betrifft beide Ansichten.
-- [ ] **Preise** in den FAQ ergänzen (`TODO` im Quelltext).
+- [x] ~~**Preise** in den FAQ ergänzen~~ — Hochzeiten: **2 Stunden ab CHF 900**,
+      von Melanie bestätigt und in `faq.a5` eingetragen (deutsch und englisch).
+      Für die Business-Ansicht gibt es noch keine Zahl, dort steht weiterhin ein
+      `TODO` in `faq.a4`.
 - [ ] **Lieferfristen** festlegen (`TODO` im Quelltext).
 - [ ] **Hintergrund-GIF ersetzen** — Prototyp mit fremdem Wasserzeichen.
 - [ ] **Impressum und Datenschutz** prüfen: beide sind nur auf Deutsch. Im
