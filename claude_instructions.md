@@ -6,7 +6,30 @@ sich an zwei Leserinnen: an **Melanie**, die hier mit Claude Code weiterbaut,
 und an **Claude Code selbst**, das dieses Dokument zu Beginn jeder Sitzung
 lesen soll.
 
-Stand: Oktober 2026.
+Stand: Oktober 2026 — zuletzt ergänzt nach der Landingpage.
+
+---
+
+## 📝 Dieses Dokument lebt mit
+
+**Das hier ist kein Schnappschuss, sondern das laufende Gedächtnis des
+Projekts.** Es wird während des ganzen Umbaus weitergeschrieben.
+
+**Regel:** Wer etwas Neues herausfindet oder entscheidet, trägt es hier ein —
+im selben Arbeitsschritt, nicht später. Das gilt für:
+
+- **jeden gebauten Abschnitt**: was entstanden ist und warum so;
+- **jede Entscheidung**, die man später hinterfragen könnte, mitsamt Begründung
+  (sonst wird sie irgendwann ahnungslos wieder umgedreht);
+- **jede neue Konvention**: Ordner, Namensmuster, Bildgrössen;
+- **jede Stolperfalle**, über die jemand gestolpert ist — einmal reicht;
+- **jeden offenen Punkt**, der auffällt, auch wenn er gerade nicht dran ist;
+- **jede erledigte Aufgabe**: abhaken statt stehen lassen.
+
+Für Claude Code ist das verbindlich: **ein Arbeitsschritt gilt erst als fertig,
+wenn dieses Dokument den neuen Stand zeigt.** Lieber ein Satz zu viel als eine
+Entscheidung, deren Grund niemand mehr kennt. Wer das Dokument aktualisiert,
+passt auch die Kopfzeile „Stand" an.
 
 ---
 
@@ -72,11 +95,11 @@ nichts zu kompilieren und nichts zu installieren.
 
 ### Was gerade umgebaut wird
 
-Die bestehende Seite (`index.html`) ist **eine** Seite für alles: Hochzeiten,
-Events und Shootings zusammen. Der Umbau teilt das auf:
+Die alte Seite war **eine** Seite für alles: Hochzeiten, Events und Shootings
+zusammen. Der Umbau teilt das auf:
 
 ```
-Landingpage (index.html)          ← noch nicht gebaut
+Landingpage (index.html)             ← fertig, die Weiche
    ├── Hochzeiten  (weddings.html)   ← fertig
    └── Business    (business.html)   ← fertig, zwei Bereiche noch ohne Bilder
 ```
@@ -216,27 +239,80 @@ Schleife, 1,9 MB).
   **für den Prototyp bewusst in Kauf genommen** und muss vor einer
   Veröffentlichung ersetzt sein.
 
+### 7. Landingpage (`index.html`)
+
+Die Weiche zwischen den beiden Bereichen — und die Seite, die die alte
+Startseite **ersetzt** hat. Ihre Inhalte waren vorher schon verteilt worden:
+Hochzeitsbilder in die Hochzeits-Ansicht, Events und Shootings in die
+Business-Ansicht, die Biografie ins „Über mich" dort.
+
+- Zwei Hälften über den ganzen Bildschirm, beide zuerst grau und unter dem
+  Halbtonraster. **Die Hälfte, der man sich zuwendet, wird scharf, bunt und
+  breiter**, die andere weicht zurück. Die Entscheidung wird sichtbar, bevor
+  sie getroffen ist.
+- Auf schmalen Geräten stapeln sich die Hälften. Dort gibt es kein Hover,
+  deshalb sind die Bilder von Anfang an weniger stark verfremdet — sonst sähe
+  man nur zwei graue Flächen.
+- Eigene Bilder in `img/landing/`, auf die Fläche zugeschnitten (siehe
+  „Bilder"). Die Originale wären mit 286 KB und 692 KB zu schwer für die erste
+  Seite, die jemand sieht.
+- Die Seite zeigt bewusst fast keinen Text. Für Suchmaschinen und Screenreader
+  gibt es deshalb eine unsichtbare `<h1>` und eine ordentliche
+  Meta-Beschreibung.
+- Fusszeile mit Impressum und Datenschutz — die müssen von jeder Seite aus
+  erreichbar sein.
+- Der Cookie-Hinweis steht meist hier, weil es die erste Seite ist. Seine Höhe
+  wird gemessen und als `--banner-h` weitergegeben, sonst läge „Eintreten"
+  genau darunter. Auf breiten Schirmen bekommt der Textblock jeder Hälfte den
+  Zuschlag (die Hälften sind bildschirmhoch), auf schmalen das Seitenende (dort
+  stapeln sie sich und die Seite scrollt) — sonst klebte der Text weit über dem
+  unteren Rand.
+
+**Mitgeändert:** `impressum.html` und `datenschutz.html` hatten ein Menü mit
+`index.html#about`, `#offers`, `#gallery`, `#ready`. Diese Abschnitte gibt es
+auf der neuen Startseite nicht mehr; das Menü zeigt jetzt auf Start,
+Hochzeiten und Business.
+
+#### Zwei Fehler aus der Vorlage, die hier behoben sind
+
+Beide betreffen das Wachsen der Hälften. Wer die Stellen anfasst, sollte sie
+kennen:
+
+1. **`flex: 1 1 50%` macht `flex-grow` wirkungslos.** `flex-grow` verteilt nur
+   *freien* Raum. Bei zwei Basen von je 50 % ist nichts frei, also passiert
+   nichts. Richtig ist `flex: 1 1 0%` — dann ist die ganze Breite frei und die
+   Wachstumswerte greifen.
+2. **`.split:hover .panel` schlägt `.panel:hover`.** Drei Klassen gegen zwei.
+   Beim Überfahren einer Hälfte ist auch `.split` überfahren, also bekamen
+   *beide* Hälften den kleineren Wert und es bewegte sich nichts. Die
+   Hover-Regel muss mindestens gleich genau sein: `.split:hover .panel:hover`.
+
+In der Vorlage war die Bewegung deshalb nie zu sehen.
+
 ---
 
 ## Aufbau der Dateien
 
 ```
-index.html            die bestehende alte Seite — wird später die Landingpage
+index.html            Landingpage — die Weiche
 weddings.html         Hochzeits-Ansicht
 business.html         Business-Ansicht
-impressum.html        unverändert
-datenschutz.html      unverändert
+impressum.html        nur das Menü angepasst
+datenschutz.html      nur das Menü angepasst
 
-css/styles.css        gehört zur alten index.html — nicht anfassen
+css/landing.css       nur Landingpage
 css/weddings.css      nur Hochzeits-Ansicht
 css/business.css      nur Business-Ansicht
+css/styles.css        Rest der alten Seite — siehe unten
 
-js/app.js             gehört zur alten index.html — nicht anfassen
+js/landing.js         nur Landingpage
 js/weddings.js        nur Hochzeits-Ansicht
 js/business.js        nur Business-Ansicht
+js/app.js             Rest der alten Seite — siehe unten
 
 js/i18n.js            die Sprachmechanik (enthält selbst keine Texte)
 js/i18n.common.js     Texte, die auf allen Seiten gleich sind
+js/i18n.landing.js    Texte der Landingpage
 js/i18n.weddings.js   Texte der Hochzeits-Ansicht
 js/i18n.business.js   Texte der Business-Ansicht
 
@@ -246,10 +322,13 @@ img/                  alle Bilder
 ```
 
 **Jede Ansicht hat ihr eigenes CSS und JS.** Das ist Absicht: so kann an der
-einen Ansicht gearbeitet werden, ohne die andere zu gefährden. Die alte
-`index.html` mit `styles.css` und `app.js` ist bisher **völlig unverändert** —
-die Live-Seite kann also nicht kaputtgehen, solange nicht nach `main` gepusht
-wird.
+einen Ansicht gearbeitet werden, ohne die anderen zu gefährden.
+
+`css/styles.css` und `js/app.js` gehörten zur alten Startseite. Seit die
+Landingpage steht, benutzt sie **niemand mehr** — `impressum.html` und
+`datenschutz.html` binden `styles.css` allerdings noch ein, also bleiben beide
+Dateien vorerst liegen. Nicht anfassen, solange die beiden Rechtsseiten nicht
+überarbeitet sind.
 
 ---
 
@@ -320,6 +399,7 @@ img/portfolio/event/eventGal/         Event1..6      + Event1-thumb..6
 img/portfolio/shooting/shootingGal/   Shooting1..8   + Shooting1-thumb..8
 img/selfportrait/selfportrait.webp    Portrait von Melanie
 img/background/                       Halbton-GIF plus Einzelbild
+img/landing/                          die zwei Bilder der Startseite
 img/frontpage/frontpage.webp          Brautstrauss — gehört zur Hochzeits-Seite
 ```
 
@@ -327,6 +407,13 @@ img/frontpage/frontpage.webp          Brautstrauss — gehört zur Hochzeits-Sei
 Die Vorschaubilder sind 600 px breit, die vollen rund 2500 px. Im Raster wird
 immer das Vorschaubild geladen, die volle Auflösung erst in der Lightbox oder
 der Projektansicht. Das hält die Seite schnell.
+
+**Ausnahme `img/landing/`:** Die Startseite zeigt zwei Bildflächen über den
+ganzen Bildschirm. Dafür ist das Vorschaubild zu klein und das Original zu
+schwer, deshalb liegen dort zugeschnittene Zwischengrössen (1400 px bzw.
+2000 px breit, WebP, Qualität 80, zusammen rund 435 KB statt 978 KB). Wer die
+Bilder der Startseite austauscht, erzeugt die neue Fassung nach demselben
+Muster — nicht einfach das Original verlinken.
 
 **Neue Bilder hinzufügen:** Datei und Vorschaubild nach demselben Muster
 ablegen, dann in der jeweiligen Seite eintragen. Für die Business-Ansicht steht
@@ -461,6 +548,10 @@ Regeln für die Arbeit in diesem Repository:
    wurde, nicht nur was.
 8. **Ehrlich berichten.** Wenn etwas nicht geprüft wurde oder nicht
    funktioniert: sagen.
+9. **Dieses Dokument nachführen** — im selben Arbeitsschritt, siehe ganz oben.
+   Neuer Abschnitt, neue Konvention, neue Entscheidung, neue Stolperfalle,
+   erledigter Punkt: alles kommt hier hinein. Ein Arbeitsschritt ist erst
+   fertig, wenn das Dokument stimmt.
 
 ---
 
@@ -468,12 +559,17 @@ Regeln für die Arbeit in diesem Repository:
 
 ### Als Nächstes
 
-- [ ] **Landingpage** (`index.html`): die Weiche zwischen Hochzeiten und
-      Business. Ein Entwurf liegt vor (geteilter Bildschirm, dunkel, halbtönig).
-      Achtung: die bestehende `index.html` ist die aktuelle Live-Seite und wird
-      dabei ersetzt — eigener Branch, sorgfältig.
+- [x] ~~**Landingpage** (`index.html`)~~ — steht.
 - [ ] **Bilder für Business & Branding und für Journalismus**. Die Flächen sind
       reserviert, die Anleitung steht in `business.html`.
+- [ ] **`impressum.html` und `datenschutz.html` überarbeiten.** Beide hängen
+      noch am Erscheinungsbild der alten Seite (`css/styles.css`, `js/app.js`)
+      und sind einsprachig. Sobald sie auf das neue Erscheinungsbild umgestellt
+      sind, können `styles.css` und `app.js` weg.
+- [ ] **Hero-Zitat der alten Startseite ist heimatlos geworden:** „Zwischentöne
+      erfassen, innere und äussere Welten in Einklang bringen — schlicht und
+      natürlich neue Perspektiven eröffnen." Es steht auf keiner neuen Seite.
+      Zu schade zum Wegwerfen — wohin damit?
 
 ### Vor der Veröffentlichung auf `main`
 

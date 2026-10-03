@@ -17,11 +17,17 @@ Vorschau und keinen Zwischenschritt.
   `git checkout rework && git checkout -b feature/name`
 - Fertige Arbeit wird nach `rework` gemerged, nie weiter.
 
-## Vor dem Arbeiten lesen
+## Vor dem Arbeiten lesen — und danach nachführen
 
 **`claude_instructions.md`** im Projektwurzelverzeichnis. Dort stehen der
 Aufbau des Projekts, was bisher gebaut wurde, die Zweisprachigkeit, die
 Bildkonventionen, die offenen Punkte und die Qualitätsregeln.
+
+**Es ist ein lebendes Dokument.** Jede neue Erkenntnis, Entscheidung,
+Konvention, Stolperfalle und jeder erledigte oder neu entdeckte offene Punkt
+wird dort eingetragen — im selben Arbeitsschritt, nicht später. **Ein
+Arbeitsschritt gilt erst als fertig, wenn das Dokument den neuen Stand
+zeigt.**
 
 ## Die wichtigsten Regeln in Kürze
 
@@ -37,3 +43,5 @@ Bildkonventionen, die offenen Punkte und die Qualitätsregeln.
 5. Deutsche Kommentare und Commit-Nachrichten. Die Nachricht soll sagen, warum
    etwas so gemacht wurde.
 6. Ehrlich berichten, wenn etwas nicht geprüft wurde oder nicht funktioniert.
+7. `claude_instructions.md` nachführen, bevor ein Arbeitsschritt als fertig
+   gilt.
