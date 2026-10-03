@@ -1,500 +1,174 @@
 <!DOCTYPE html>
-<html lang="de" class="no-js">
+<html lang="de">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Melanie Michel Fotografie</title>
+    <title data-i18n="meta.title">Melanie Michel — Fotografin in Zürich</title>
+    <meta name="description" data-i18n-content="meta.description"
+          content="Dokumentarische Fotografie aus Zürich. Hochzeiten auf der einen, Events, Portraits, Business und Journalismus auf der anderen Seite." />
 
-    <!-- Security Headers -->
+    <!-- Security Headers — identisch streng wie weddings.html und business.html.
+         Inter wird selbst gehostet, es sind keine fremden Domains nötig. -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' mailto:;">
+          content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self' mailto:;">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta name="robots" content="index, follow">
 
-    <!-- Main stylesheet -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="canonical" href="https://www.melaniemichel.ch/" />
+    <link rel="alternate" hreflang="de" href="https://www.melaniemichel.ch/" />
+    <link rel="alternate" hreflang="en" href="https://www.melaniemichel.ch/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="https://www.melaniemichel.ch/" />
 
-    <!-- Preload hero image for faster first paint -->
-    <link rel="preload" as="image" href="img/frontpage/frontpage.webp" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:title" data-i18n-content="og.title"
+          content="Melanie Michel — Fotografin in Zürich" />
+    <meta property="og:description" data-i18n-content="og.description"
+          content="Dokumentarische Fotografie aus Zürich. Hochzeiten, Events, Portraits und redaktionelle Arbeiten." />
+    <meta property="og:url" content="https://www.melaniemichel.ch/" />
+    <meta property="og:image" content="https://www.melaniemichel.ch/img/landing/wedding.webp" />
+
+    <!-- Inter, selbst gehostet — keine Anfrage an Dritte -->
+    <link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="stylesheet" href="css/landing.css" />
+
+    <link rel="preload" as="image" href="img/landing/wedding.webp" />
+    <link rel="preload" as="image" href="img/landing/business.webp" />
+    <!-- Das Halbton-GIF nur vorladen, wenn Bewegung gewünscht ist; sonst
+         greift unten im CSS das Einzelbild und die 1,9 MB wären umsonst. -->
+    <link rel="preload" as="image" href="img/background/halftone.gif"
+          media="(prefers-reduced-motion: no-preference)" />
+
+    <!-- Sprache vor dem ersten Zeichnen festlegen — gleiche Logik wie auf
+         den anderen Seiten: ?lang=, gespeicherte Wahl, Browsersprache, Deutsch. -->
+    <script>
+        (function () {
+            var supported = ['de', 'en'], fallback = 'de', lang = null;
+            try {
+                var fromUrl = new URLSearchParams(location.search).get('lang');
+                if (fromUrl && supported.indexOf(fromUrl) >= 0) lang = fromUrl;
+            } catch (e) { /* ältere Browser */ }
+            if (!lang) {
+                try {
+                    var saved = localStorage.getItem('mm_lang');
+                    if (saved && supported.indexOf(saved) >= 0) lang = saved;
+                } catch (e) { /* Privatmodus */ }
+            }
+            if (!lang) {
+                var nav = (navigator.language || fallback).slice(0, 2).toLowerCase();
+                lang = supported.indexOf(nav) >= 0 ? nav : fallback;
+            }
+            window.__mmLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.setAttribute('data-lang', lang);
+            if (lang !== fallback) {
+                document.documentElement.classList.add('i18n-pending');
+                setTimeout(function () {
+                    document.documentElement.classList.remove('i18n-pending');
+                }, 1500);
+            }
+        })();
+    </script>
 </head>
 <body>
 
-<!-- ===================== Menu ===================== -->
-<div class="menu-overlay">
-    <nav class="menu-items">
-        <a href="#hero" class="menu-item">Home</a>
-        <a href="#about" class="menu-item">Über mich</a>
-        <a href="#offers" class="menu-item">Angebote</a>
-        <div class="menu-item-wrapper">
-            <button class="menu-item menu-item--toggle" aria-expanded="false">
-                Portfolio
-                <span class="menu-item__arrow">›</span>
-            </button>
-            <div class="menu-submenu">
-                <a href="#gallery-wedding" class="menu-submenu__item">Hochzeiten</a>
-                <a href="#gallery-event" class="menu-submenu__item">Events</a>
-                <a href="#gallery-shooting" class="menu-submenu__item">Shootings</a>
-            </div>
-        </div>
-        <a href="#ready" class="menu-item">Anfrage</a>
-    </nav>
+<!-- Für Suchmaschinen und Screenreader: die Seite selbst zeigt bewusst
+     fast keinen Text, braucht aber eine Überschrift. -->
+<h1 class="visually-hidden" data-i18n="page.h1">
+    Melanie Michel — dokumentarische Fotografie in Zürich
+</h1>
 
-    <div class="menu-legal">
-        <a href="impressum.html" class="menu-legal__link">Impressum</a>
-        <a href="datenschutz.html" class="menu-legal__link">Datenschutz</a>
-    </div>
-</div>
+<div id="cursor" aria-hidden="true"></div>
+<div id="ambient" aria-hidden="true"></div>
 
-<button class="menu-toggle" aria-controls="menu" aria-expanded="false" aria-label="Menü öffnen">
-    <span class="menu-toggle__bar"></span>
-    <span class="menu-toggle__bar"></span>
-    <span class="menu-toggle__bar"></span>
-</button>
+<header>
+    <span class="wordmark">
+        <img src="img/Logo/MelanieMichelLogo.webp" alt="" width="110" height="24"
+             loading="eager" decoding="async" />
+        Melanie Michel
+    </span>
 
-<!-- ===================== HERO ===================== -->
-<section class="hero-stage">
-    <header class="hero hero--sticky" id="hero" data-theme="dark">
-        <a class="hero__logo" href="#top" aria-label="Startseite">
-            <img src="img/Logo/MelanieMichelLogo.webp"
-                 alt="Logo: Melanie Michel Fotografie"
-                 loading="eager" decoding="async" />
-        </a>
+    <span class="header-right">
+        <span class="place" data-i18n="header.place">Zürich</span>
 
-        <div class="hero__content">
-            <blockquote class="hero__quote">
-                „Zwischentöne erfassen, innere und äussere Welten in Einklang bringen —
-                schlicht und natürlich neue Perspektiven eröffnen."
-            </blockquote>
-        </div>
+        <span class="lang-switch" role="group" data-i18n-aria-label="lang.label" aria-label="Sprache">
+            <button type="button" data-lang-switch="de" aria-pressed="true"
+                    data-i18n-title="lang.deTitle" title="Auf Deutsch anzeigen">DE</button>
+            <span class="lang-switch__sep" aria-hidden="true">/</span>
+            <button type="button" data-lang-switch="en" aria-pressed="false"
+                    data-i18n-title="lang.enTitle" title="Show in English">EN</button>
+        </span>
+    </span>
+</header>
 
-        <a href="#ready" class="btn btn--primary btn--floating">ANFRAGE</a>
-    </header>
-</section>
+<main class="split">
 
-<!-- ===================== ABOUT ===================== -->
-<section id="about" class="section section--accent" data-theme="accent">
-    <div class="container split">
-        <div class="split__item">
-            <h2 class="h2 reveal">Mein Leben im Kurzformat</h2>
-            <p class="reveal">
-                Geboren im Zürcher Oberland, lebe ich seit einigen Jahren in Zürich.
-                Die Fotografie begleitet mich schon lange – während des Studiums wurde sie zu einem
-                kreativen Ausgleich und ist heute ein wichtiger Bestandteil meines Lebens.
+    <a class="panel" href="weddings.html">
+        <span class="panel-media">
+            <img src="img/landing/wedding.webp"
+                 data-i18n-alt="wedding.alt"
+                 alt="Brautpaar verlässt Hand in Hand die Trauung durch einen Arkadengang, Gäste lassen Seifenblasen steigen"
+                 width="1400" height="2101" loading="eager" decoding="async" />
+        </span>
+        <span class="panel-shade"></span>
+        <span class="panel-body">
+            <h2 data-i18n-html="wedding.h2">Hochzeiten</h2>
+            <p data-i18n="wedding.p">
+                Ihr heiratet und möchtet den Tag nicht mit Posieren verbringen. Dann hier entlang.
             </p>
-            <p class="reveal">
-                Als Beobachterin mitten im Geschehen halte ich besondere Momente möglichst natürlich und authentisch
-                fest – von Hochzeiten und persönlichen Anlässen bis hin zu Konzerten und
-                kulturellen Veranstaltungen. Als Reportage- und Portraitfotografin interessiert mich besonders
-                die Geschichte hinter den Gesichtern. Auch die Licht- und Studiofotografie habe ich für mich entdeckt;
-                hier möchte ich mich weiterentwickeln und meine gestalterischen Möglichkeiten ausbauen.
+            <span class="enter" data-i18n="enter">Eintreten</span>
+        </span>
+    </a>
+
+    <a class="panel" href="business.html">
+        <span class="panel-media">
+            <img src="img/landing/business.webp"
+                 data-i18n-alt="business.alt"
+                 alt="Schwarzweiss: Festivalpublikum unter einem Leuchtschild mit der Aufschrift Pizza"
+                 width="2000" height="1334" loading="eager" decoding="async" />
+        </span>
+        <span class="panel-shade"></span>
+        <span class="panel-body">
+            <h2 data-i18n-html="business.h2">Business<br>&amp; Reportage</h2>
+            <p data-i18n="business.p">
+                Aufträge für Unternehmen, Redaktionen, Veranstaltungen und Portraits.
             </p>
-            <p class="reveal">
-                Aktuell absolviere ich den Studiengang Fotografie am MAZ (bis Sommer 2027). Zuvor studierte ich an der
-                ZHAW Soziale Arbeit und arbeitete fünf Jahre mit Jugendlichen im betreuten Wohnen.
-                Den ersten Kontakt mit einer Kamera hatte ich während der gestalterischen Berufsmaturität in Altstetten,
-                wo ich die analoge Fotografie von Grund auf kennenlernte.
-                Heute arbeite ich mit einer professionellen Systemkamera von Canon
-                und nutze meine analoge Ausrüstung vor allem privat.
-            </p>
-        </div>
+            <span class="enter" data-i18n="enter">Eintreten</span>
+        </span>
+    </a>
 
-        <div class="split__item">
-            <img src="img/selfportrait/selfportrait.webp"
-                 alt="Fotografin Melanie Michel — Portrait"
-                 class="media reveal-right"
-                 loading="lazy" decoding="async" />
-        </div>
-    </div>
-</section>
+</main>
 
-<!-- ===================== OFFER ===================== -->
-<section id="offers" class="section" data-theme="accent">
-    <div class="container">
-        <h2 class="h2 h2--inline">Angebote</h2>
-
-        <div class="cards">
-            <article class="card">
-                <img src="img/portfolio/wedding/iconPic/wedding_icon.webp"
-                     alt="Portfolio-Kachel: Hochzeit"
-                     class="card__img card__img--focus-left"
-                     loading="lazy" decoding="async" />
-                <h3 class="card__title">Hochzeiten</h3>
-            </article>
-
-            <article class="card">
-                <img src="img/portfolio/event/iconPic/event_icon.webp"
-                     alt="Portfolio-Kachel: Event"
-                     class="card__img"
-                     loading="lazy" decoding="async" />
-                <h3 class="card__title">Events</h3>
-            </article>
-
-            <article class="card">
-                <img src="img/portfolio/shooting/iconPic/shooting_icon.webp"
-                     alt="Portfolio-Kachel: Shooting"
-                     class="card__img"
-                     loading="lazy" decoding="async" />
-                <h3 class="card__title">Shootings</h3>
-            </article>
-        </div>
-    </div>
-</section>
-
-<!-- ===================== DISCOVER ===================== -->
-<section id="discover" class="section discover-section" data-theme="dark">
-    <div class="discover__container">
-        <div class="discover__text">
-            <h2 class="discover__title">ENTDECKE MEINE FOTOS</h2>
-        </div>
-        <div class="discover__image">
-            <img src="img/portfolio/discover/discover.webp"
-                 alt="Entdecke meine Fotos — Beispielportrait"
-                 loading="lazy" decoding="async" />
-        </div>
-    </div>
-</section>
-
-<!-- ===================== GALLERY WITH THUMBNAILS ===================== -->
-<section id="gallery" class="section" data-theme="accent">
-    <div class="container">
-        <nav class="gallery-toc" aria-label="Abschnitte">
-            <a class="gallery-toc__link" href="#gallery-wedding">Hochzeiten</a>
-            <a class="gallery-toc__link" href="#gallery-event">Events</a>
-            <a class="gallery-toc__link" href="#gallery-shooting">Shootings</a>
-        </nav>
-    </div>
-
-    <!-- Weddings Gallery -->
-    <div class="container">
-        <h3 id="gallery-wedding" class="gallery__heading">Hochzeiten</h3>
-
-        <div class="gallery gallery--complex-grid">
-            <!-- H1 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit1-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit1.webp"
-                     alt="Hochzeit 1"
-                     decoding="async">
-            </figure>
-            <!-- H2 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit2-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit2.webp"
-                     alt="Hochzeit 2"
-                     decoding="async">
-            </figure>
-            <!-- H3 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit3-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit3.webp"
-                     alt="Hochzeit 3"
-                     decoding="async">
-            </figure>
-            <!-- H4 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit4-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit4.webp"
-                     alt="Hochzeit 4"
-                     decoding="async">
-            </figure>
-            <!-- H5 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit5-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit5.webp"
-                     alt="Hochzeit 5"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H6 (h4, v2) -->
-            <figure class="gallery__item item-h-span-4 item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit6-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit6.webp"
-                     alt="Hochzeit 6"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H7 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit7-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit7.webp"
-                     alt="Hochzeit 7"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H8 (h3, v2) -->
-            <figure class="gallery__item item-h-span-3 item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit8-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit8.webp"
-                     alt="Hochzeit 8"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H9 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit9-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit9.webp"
-                     alt="Hochzeit 9"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H10 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit10-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit10.webp"
-                     alt="Hochzeit 10"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H11 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit11-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit11.webp"
-                     alt="Hochzeit 11"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H12 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit12-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit12.webp"
-                     alt="Hochzeit 12"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H13 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit13-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit13.webp"
-                     alt="Hochzeit 13"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H14 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit14-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit14.webp"
-                     alt="Hochzeit 14"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- H15 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/wedding/weddingGal/Hochzeit15-thumb.webp"
-                     data-full="img/portfolio/wedding/weddingGal/Hochzeit15.webp"
-                     alt="Hochzeit 15"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-        </div>
-    </div>
-
-    <!-- Events Gallery -->
-    <div class="container">
-        <h3 id="gallery-event" class="gallery__heading">Events</h3>
-
-        <div class="gallery gallery--complex-grid">
-            <!-- E1 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/event/eventGal/Event1-thumb.webp"
-                     data-full="img/portfolio/event/eventGal/Event1.webp"
-                     alt="Event 1"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- E2 (v2) -->
-            <figure class="gallery__item item-v-span-2">
-                <img src="img/portfolio/event/eventGal/Event2-thumb.webp"
-                     data-full="img/portfolio/event/eventGal/Event2.webp"
-                     alt="Event 2"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- E3 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/event/eventGal/Event3-thumb.webp"
-                     data-full="img/portfolio/event/eventGal/Event3.webp"
-                     alt="Event 3"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- E4 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/event/eventGal/Event4-thumb.webp"
-                     data-full="img/portfolio/event/eventGal/Event4.webp"
-                     alt="Event 4"
-                     loading="lazy"
-                     decoding="async"
-                     style="object-position: 95%;">
-            </figure>
-            <!-- E5 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/event/eventGal/Event5-thumb.webp"
-                     data-full="img/portfolio/event/eventGal/Event5.webp"
-                     alt="Event 5"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- E6 (h4, v2) -->
-            <figure class="gallery__item item-h-span-4 item-v-span-2">
-                <img src="img/portfolio/event/eventGal/Event6-thumb.webp"
-                     data-full="img/portfolio/event/eventGal/Event6.webp"
-                     alt="Event 6"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-        </div>
-    </div>
-
-    <!-- Shootings Gallery -->
-    <div class="container">
-        <h3 id="gallery-shooting" class="gallery__heading">Shootings</h3>
-
-        <div class="gallery gallery--complex-grid">
-            <!-- S1 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/shooting/shootingGal/Shooting1-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting1.webp"
-                     alt="Shooting 1"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S2 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/shooting/shootingGal/Shooting2-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting2.webp"
-                     alt="Shooting 2"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S3 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/shooting/shootingGal/Shooting3-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting3.webp"
-                     alt="Shooting 3"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S4 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/shooting/shootingGal/Shooting4-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting4.webp"
-                     alt="Shooting 4"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S5 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/shooting/shootingGal/Shooting5-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting5.webp"
-                     alt="Shooting 5"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S6 (h2, v3) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-3">
-                <img src="img/portfolio/shooting/shootingGal/Shooting6-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting6.webp"
-                     alt="Shooting 6"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S7 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/shooting/shootingGal/Shooting7-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting7.webp"
-                     alt="Shooting 7"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-            <!-- S8 (h2, v2) -->
-            <figure class="gallery__item item-h-span-2 item-v-span-2">
-                <img src="img/portfolio/shooting/shootingGal/Shooting8-thumb.webp"
-                     data-full="img/portfolio/shooting/shootingGal/Shooting8.webp"
-                     alt="Shooting 8"
-                     loading="lazy"
-                     decoding="async">
-            </figure>
-        </div>
-    </div>
-</section>
-
-<!-- ===================== CTA / READY SECTION ===================== -->
-<section id="ready" class="section cta-section" data-theme="accent">
-    <div class="cta__media">
-        <img src="img/cta/cta1.webp"
-             alt="Fotoprint auf Regal"
-             loading="lazy" decoding="async">
-    </div>
-
-    <aside class="cta__panel">
-        <div class="cta__copy">
-            <h2 class="cta__title">Bereit für dein nächstes Foto?</h2>
-            <p class="cta__text">
-                Schreib mir, erzähl mir von deinen Ideen / deinem Anlass und lass uns
-                zusammen deine Fotostory kreieren.
-            </p>
-
-            <a href="mailto:melaniemichelfotografie@gmail.com" class="cta__email-link">melaniemichelfotografie@gmail.com</a>
-
-            <p class="cta__text">
-                ICH FREUE MICH AUF DEINE
-                NACHRICHT :)
-            </p>
-        </div>
-
-        <div class="cta__actions">
-            <a class="cta__social" href="https://www.instagram.com/_melaniemichelfotografie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
-                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm6.25-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
-    </aside>
-</section>
-
-<!-- ===================== FOOTER ===================== -->
-<footer class="footer" data-theme="dark">
-    <div class="footer__content container">
-        <div class="footer__links">
-            <a href="datenschutz.html" class="footer__link">Datenschutz</a>
-            <a href="impressum.html" class="footer__link">Impressum</a>
-        </div>
-        <div class="footer__copy">
-            <p>© 2025 Melanie Michel Fotografie. Alle Rechte vorbehalten.</p>
-        </div>
-    </div>
+<footer>
+    <span data-i18n="footer.tagline">Dokumentarische Fotografie · Zürich</span>
+    <a href="impressum.html" data-i18n="footer.impressum">Impressum</a>
+    <a href="datenschutz.html" data-i18n="footer.datenschutz">Datenschutz</a>
 </footer>
 
-<!-- ===================== LIGHTBOX (Global) ===================== -->
-<dialog class="lightbox" id="lightbox">
-    <button class="lightbox__close" aria-label="Schliessen">×</button>
-    <button class="lightbox__nav lightbox__nav--prev" aria-label="Vorheriges Bild">‹</button>
-    <button class="lightbox__nav lightbox__nav--next" aria-label="Nächstes Bild">›</button>
-    <img class="lightbox__img" alt="">
-</dialog>
-
-<!-- ===================== COOKIE CONSENT BANNER ===================== -->
+<!-- ===================== COOKIE-HINWEIS ===================== -->
 <div class="cookie-banner" id="cookieBanner">
     <div class="cookie-banner__content">
         <p class="cookie-banner__text">
-            Diese Website verwendet Cookies, um die technische Funktionalität zu gewährleisten.
-            Wir verwenden keine Tracking-Tools oder Analyse-Cookies.
-            Weitere Informationen finden Sie in unserer
-            <a href="datenschutz.html">Datenschutzerklärung</a>.
+            <span data-i18n="cookie.text">Diese Website verwendet Cookies, um die technische Funktionalität zu
+                gewährleisten. Wir verwenden keine Tracking-Tools oder Analyse-Cookies. Weitere
+                Informationen findest du in der </span><a href="datenschutz.html"
+                data-i18n="cookie.link">Datenschutzerklärung</a><span data-i18n="cookie.textEnd">.</span>
         </p>
         <div class="cookie-banner__actions">
-            <button class="cookie-banner__btn cookie-banner__btn--decline" id="cookieDecline">
-                Ablehnen
-            </button>
-            <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAccept">
-                Akzeptieren
-            </button>
+            <button class="cookie-banner__btn cookie-banner__btn--decline" id="cookieDecline"
+                    data-i18n="cookie.decline">Ablehnen</button>
+            <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAccept"
+                    data-i18n="cookie.accept">Akzeptieren</button>
         </div>
     </div>
 </div>
 
-<script src="js/app.js" defer></script>
+<script src="js/i18n.common.js" defer></script>
+<script src="js/i18n.landing.js" defer></script>
+<script src="js/i18n.js" defer></script>
+<script src="js/landing.js" defer></script>
 </body>
 </html>
