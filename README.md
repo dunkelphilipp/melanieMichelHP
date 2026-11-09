@@ -146,7 +146,7 @@ Website code may be used as reference with attribution.
 ## 📞 Contact
 
 - **Email**: melaniemichelfotografie@gmail.com
-- **Instagram**: [@_melaniemichelfotografie](https://www.instagram.com/_melaniemichelfotografie)
+- **Instagram**: [@_melaniemichel](https://www.instagram.com/_melaniemichel/)
 - **Location**: Zürich, Switzerland
 
 ## 🙏 Acknowledgments
