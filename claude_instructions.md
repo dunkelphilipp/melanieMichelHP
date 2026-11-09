@@ -93,7 +93,7 @@ Gearbeitet wird immer auf `rework` und den davon abgezweigten Branches.
 | Hosting | GitHub Pages, statisch, kein Server, keine Datenbank |
 | Repository | `dunkelphilipp/melanieMichelHP` |
 | E-Mail | `melaniemichelfotografie@gmail.com` |
-| Instagram | `@_melaniemichelfotografie` |
+| Instagram | `@_melaniemichel` — **ohne** „fotografie", das Konto wurde umbenannt |
 | Technik | HTML, CSS, JavaScript ohne Framework. Kein Build-Schritt. |
 
 Die Dateien im Repository sind genau das, was im Browser landet. Es gibt
